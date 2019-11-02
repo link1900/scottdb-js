@@ -1,0 +1,41 @@
+{
+  "name": "@link1900/node-util",
+  "version": "0.2.1",
+  "description": "Node util",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Scott Brown <link1900@gmail.com>",
+  "license": "MIT",
+  "repository": "git@github.com:link1900/link1900.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "prebuild": "rm -rf lib/",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "@link1900/node-error": "^0.2.0",
+    "@link1900/node-validation": "^0.1.2",
+    "@types/bluebird": "3.5.26",
+    "@types/google-libphonenumber": "7.4.17",
+    "@types/lodash": "4.14.123",
+    "@types/pretty-bytes": "5.1.0",
+    "bluebird": "3.5.4",
+    "decimal.js": "10.1.1",
+    "google-libphonenumber": "3.2.2",
+    "lodash": "4.17.11",
+    "moment-timezone": "0.5.23",
+    "pretty-bytes": "5.1.0",
+    "query-string": "6.4.2"
+  }
+}

@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`objectHelper #unwrap throw an exception when null 1`] = `"Attempted to unwrap value but was null or undefined"`;
+
+exports[`objectHelper #unwrap throw an exception when undefined 1`] = `"Attempted to unwrap value but was null or undefined"`;

@@ -1,0 +1,41 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# testing
+lib-cov
+coverage
+.nyc_output
+
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Node dependency directories
+node_modules/
+.npm
+.node_repl_history
+.yarn-integrity
+
+# local environment variables
+.env
+
+# IDE
+.idea
+*.iml
+
+# OS
+.DS_STORE
+
+# build
+dist
+

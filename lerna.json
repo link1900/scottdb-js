@@ -1,0 +1,18 @@
+{
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "version": "independent",
+  "command": {
+    "run": {
+      "stream": "true"
+    },
+    "publish": {
+      "push": true,
+      "conventionalCommits": true,
+      "changelogPreset": "angular-bitbucket",
+      "yes": true,
+      "exact": false,
+      "npmClient": "yarn"
+    }
+  }
+}

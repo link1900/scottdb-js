@@ -36,7 +36,7 @@
     "hygen": "4.0.2",
     "jest": "24.7.1",
     "lerna": "3.18.3",
-    "lint-staged": "8.1.5",
+    "lint-staged": "9.4.2",
     "mermaid.cli": "0.5.1",
     "prettier": "1.17.0",
     "ts-jest": "24.0.2",

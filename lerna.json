@@ -14,5 +14,6 @@
       "exact": false,
       "npmClient": "yarn"
     }
-  }
+  },
+  "packages": ["packages/*"]
 }

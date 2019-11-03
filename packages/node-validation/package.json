@@ -25,12 +25,12 @@
   ],
   "devDependencies": {
     "@types/joi": "14.3.2",
-    "@types/lodash": "4.14.123",
+    "@types/lodash": "4.14.144",
     "@types/moment-timezone": "0.5.12"
   },
   "dependencies": {
     "joi": "14.3.1",
-    "lodash": "4.17.11",
+    "lodash": "4.17.15",
     "moment-timezone": "0.5.23"
   }
 }

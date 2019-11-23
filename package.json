@@ -18,7 +18,7 @@
     "build": "lerna run build",
     "lerna:publish": "lerna publish from-git",
     "lerna:version": "lerna version --message \"chore(release): publish\"",
-    "release": "yarn lint && yarn test && yarn build && yarn lerna:version && yarn lerna:publish",
+    "release": "git pull && git push && yarn lint && yarn test && yarn build && yarn lerna:version && yarn lerna:publish",
     "cz": "git-cz",
     "cz:retry": "git-cz --retry",
     "script": "ts-node",

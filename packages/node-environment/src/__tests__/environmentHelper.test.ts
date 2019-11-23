@@ -4,6 +4,7 @@ import {
   getVariableAsInteger,
   isVariableEnabled,
   loadConfigFile,
+  loadConfigForEnvironment,
   loadConfigObject,
   setVariable
 } from '../environmentHelper';
@@ -208,6 +209,27 @@ describe('environmentHelper', () => {
       const result = loadConfigObject(data, true);
       expect(result).toEqual(true);
       expect(process.env.exampleVar).toEqual('newValue');
+    });
+  });
+
+  describe('#loadConfigForEnvironment', () => {
+    afterEach(async () => {
+      delete process.env.exampleVar;
+      delete process.env.extraVar;
+      process.env.EXECUTION_ENVIRONMENT = 'local-test';
+    });
+
+    it('load base config correctly', async () => {
+      delete process.env.EXECUTION_ENVIRONMENT;
+      await loadConfigForEnvironment();
+      expect(process.env.exampleVar).toEqual('baseValue');
+    });
+
+    it('load base extra config correctly', async () => {
+      process.env.EXECUTION_ENVIRONMENT = 'local-test';
+      await loadConfigForEnvironment();
+      expect(process.env.exampleVar).toEqual('test-value');
+      expect(process.env.extraVar).toEqual('extra-value');
     });
   });
 });

@@ -1,6 +1,7 @@
 import { InternalServerError } from '@link1900/node-error';
 import { logger } from '@link1900/node-logger';
 import { readJsonFileFromDisk } from '@link1900/node-util';
+import * as path from 'path';
 
 export function findVariable(key: string): string | undefined {
   return process.env[key];
@@ -60,4 +61,16 @@ export function loadConfigObject(configToLoad: object, override: boolean = false
     setVariable(key, configToLoad[key], !override);
   });
   return true;
+}
+
+export async function loadConfigForEnvironment() {
+  const executionEnvironment = findVariable('EXECUTION_ENVIRONMENT');
+  if (executionEnvironment) {
+    logger.info(`Loading environment variables for ${executionEnvironment}`);
+    const configFilePath = path.join(__dirname, 'config', `${executionEnvironment}.env.json`);
+    await loadConfigFile(configFilePath);
+  } else {
+    logger.info('No environment was set for EXECUTION_ENVIRONMENT');
+  }
+  await loadConfigFile(path.join(__dirname, 'config', 'env.json'));
 }

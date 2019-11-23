@@ -219,15 +219,17 @@ describe('environmentHelper', () => {
       process.env.EXECUTION_ENVIRONMENT = 'local-test';
     });
 
+    const testConfigPath = path.join(__dirname, '..', 'config');
+
     it('load base config correctly', async () => {
       delete process.env.EXECUTION_ENVIRONMENT;
-      await loadConfigForEnvironment();
+      await loadConfigForEnvironment(testConfigPath);
       expect(process.env.exampleVar).toEqual('baseValue');
     });
 
     it('load base extra config correctly', async () => {
       process.env.EXECUTION_ENVIRONMENT = 'local-test';
-      await loadConfigForEnvironment();
+      await loadConfigForEnvironment(testConfigPath);
       expect(process.env.exampleVar).toEqual('test-value');
       expect(process.env.extraVar).toEqual('extra-value');
     });

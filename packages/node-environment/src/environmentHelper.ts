@@ -63,14 +63,14 @@ export function loadConfigObject(configToLoad: object, override: boolean = false
   return true;
 }
 
-export async function loadConfigForEnvironment() {
+export async function loadConfigForEnvironment(configPath: string) {
   const executionEnvironment = findVariable('EXECUTION_ENVIRONMENT');
   if (executionEnvironment) {
     logger.info(`Loading environment variables for ${executionEnvironment}`);
-    const configFilePath = path.join(__dirname, 'config', `${executionEnvironment}.env.json`);
+    const configFilePath = path.join(configPath, `${executionEnvironment}.env.json`);
     await loadConfigFile(configFilePath);
   } else {
     logger.info('No environment was set for EXECUTION_ENVIRONMENT');
   }
-  await loadConfigFile(path.join(__dirname, 'config', 'env.json'));
+  await loadConfigFile(path.join(configPath, 'env.json'));
 }

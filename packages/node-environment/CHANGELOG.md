@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+
+# 0.2.0 (2019-11-23)
+
+### Features
+
+- **node-environment:** Added loadConfigForEnvironment ([be2985f](https://github.com/projects/link1900/repos/link1900/commits/be2985f))
+
 <a name="0.1.6"></a>
 
 ## [0.1.6](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-environment@0.1.5&sourceBranch=refs%2Ftags%2F@link1900/node-environment@0.1.6) (2019-04-21)

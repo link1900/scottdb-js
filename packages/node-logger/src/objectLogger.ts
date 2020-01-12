@@ -7,17 +7,20 @@ export type LogOptions = {
   name?: string;
   enabled?: boolean;
   level?: LogTypes;
+  context?: Object;
 };
 
 export class ObjectLogger {
   public innerLogger: Logger;
   public enabled: boolean;
+  public context: Object | undefined;
 
   constructor(options: LogOptions = {}) {
-    const { enabled = true, name = 'default', level = 'info' } = options;
+    const { enabled = true, name = 'default', level = 'info', context = undefined } = options;
     this.innerLogger = log.getLogger(name);
     this.innerLogger.setLevel(level, false);
     this.enabled = enabled;
+    this.context = context;
   }
 
   public formatMessage(level: string, message: string, meta?: object): string {
@@ -58,10 +61,17 @@ export class ObjectLogger {
   }
 
   public log(level: LogTypes, message: string, meta?: object): string | undefined {
+    let messageMeta = {};
     if (!this.enabled) {
       return undefined;
     }
-    const logMessage = this.formatMessage(level, message, meta);
+    if (this.context !== undefined) {
+      messageMeta = {
+        ...meta,
+        ...this.context
+      };
+    }
+    const logMessage = this.formatMessage(level, message, messageMeta);
     this.innerLogger[level](logMessage);
     return logMessage;
   }
@@ -85,5 +95,12 @@ export class ObjectLogger {
 
   set level(level: LogTypes) {
     this.innerLogger.setLevel(level, false);
+  }
+
+  public updateContext(context: Object) {
+    this.context = {
+      ...this.context,
+      ...context
+    };
   }
 }

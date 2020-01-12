@@ -166,4 +166,30 @@ describe('ObjectLogger', () => {
     logger.innerLogger.setLevel('silent');
     expect(logger.level).toEqual('info');
   });
+
+  it('logs context correctly', () => {
+    const logger = new ObjectLogger({ context: { extraContext: 'data1' } });
+    const mock = jest.spyOn(logger, 'info');
+    const logResult = logger.info('info message', { extra: 'data2' });
+    const result = JSON.parse(logResult!);
+    expect(result.level).toEqual('info');
+    expect(result.message).toEqual('info message');
+    expect(result.extra).toEqual('data2');
+    expect(result.extraContext).toEqual('data1');
+    expect(mock).toHaveBeenCalled();
+  });
+
+  it('logs context correctly after update', () => {
+    const logger = new ObjectLogger({ context: { extraContext: 'data1' } });
+    logger.updateContext({ moreContext: 'data3' });
+    const mock = jest.spyOn(logger, 'info');
+    const logResult = logger.info('info message', { extra: 'data2' });
+    const result = JSON.parse(logResult!);
+    expect(result.level).toEqual('info');
+    expect(result.message).toEqual('info message');
+    expect(result.extra).toEqual('data2');
+    expect(result.extraContext).toEqual('data1');
+    expect(result.moreContext).toEqual('data3');
+    expect(mock).toHaveBeenCalled();
+  });
 });

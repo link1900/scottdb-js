@@ -25,9 +25,9 @@ describe('ObjectLogger', () => {
     const mock = jest.spyOn(logger, 'info');
     const logResult = logger.info('info message', { extra: 'data' });
     const result = JSON.parse(logResult!);
-    expect(result && result.level).toEqual('info');
-    expect(result && result.message).toEqual('info message');
-    expect(result && result.extra).toEqual('data');
+    expect(result.level).toEqual('info');
+    expect(result.message).toEqual('info message');
+    expect(result.extra).toEqual('data');
     expect(mock).toHaveBeenCalled();
   });
 

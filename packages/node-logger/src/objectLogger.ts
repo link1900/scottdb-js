@@ -61,15 +61,14 @@ export class ObjectLogger {
   }
 
   public log(level: LogTypes, message: string, meta?: object): string | undefined {
-    let messageMeta = {};
+    const messageMeta = this.context
+      ? {
+          ...meta,
+          ...this.context
+        }
+      : meta;
     if (!this.enabled) {
       return undefined;
-    }
-    if (this.context !== undefined) {
-      messageMeta = {
-        ...meta,
-        ...this.context
-      };
     }
     const logMessage = this.formatMessage(level, message, messageMeta);
     this.innerLogger[level](logMessage);

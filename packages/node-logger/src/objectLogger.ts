@@ -1,7 +1,7 @@
 import * as log from 'loglevel';
 import { Logger } from 'loglevel';
 
-export type LogTypes = 'trace' | 'debug' | 'info' | 'warn' | 'error';
+export type LogTypes = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'silent';
 
 export type LogOptions = {
   name?: string;

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+
+# [0.3.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.2.0&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.3.0) (2020-07-14)
+
+### Features
+
+- **node-logger:** Added silent log level ([d863dd2](https://github.com/projects/link1900/repos/link1900/commits/d863dd2))
+
 <a name="0.2.0"></a>
 
 # [0.2.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.1.2&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.2.0) (2020-01-12)

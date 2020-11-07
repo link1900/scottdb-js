@@ -6,5 +6,6 @@ export * from './InternalServerError';
 export * from './InvalidFieldReason';
 export * from './NotFoundError';
 export * from './ServerError';
-export * from './UserInputError';
 export * from './TimeoutError';
+export * from './UnauthorizedError';
+export * from './UserInputError';

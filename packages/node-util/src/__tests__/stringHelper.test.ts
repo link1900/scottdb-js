@@ -1,5 +1,5 @@
 import {
-  anyToString,
+  anyToObjectString,
   arrayToString,
   base64Decode,
   base64Encode,
@@ -10,7 +10,7 @@ import {
   getHashForString,
   isString,
   serializeToString,
-  stringToAny,
+  objectStringToObject,
   unzipStringToString,
   zipStringToString
 } from '../stringHelper';
@@ -137,9 +137,9 @@ describe('stringHelper', () => {
 
     inputs.forEach(input => {
       it(`converts value ${input.value} to string ${input.expected}`, () => {
-        const stringResult = anyToString(input.value);
+        const stringResult = anyToObjectString(input.value);
         expect(stringResult).toEqual(input.expected);
-        expect(stringToAny(stringResult)).toEqual(input.value);
+        expect(objectStringToObject(stringResult)).toEqual(input.value);
       });
     });
   });
@@ -152,7 +152,7 @@ describe('stringHelper', () => {
 
     inputs.forEach(input => {
       it(`converts value ${input.value} to object ${input.expected}`, () => {
-        const objectResult = stringToAny(input.value);
+        const objectResult = objectStringToObject(input.value);
         expect(objectResult).toEqual(input.expected);
       });
     });

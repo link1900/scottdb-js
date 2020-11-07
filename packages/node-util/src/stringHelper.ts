@@ -47,16 +47,16 @@ export function getHashForString(string: string): string {
 }
 
 export function getHash(something: any): string {
-  return getHashForString(anyToString(something));
+  return getHashForString(anyToObjectString(something));
 }
 
-export function anyToString(value: any): string {
+export function anyToObjectString(value: any): string {
   return JSON.stringify({
     value
   });
 }
 
-export function stringToAny(string: string): any {
+export function objectStringToObject(string: string): any {
   try {
     const result = JSON.parse(string);
     if (result === undefined || result === null || result.value === undefined) {
@@ -95,7 +95,7 @@ export async function unzipStringToString(zipString: string): Promise<string> {
 }
 
 export async function serializeToString(something: any): Promise<string> {
-  return zipStringToString(anyToString(something));
+  return zipStringToString(anyToObjectString(something));
 }
 
 export async function deserializeFromString(string: string): Promise<any> {
@@ -103,7 +103,7 @@ export async function deserializeFromString(string: string): Promise<any> {
     return undefined;
   }
   const unzippedString = await unzipStringToString(string);
-  return stringToAny(unzippedString);
+  return objectStringToObject(unzippedString);
 }
 
 export function formatBytes(bytes: number): string {

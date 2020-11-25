@@ -8,7 +8,8 @@ import {
   objectToJsonObject,
   jsonObjectToObject,
   serializeObjectToString,
-  deserializeStringToObject
+  deserializeStringToObject,
+  isPresent
 } from '../objectHelper';
 
 describe('objectHelper', () => {
@@ -177,6 +178,15 @@ describe('objectHelper', () => {
       expect(result).toBeTruthy();
       const parseResult: object = deserializeStringToObject(result);
       expect(parseResult).toEqual(toReplace);
+    });
+  });
+
+  describe('#isPresent', () => {
+    it('returns false when the value is nil', () => {
+      expect(isPresent(undefined)).toEqual(false);
+    });
+    it('returns false when the value is nil', () => {
+      expect(isPresent('some')).toEqual(true);
     });
   });
 });

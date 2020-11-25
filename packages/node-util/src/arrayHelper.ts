@@ -1,3 +1,5 @@
+import { isPresent } from './objectHelper';
+
 export function generateArray<T>(amount: number, generateFunction: (index: number) => T): T[] {
   return Array.from({ length: amount }, (v, i) => generateFunction(i));
 }
@@ -14,4 +16,8 @@ export function groupArray<T>(items: T[]) {
       return groups;
     }
   }, []);
+}
+
+export function removeNils<T>(values: Array<T | undefined | null | void>): T[] {
+  return values.filter(isPresent);
 }

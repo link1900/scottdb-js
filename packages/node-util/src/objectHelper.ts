@@ -21,6 +21,10 @@ export function exists<T>(value?: T): boolean {
   return !(value === null || value === undefined);
 }
 
+export function isPresent<T>(t: T | undefined | null | void): t is T {
+  return t !== undefined && t !== null;
+}
+
 const jsonToStringRules: ReplacementRule[] = [
   {
     valueType: 'date',

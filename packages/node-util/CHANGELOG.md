@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+
+# [0.3.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.2.3&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.3.0) (2020-11-25)
+
+### Features
+
+- **node-util:** Added isPresent and removeNil helpers ([067b0c7](https://github.com/projects/link1900/repos/link1900/commits/067b0c7))
+
 <a name="0.2.3"></a>
 
 ## [0.2.3](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.2.2&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.2.3) (2020-11-07)

@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-util",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Node util",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

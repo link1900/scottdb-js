@@ -1,3 +1,4 @@
+import prettyMilliseconds from 'pretty-ms';
 export type TimeMark = [number, number];
 
 export function getBenchmarkStartTime(): TimeMark {
@@ -11,7 +12,15 @@ export function getBenchmarkEndTimeParts(hrstart: TimeMark) {
   return { seconds, milliseconds };
 }
 
-export function getBenchmarkEndTime(startTime: TimeMark) {
+export function getBenchmarkEndTimeMilliseconds(startTime: TimeMark) {
   const { seconds, milliseconds } = getBenchmarkEndTimeParts(startTime);
   return seconds * 1000 + Math.round(milliseconds);
+}
+
+export function getBenchmarkEndTimeString(startTime: TimeMark) {
+  return convertMillisecondsToString(getBenchmarkEndTimeMilliseconds(startTime));
+}
+
+export function convertMillisecondsToString(milliseconds: number): string {
+  return prettyMilliseconds(milliseconds);
 }

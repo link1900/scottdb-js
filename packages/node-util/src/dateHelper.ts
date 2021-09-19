@@ -1,4 +1,4 @@
-import prettyMilliseconds from 'pretty-ms';
+import prettyMilliseconds from "pretty-ms";
 export type TimeMark = [number, number];
 
 export function getBenchmarkStartTime(): TimeMark {

@@ -1,7 +1,7 @@
-import { ErrorCode } from './ErrorCode';
-import { ServerError } from './ServerError';
-import { HttpStatusCode } from './HttpStatusCode';
-import { InvalidFieldReason } from './InvalidFieldReason';
+import { ErrorCode } from "./ErrorCode";
+import { ServerError } from "./ServerError";
+import { HttpStatusCode } from "./HttpStatusCode";
+import { InvalidFieldReason } from "./InvalidFieldReason";
 
 export class UserInputError extends ServerError {
   public invalidField: string;

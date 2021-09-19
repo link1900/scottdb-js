@@ -1,5 +1,5 @@
-import { isValidString } from '@link1900/node-validation';
-import { PhoneNumberUtil, PhoneNumberType } from 'google-libphonenumber';
+import { isValidString } from "@link1900/node-validation";
+import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
 
 /**
  * Takes a phone number and does analysis it to determine if it is a mobile or national number.
@@ -8,27 +8,27 @@ export function categorizePhoneNumber(phone?: string, isoCountryCode?: string): 
   if (!phone || !isValidString(phone, { min: 1, max: 50 })) {
     return {
       mobile: undefined,
-      phone: undefined
+      phone: undefined,
     };
   }
 
   if (!isoCountryCode) {
     return {
       mobile: undefined,
-      phone
+      phone,
     };
   }
 
   if (isNumberMobileType(phone, isoCountryCode)) {
     return {
       mobile: phone,
-      phone: undefined
+      phone: undefined,
     };
   }
 
   return {
     mobile: undefined,
-    phone
+    phone,
   };
 }
 

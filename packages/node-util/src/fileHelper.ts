@@ -1,6 +1,6 @@
-import fs, { WriteFileOptions } from 'fs';
-import path from 'path';
-import { stringToObject } from './objectHelper';
+import fs, { WriteFileOptions } from "fs";
+import path from "path";
+import { stringToObject } from "./objectHelper";
 
 export async function readFileFromDisk(filePath: string): Promise<string> {
   return new Promise<string>((resolve, reject) => {
@@ -20,7 +20,7 @@ export async function writeFileToDisk(
   options: WriteFileOptions = {}
 ): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    fs.writeFile(filePath, data, options, err => {
+    fs.writeFile(filePath, data, options, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -32,7 +32,7 @@ export async function writeFileToDisk(
 
 export async function createDirectoryOnDisk(filePath: string): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    fs.mkdir(filePath, err => {
+    fs.mkdir(filePath, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -49,7 +49,7 @@ export async function readJsonFileFromDisk(filePath: string): Promise<object> {
 
 export async function deleteFileFromDisk(filePath: string): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    fs.unlink(filePath, err => {
+    fs.unlink(filePath, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -89,7 +89,7 @@ export async function doesPathExist(filePath: string): Promise<boolean> {
 
 export async function deleteFolderFromDisk(filePath: string): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
-    fs.rmdir(filePath, err => {
+    fs.rmdir(filePath, (err) => {
       if (err) {
         reject(err);
       } else {

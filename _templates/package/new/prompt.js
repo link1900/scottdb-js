@@ -3,8 +3,8 @@
 //
 module.exports = [
   {
-    type: 'input',
-    name: 'name',
-    message: 'What the package name?'
-  }
+    type: "input",
+    name: "name",
+    message: "What the package name?",
+  },
 ];

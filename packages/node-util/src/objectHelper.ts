@@ -1,7 +1,7 @@
-import { InternalServerError } from '@link1900/node-error';
-import { isObject, isString, isDate, isNumber, isArray } from 'lodash';
+import { InternalServerError } from "@link1900/node-error";
+import { isObject, isString, isDate, isNumber, isArray } from "lodash";
 
-export type ReplacementValueType = 'string' | 'number' | 'date';
+export type ReplacementValueType = "string" | "number" | "date";
 
 export type ReplacementRule = {
   keyRegex?: RegExp;
@@ -12,7 +12,7 @@ export type ReplacementRule = {
 
 export function unwrap<T>(value: T | undefined | null): T {
   if (value === null || value === undefined) {
-    throw new InternalServerError('Attempted to unwrap value but was null or undefined');
+    throw new InternalServerError("Attempted to unwrap value but was null or undefined");
   }
   return value;
 }
@@ -27,22 +27,22 @@ export function isPresent<T>(t: T | undefined | null | void): t is T {
 
 const jsonToStringRules: ReplacementRule[] = [
   {
-    valueType: 'date',
-    mapping: (date: Date) => `___date___${date.toISOString()}`
-  }
+    valueType: "date",
+    mapping: (date: Date) => `___date___${date.toISOString()}`,
+  },
 ];
 
 const jsonParseRules: ReplacementRule[] = [
   {
     valueRegex: /___date___/,
-    mapping: (value: string) => new Date(value.replace('___date___', ''))
-  }
+    mapping: (value: string) => new Date(value.replace("___date___", "")),
+  },
 ];
 
 export function walkObjectAndReplace(object: object, replacementRules: ReplacementRule[]): object {
   let result = {};
   const objectKeys = Object.keys(object);
-  objectKeys.forEach(objectKey => {
+  objectKeys.forEach((objectKey) => {
     const objectValue = object[objectKey];
     result[objectKey] = replaceField(objectKey, objectValue, replacementRules, object);
   });
@@ -86,11 +86,11 @@ export function evaluateReplacementRule(
 
   if (valueType) {
     switch (valueType) {
-      case 'date':
+      case "date":
         return isDate(objectValue);
-      case 'number':
+      case "number":
         return isNumber(objectValue);
-      case 'string':
+      case "string":
         return isString(objectValue);
     }
   }
@@ -108,7 +108,7 @@ export function jsonObjectToObject(val: object): object {
 
 export function objectToString(object: object): string {
   if (!isObject(object)) {
-    return '';
+    return "";
   }
 
   return JSON.stringify(object);

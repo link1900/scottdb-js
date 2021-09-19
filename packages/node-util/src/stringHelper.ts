@@ -1,49 +1,46 @@
-import { isArray, isString, isEmpty } from 'lodash';
-import zlib from 'zlib';
-import crypto from 'crypto';
-import prettyBytes from 'pretty-bytes';
+import { isArray, isString, isEmpty } from "lodash";
+import zlib from "zlib";
+import crypto from "crypto";
+import prettyBytes from "pretty-bytes";
 
 export { isString };
 
-export function arrayToString(fields: Array<string | null | undefined> = [], separator: string = ' '): string {
+export function arrayToString(fields: Array<string | null | undefined> = [], separator: string = " "): string {
   if (!isArray(fields)) {
-    return '';
+    return "";
   }
   return fields
-    .filter(x => isString(x))
-    .map(field => field && field.trim())
-    .filter(x => !isEmpty(x))
+    .filter((x) => isString(x))
+    .map((field) => field && field.trim())
+    .filter((x) => !isEmpty(x))
     .join(separator)
     .trim();
 }
 
 export function filterForOnlyLetters(value?: string, regex: string | RegExp = /[^a-zA-Z\s]/g): string {
   if (!value) {
-    return '';
+    return "";
   }
 
-  return value.replace(regex, '');
+  return value.replace(regex, "");
 }
 
 export function base64Encode(text?: string): string {
   if (!isString(text)) {
-    return '';
+    return "";
   }
-  return Buffer.from(text, 'ascii').toString('base64');
+  return Buffer.from(text, "ascii").toString("base64");
 }
 
 export function base64Decode(text?: string): string {
   if (!isString(text)) {
-    return '';
+    return "";
   }
-  return Buffer.from(text, 'base64').toString('ascii');
+  return Buffer.from(text, "base64").toString("ascii");
 }
 
 export function getHashForString(string: string): string {
-  return crypto
-    .createHash('sha1')
-    .update(string)
-    .digest('base64');
+  return crypto.createHash("sha1").update(string).digest("base64");
 }
 
 export function getHash(something: any): string {
@@ -52,7 +49,7 @@ export function getHash(something: any): string {
 
 export function anyToObjectString(value: any): string {
   return JSON.stringify({
-    value
+    value,
   });
 }
 
@@ -75,7 +72,7 @@ export async function zipStringToString(string: string): Promise<string> {
         reject(err);
         return undefined;
       }
-      resolve(buffer.toString('base64'));
+      resolve(buffer.toString("base64"));
       return undefined;
     });
   });
@@ -83,7 +80,7 @@ export async function zipStringToString(string: string): Promise<string> {
 
 export async function unzipStringToString(zipString: string): Promise<string> {
   return new Promise<string>((resolve, reject) => {
-    zlib.gunzip(Buffer.from(zipString, 'base64'), (err, buffer) => {
+    zlib.gunzip(Buffer.from(zipString, "base64"), (err, buffer) => {
       if (err) {
         reject(err);
         return undefined;

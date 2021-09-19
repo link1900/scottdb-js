@@ -1,7 +1,7 @@
-import * as log from 'loglevel';
-import { Logger } from 'loglevel';
+import * as log from "loglevel";
+import { Logger } from "loglevel";
 
-export type LogTypes = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'silent';
+export type LogTypes = "trace" | "debug" | "info" | "warn" | "error" | "silent";
 
 export type LogOptions = {
   name?: string;
@@ -16,7 +16,7 @@ export class ObjectLogger {
   public context: Object | undefined;
 
   constructor(options: LogOptions = {}) {
-    const { enabled = true, name = 'default', level = 'info', context = undefined } = options;
+    const { enabled = true, name = "default", level = "info", context = undefined } = options;
     this.innerLogger = log.getLogger(name);
     this.innerLogger.setLevel(level, false);
     this.enabled = enabled;
@@ -28,24 +28,24 @@ export class ObjectLogger {
       level,
       message,
       timestamp: new Date().toISOString(),
-      ...meta
+      ...meta,
     });
   }
 
   public trace(message: string, meta?: object): string | undefined {
-    return this.log('trace', message, meta);
+    return this.log("trace", message, meta);
   }
 
   public debug(message: string, meta?: object) {
-    return this.log('debug', message, meta);
+    return this.log("debug", message, meta);
   }
 
   public info(message: string, meta?: object) {
-    return this.log('info', message, meta);
+    return this.log("info", message, meta);
   }
 
   public warn(message: string, meta?: object) {
-    return this.log('warn', message, meta);
+    return this.log("warn", message, meta);
   }
 
   public error(message: string, error?: Error, meta: any = {}) {
@@ -54,17 +54,17 @@ export class ObjectLogger {
         type: error.name,
         message: error.message,
         stacktrace: error.stack,
-        ...error
+        ...error,
       };
     }
-    return this.log('error', message, meta);
+    return this.log("error", message, meta);
   }
 
   public log(level: LogTypes, message: string, meta?: object): string | undefined {
     const messageMeta = this.context
       ? {
           ...meta,
-          ...this.context
+          ...this.context,
         }
       : meta;
     if (!this.enabled) {
@@ -78,17 +78,17 @@ export class ObjectLogger {
   get level(): LogTypes {
     switch (this.innerLogger.getLevel()) {
       case log.levels.TRACE:
-        return 'trace';
+        return "trace";
       case log.levels.DEBUG:
-        return 'debug';
+        return "debug";
       case log.levels.INFO:
-        return 'info';
+        return "info";
       case log.levels.WARN:
-        return 'warn';
+        return "warn";
       case log.levels.ERROR:
-        return 'error';
+        return "error";
       case log.levels.SILENT:
-        return 'info';
+        return "info";
     }
   }
 
@@ -99,7 +99,7 @@ export class ObjectLogger {
   public updateContext(context: Object) {
     this.context = {
       ...this.context,
-      ...context
+      ...context,
     };
   }
 }

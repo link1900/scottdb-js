@@ -1,5 +1,5 @@
-import BlueBird from 'bluebird';
-import { TimeoutError } from '@link1900/node-error';
+import BlueBird from "bluebird";
+import { TimeoutError } from "@link1900/node-error";
 
 export interface BasicMapPromiseOptions {
   concurrency?: number;
@@ -24,7 +24,7 @@ export interface MapPromiseOptions extends BasicMapPromiseOptions {
 export async function promiseEvery<T, R>(items: T[], func: (item: T) => Promise<R>, options?: MapPromiseOptions) {
   const resultGroups = await promiseEveryGrouped(items, func, options);
   if (resultGroups.invalid.length > 0 && options && options.actionOnFailure) {
-    resultGroups.invalid.forEach(invalidItem => {
+    resultGroups.invalid.forEach((invalidItem) => {
       if (options.actionOnFailure) {
         return options.actionOnFailure(invalidItem.value, invalidItem.item);
       }
@@ -40,8 +40,10 @@ export async function promiseEveryGrouped<T, R>(
 ): Promise<GroupedPromises<R>> {
   const wrappedPromises = await promiseEveryWrapped(items, func, options);
   return {
-    valid: wrappedPromises.filter(result => result.state).map(result => result.value),
-    invalid: wrappedPromises.filter(result => !result.state).map(result => ({ value: result.value, item: result.item }))
+    valid: wrappedPromises.filter((result) => result.state).map((result) => result.value),
+    invalid: wrappedPromises
+      .filter((result) => !result.state)
+      .map((result) => ({ value: result.value, item: result.item })),
   };
 }
 
@@ -55,12 +57,12 @@ export async function promiseEveryWrapped<T, R>(
 
   return BlueBird.map(
     items,
-    async item => {
+    async (item) => {
       try {
         return {
           state: true,
           value: await delayPromise(func(item), delayInMilliseconds),
-          item
+          item,
         };
       } catch (error) {
         return { state: false, value: error, item };

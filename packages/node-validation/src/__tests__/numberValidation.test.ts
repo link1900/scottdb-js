@@ -1,9 +1,9 @@
-import { isValidNumber } from '../numberValidation';
+import { isValidNumber } from "../numberValidation";
 
-describe('#isValidNumber', () => {
+describe("#isValidNumber", () => {
   const testCases = [
     { value: 5, expectedResult: true },
-    { value: '', expectedResult: false },
+    { value: "", expectedResult: false },
     { value: {}, expectedResult: false },
     { value: [], expectedResult: false },
     { value: null, expectedResult: false },
@@ -24,12 +24,12 @@ describe('#isValidNumber', () => {
     { value: 9, options: { min: 5, max: 8 }, expectedResult: false },
 
     { value: 9, options: { isOnly: [5] }, expectedResult: false },
-    { value: 9, options: { isOnly: [9] }, expectedResult: true }
+    { value: 9, options: { isOnly: [9] }, expectedResult: true },
   ];
 
-  testCases.forEach(testcase => {
+  testCases.forEach((testcase) => {
     it(`finds number value of '${testcase.value}' to be ${
-      testcase.expectedResult ? 'valid' : 'invalid'
+      testcase.expectedResult ? "valid" : "invalid"
     } for options ${JSON.stringify(testcase.options)}`, () => {
       expect(isValidNumber(testcase.value, testcase.options)).toEqual(testcase.expectedResult);
     });

@@ -1,5 +1,5 @@
-import joi from 'joi';
-import { isNumber } from 'lodash';
+import joi from "joi";
+import { isNumber } from "lodash";
 
 export { isNumber };
 
@@ -28,13 +28,7 @@ export function isValidNumber(value?: any, options?: NumberValidationOptions) {
 
   if (max) {
     try {
-      joi.assert(
-        value,
-        joi
-          .number()
-          .optional()
-          .max(max)
-      );
+      joi.assert(value, joi.number().optional().max(max));
     } catch (error) {
       return false;
     }

@@ -1,5 +1,5 @@
-import joi from 'joi';
-import { isString } from './stringValidation';
+import joi from "joi";
+import { isString } from "./stringValidation";
 
 export function isUri(string: string) {
   if (!isString(string)) {

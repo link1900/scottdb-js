@@ -1,5 +1,5 @@
-import { ErrorCode } from './ErrorCode';
-import { HttpStatusCode } from './HttpStatusCode';
+import { ErrorCode } from "./ErrorCode";
+import { HttpStatusCode } from "./HttpStatusCode";
 
 export class ServerError extends Error {
   public code: ErrorCode;

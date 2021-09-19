@@ -1,6 +1,6 @@
-import joi from 'joi';
-import moment from 'moment-timezone';
-import { isString } from './stringValidation';
+import joi from "joi";
+import moment from "moment-timezone";
+import { isString } from "./stringValidation";
 
 export function isFutureDate(date?: Date) {
   if (!date) {

@@ -1,1 +1,1 @@
-export * from './environmentHelper';
+export * from "./environmentHelper";

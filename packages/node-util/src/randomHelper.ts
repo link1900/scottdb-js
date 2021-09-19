@@ -1,9 +1,9 @@
-import { generateArray } from './arrayHelper';
+import { generateArray } from "./arrayHelper";
 
-export const NUMBERS = '0123456789';
-export const CHARS_LOWER = 'abcdefghijklmnopqrstuvwxyz';
+export const NUMBERS = "0123456789";
+export const CHARS_LOWER = "abcdefghijklmnopqrstuvwxyz";
 export const CHARS_UPPER = CHARS_LOWER.toUpperCase();
-export const SYMBOLS = '!@#$%^&*()[]';
+export const SYMBOLS = "!@#$%^&*()[]";
 export const ALL_CHARACTERS = NUMBERS + CHARS_LOWER + CHARS_UPPER + SYMBOLS;
 
 export function randomInteger(min: number = Number.MIN_SAFE_INTEGER, max: number = Number.MAX_SAFE_INTEGER): number {
@@ -27,5 +27,5 @@ export function randomCharacter(characterString: string = ALL_CHARACTERS) {
 }
 
 export function randomString(length: number, characterString: string = ALL_CHARACTERS) {
-  return generateArray(length, () => randomCharacter(characterString)).join('');
+  return generateArray(length, () => randomCharacter(characterString)).join("");
 }

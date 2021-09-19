@@ -1,4 +1,4 @@
-import { isString } from './stringValidation';
+import { isString } from "./stringValidation";
 
 export function isPhone(value?: string) {
   if (!isString(value)) {

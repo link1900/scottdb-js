@@ -4,12 +4,12 @@ export function runScript(scriptFunction: () => Promise<any>) {
       .then(() => {
         process.exit(0);
       })
-      .catch(err => {
+      .catch((err) => {
         process.exit(1);
       });
   });
 }
 
 async function scriptSetup() {
-  process.env.EXECUTION_ENVIRONMENT = 'local-dev';
+  process.env.EXECUTION_ENVIRONMENT = "local-dev";
 }

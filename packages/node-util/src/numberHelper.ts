@@ -1,5 +1,5 @@
-import Decimal from 'decimal.js';
-import { isFinite, isNumber, isString } from 'lodash';
+import Decimal from "decimal.js";
+import { isFinite, isNumber, isString } from "lodash";
 export { isNumber };
 
 /**
@@ -12,7 +12,7 @@ export function findClosestNumber(items: number[], goal: number): number {
     return 0;
   }
   const target = new Decimal(goal);
-  const safeItems: Decimal[] = items.map(i => new Decimal(i));
+  const safeItems: Decimal[] = items.map((i) => new Decimal(i));
   return safeItems
     .reduce((prev, curr) => {
       const currentDiff = curr.minus(target).abs();
@@ -47,7 +47,7 @@ export function inRange(value: number, start: number, end: number): boolean {
 }
 
 export function inRanges(value: number, ranges: Array<{ start: number; end: number }>): boolean {
-  return ranges.some(range => inRange(value, range.start, range.end));
+  return ranges.some((range) => inRange(value, range.start, range.end));
 }
 
 export function generateNumberRange(start: number, end: number, step: number = 1): number[] {

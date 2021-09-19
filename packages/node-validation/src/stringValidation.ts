@@ -1,5 +1,5 @@
-import joi from 'joi';
-import { isString } from 'lodash';
+import joi from "joi";
+import { isString } from "lodash";
 
 export { isString };
 
@@ -28,14 +28,7 @@ export function isValidString(value?: string, options?: StringValidationOptions)
 
   if (max) {
     try {
-      joi.assert(
-        value,
-        joi
-          .string()
-          .optional()
-          .empty('')
-          .max(max)
-      );
+      joi.assert(value, joi.string().optional().empty("").max(max));
     } catch (error) {
       return false;
     }

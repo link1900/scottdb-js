@@ -1,7 +1,7 @@
-import { InternalServerError } from '@link1900/node-error';
-import { logger } from '@link1900/node-logger';
-import { readJsonFileFromDisk } from '@link1900/node-util';
-import * as path from 'path';
+import { InternalServerError } from "@link1900/node-error";
+import { logger } from "@link1900/node-logger";
+import { readJsonFileFromDisk } from "@link1900/node-util";
+import * as path from "path";
 
 export function findVariable(key: string): string | undefined {
   return process.env[key];
@@ -30,7 +30,7 @@ export function getVariableAsInteger(key: string): number {
 export function isVariableEnabled(key: string): boolean {
   try {
     const result = getVariable(key);
-    return result.trim().toLowerCase() === 'true';
+    return result.trim().toLowerCase() === "true";
   } catch (err) {
     return false;
   }
@@ -57,20 +57,20 @@ export async function loadConfigFile(filePath: string, override: boolean = false
 }
 
 export function loadConfigObject(configToLoad: object, override: boolean = false): boolean {
-  Object.keys(configToLoad).forEach(key => {
+  Object.keys(configToLoad).forEach((key) => {
     setVariable(key, configToLoad[key], !override);
   });
   return true;
 }
 
 export async function loadConfigForEnvironment(configPath: string) {
-  const executionEnvironment = findVariable('EXECUTION_ENVIRONMENT');
+  const executionEnvironment = findVariable("EXECUTION_ENVIRONMENT");
   if (executionEnvironment) {
     logger.info(`Loading environment variables for ${executionEnvironment}`);
     const configFilePath = path.join(configPath, `${executionEnvironment}.env.json`);
     await loadConfigFile(configFilePath);
   } else {
-    logger.info('No environment was set for EXECUTION_ENVIRONMENT');
+    logger.info("No environment was set for EXECUTION_ENVIRONMENT");
   }
-  await loadConfigFile(path.join(configPath, 'env.json'));
+  await loadConfigFile(path.join(configPath, "env.json"));
 }

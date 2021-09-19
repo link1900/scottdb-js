@@ -1,6 +1,6 @@
-import cls, { Namespace } from 'cls-hooked';
+import cls, { Namespace } from "cls-hooked";
 
-export const DEFAULT_CONTEXT_NAMESPACE_ID = 'request-context';
+export const DEFAULT_CONTEXT_NAMESPACE_ID = "request-context";
 
 /**
  * Get (or create if it doesn't exist) the CLS namespace

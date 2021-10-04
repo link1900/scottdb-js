@@ -25,6 +25,21 @@ commands:
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+  setup_npm:
+    steps:
+      - run:
+          name: Setup npm auth token
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+  version_bump:
+    steps:
+      - run:
+          name: Bump package versions
+          command: yarn lerna:version
+  publish_to_npm:
+    steps:
+      - run:
+          name: "Publish to npm via lerna"
+          command: yarn lerna:publish
   setup_cmd:
     steps:
       - checkout
@@ -35,6 +50,11 @@ commands:
     steps:
       - run:
           command: yarn validate
+  publish_cmd:
+    steps:
+      - setup_npm
+      - version_bump
+      - publish_to_npm
 jobs:
   test:
     executor: default
@@ -46,14 +66,12 @@ jobs:
     steps:
       - setup_cmd
       - test_cmd
-#      - publish_cmd
+      - publish_cmd
 
 workflows:
   build:
     jobs:
       - test:
-          context:
-            - scottdb
           filters:
             branches:
               ignore: master

@@ -1,0 +1,65 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.1.0
+executors:
+  default:
+    docker:
+      - image: cimg/node:16.10.0
+
+commands:
+  restore_cache_cmd:
+    steps:
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+  save_cache_cmd:
+    steps:
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+  yarn_install_cmd:
+    steps:
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+  setup_cmd:
+    steps:
+      - checkout
+      - restore_cache_cmd
+      - yarn_install_cmd
+      - save_cache_cmd
+  test_cmd:
+    steps:
+      - run:
+          command: yarn validate
+jobs:
+  test:
+    executor: default
+    steps:
+      - setup_cmd
+      - test_cmd
+  test-and-publish:
+    executor: default
+    steps:
+      - setup_cmd
+      - test_cmd
+#      - publish_cmd
+
+workflows:
+  build:
+    jobs:
+      - test:
+          context:
+            - scottdb
+          filters:
+            branches:
+              ignore: master
+      - test-and-publish:
+          context:
+            - scottdb
+          filters:
+            branches:
+              only: master

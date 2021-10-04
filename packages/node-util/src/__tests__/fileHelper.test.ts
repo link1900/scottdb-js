@@ -1,3 +1,5 @@
+import * as path from "path";
+import * as fs from "fs";
 import {
   createDirectory,
   createDirectoryOnDisk,
@@ -13,15 +15,13 @@ import {
   writePath,
   readDirectoryFromDisk,
 } from "../fileHelper";
-import path from "path";
-import fs from "fs";
 
 describe("fileHelper", () => {
   describe("#readFileFromDisk", () => {
     const readFilePath = path.join(__dirname, "readTestFile.txt");
     it("reads the file correctly", async () => {
       const contents = await readFileFromDisk(readFilePath);
-      expect(contents).toEqual("read test file contents\n");
+      expect(contents).toContain("read test file contents");
     });
 
     it("throws an exception when file cannot be read", async () => {

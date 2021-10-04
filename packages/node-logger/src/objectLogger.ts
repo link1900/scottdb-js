@@ -1,5 +1,6 @@
 import * as log from "loglevel";
 import { Logger } from "loglevel";
+import stringify from "json-stringify-safe";
 
 export type LogTypes = "trace" | "debug" | "info" | "warn" | "error" | "silent";
 
@@ -14,22 +15,47 @@ export class ObjectLogger {
   public innerLogger: Logger;
   public enabled: boolean;
   public context: Object | undefined;
+  public metaHooks: Array<() => object>;
 
   constructor(options: LogOptions = {}) {
-    const { enabled = true, name = "default", level = "info", context = undefined } = options;
+    const {
+      enabled = true,
+      name = "default",
+      level = "info",
+      context = undefined,
+    } = options;
     this.innerLogger = log.getLogger(name);
     this.innerLogger.setLevel(level, false);
     this.enabled = enabled;
     this.context = context;
+    this.metaHooks = [];
   }
 
   public formatMessage(level: string, message: string, meta?: object): string {
-    return JSON.stringify({
-      level,
+    const hookMeta = this.getMetaDataForHooks();
+
+    // using safe stringify, as log message fields can contain circular structures that can break JSON.stringify
+    return stringify({
       message,
-      timestamp: new Date().toISOString(),
+      ...hookMeta,
       ...meta,
+      timestamp: new Date().toISOString(),
+      level,
     });
+  }
+
+  public getMetaDataForHooks(): object {
+    if (this.metaHooks.length === 0) {
+      return {};
+    }
+    return this.metaHooks
+      .map((hook) => hook())
+      .reduce((parent, item) => {
+        return {
+          ...parent,
+          ...item,
+        };
+      }, {});
   }
 
   public trace(message: string, meta?: object): string | undefined {
@@ -50,17 +76,23 @@ export class ObjectLogger {
 
   public error(message: string, error?: Error, meta: any = {}) {
     if (error) {
+      // pulling message out to ensure it is at the start of the error object
+      const { message: errorMessage, ...errorFields } = error;
       meta.error = {
+        message: errorMessage,
         type: error.name,
-        message: error.message,
         stacktrace: error.stack,
-        ...error,
+        ...errorFields,
       };
     }
     return this.log("error", message, meta);
   }
 
-  public log(level: LogTypes, message: string, meta?: object): string | undefined {
+  public log(
+    level: LogTypes,
+    message: string,
+    meta?: object
+  ): string | undefined {
     const messageMeta = this.context
       ? {
           ...meta,
@@ -88,7 +120,7 @@ export class ObjectLogger {
       case log.levels.ERROR:
         return "error";
       case log.levels.SILENT:
-        return "info";
+        return "silent";
     }
   }
 
@@ -101,5 +133,13 @@ export class ObjectLogger {
       ...this.context,
       ...context,
     };
+  }
+
+  public addMetaHook(hook: () => object) {
+    this.metaHooks.push(hook);
+  }
+
+  public clearMetaHooks() {
+    this.metaHooks = [];
   }
 }

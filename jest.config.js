@@ -6,6 +6,7 @@ module.exports = {
   testMatch: ["<rootDir>/src/**/__tests__/**/*.test.ts?(x)"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   globalSetup: "../../scripts/test/testSetup.ts",
+  setupFilesAfterEnv: ["../../scripts/test/testSetupPostEnv.ts"],
   globalTeardown: "../../scripts/test/testTeardown.ts",
   globals: {
     __DEV__: true,

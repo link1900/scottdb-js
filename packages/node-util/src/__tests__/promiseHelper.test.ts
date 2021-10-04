@@ -1,4 +1,4 @@
-import { delayPromise, promiseEvery, promiseEveryGrouped, promiseEveryWrapped, timeoutPromise } from "../promiseHelper";
+import { delayPromise, promiseEvery, timeoutPromise, promiseSequence } from "../promiseHelper";
 
 async function testFunction(result: string) {
   if (result === "fail-error") {
@@ -14,110 +14,89 @@ async function testFunction(result: string) {
   return result;
 }
 
+function getPromiseSet(types: string[]): Array<Promise<string> | string> {
+  return types.map((item) => (item === "skipped" ? "skipped" : testFunction(item)));
+}
+
 describe("promiseHelperTests", () => {
-  describe("#promiseEvery", () => {
-    it("returns only valid results and actions failures", async () => {
-      const items = ["pass", "fail-error", "fail-uncaught"];
-      const failures: any[] = [];
-      const results = await promiseEvery(items, testFunction, {
-        concurrency: 1,
-        delayInMilliseconds: 1,
-        actionOnFailure: (failure) => failures.push(failure),
-      });
-      expect(results.length).toEqual(1);
-      expect(results[0]).toEqual("success");
-
-      expect(failures.length).toEqual(2);
-    });
-
+  describe("promiseEvery()", () => {
     it("returns only valid results", async () => {
-      const items = ["pass", "fail-error", "fail-uncaught"];
-      const results = await promiseEvery(items, testFunction);
-      expect(results.length).toEqual(1);
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
+      const results = await promiseEvery(items);
+      expect(results).toHaveLength(1);
       expect(results[0]).toEqual("success");
     });
-  });
 
-  describe("#promiseEveryGrouped", () => {
-    it("returns results is grouped into either valid or invalid", async () => {
-      const items = ["pass", "fail-error", "fail-uncaught"];
-      const results = await promiseEveryGrouped(items, testFunction, { concurrency: 1, delayInMilliseconds: 1 });
-      expect(results.valid.length).toEqual(1);
-      expect(results.valid[0]).toEqual("success");
+    it("handles non promises", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught", "skipped"]);
+      const results = await promiseEvery(items);
+      expect(results).toHaveLength(2);
+      expect(results).toEqual(["success", "skipped"]);
+    });
 
-      expect(results.invalid.length).toEqual(2);
+    it("throws when errorStrategy equals 'throw'", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
+      await expect(() => promiseEvery(items, { errorStrategy: "throw" })).rejects.toThrowError("example error");
+    });
+
+    it("includes undefined if errorStrategy equals 'include'", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
+      const results = await promiseEvery(items, { errorStrategy: "include" });
+      expect(results).toHaveLength(3);
+    });
+
+    it("uses custom onError when provided'", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
+      const errors: any[] = [];
+      const results = await promiseEvery(items, { onError: (error: any) => errors.push(error) });
+      expect(results).toHaveLength(1);
+      expect(errors).toHaveLength(2);
     });
   });
 
-  describe("#promiseEveryWrapped", () => {
-    it("returns each result from the provided function wrapped with a state of true or false", async () => {
-      const items = ["pass", "fail-error", "fail-uncaught"];
-      const results = await promiseEveryWrapped(items, testFunction);
-      expect(results.length).toEqual(3);
-      expect(results[0].state).toEqual(true);
-      expect(results[0].value).toEqual("success");
-      expect(results[1].state).toEqual(false);
-      expect(results[2].state).toEqual(false);
+  describe("promiseSequence()", () => {
+    it("returns only valid results", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
+      const results = await promiseSequence(items);
+      expect(results).toHaveLength(1);
+      expect(results).toEqual(["success"]);
     });
 
-    it("returns each results correctly when options are provided", async () => {
-      const items = ["pass", "fail-error", "fail-uncaught"];
-      const results = await promiseEveryWrapped(items, testFunction, { concurrency: 1, delayInMilliseconds: 1 });
-      expect(results.length).toEqual(3);
-      expect(results[0].state).toEqual(true);
-      expect(results[0].value).toEqual("success");
-      expect(results[1].state).toEqual(false);
-      expect(results[2].state).toEqual(false);
+    it("handles non promises", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught", "skipped"]);
+      const results = await promiseSequence(items);
+      expect(results).toHaveLength(2);
+      expect(results).toEqual(["success", "skipped"]);
     });
 
-    it("returns no items for empty array", async () => {
-      const items: string[] = [];
-      const results = await promiseEveryWrapped(items, testFunction);
-      expect(results.length).toEqual(0);
-    });
-  });
-
-  describe("#promiseEveryWrapped", () => {
-    it("returns each result from the provided function wrapped with a state of true or false", async () => {
-      const items = ["pass", "fail-error", "fail-uncaught"];
-      const results = await promiseEveryWrapped(items, testFunction);
-      expect(results.length).toEqual(3);
-      expect(results[0].state).toEqual(true);
-      expect(results[0].value).toEqual("success");
-      expect(results[1].state).toEqual(false);
-      expect(results[2].state).toEqual(false);
+    it("includes undefined if errorStrategy equals 'include'", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
+      const results = await promiseSequence(items, { errorStrategy: "include" });
+      expect(results).toHaveLength(3);
     });
 
-    it("returns each results correctly when options are provided", async () => {
-      const items = ["pass", "fail-error", "fail-uncaught"];
-      const results = await promiseEveryWrapped(items, testFunction, { concurrency: 1, delayInMilliseconds: 1 });
-      expect(results.length).toEqual(3);
-      expect(results[0].state).toEqual(true);
-      expect(results[0].value).toEqual("success");
-      expect(results[1].state).toEqual(false);
-      expect(results[2].state).toEqual(false);
-    });
-
-    it("returns no items for empty array", async () => {
-      const items: string[] = [];
-      const results = await promiseEveryWrapped(items, testFunction);
-      expect(results.length).toEqual(0);
+    it("uses custom onError when provided'", async () => {
+      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
+      const errors: any[] = [];
+      const results = await promiseSequence(items, { onError: (error: any) => errors.push(error) });
+      expect(results).toHaveLength(1);
+      expect(errors).toHaveLength(2);
     });
   });
 
-  describe("#delayPromise", () => {
+  describe("delayPromise()", () => {
     it("runs without delay when delay is 0", async () => {
       const result = await delayPromise(testFunction("pass"), 0);
       expect(result).toEqual("success");
     });
 
-    it("runs with delay when delay is 1", async () => {
-      const result = await delayPromise(testFunction("pass"), 1);
+    it("runs with delay when delay is 1000", async () => {
+      const result = await delayPromise(testFunction("pass"), 1000);
       expect(result).toEqual("success");
     });
   });
 
-  describe("#timeoutPromise", () => {
+  describe("timeoutPromise()", () => {
     it("runs without timeout when timeout is 0", async () => {
       const result = await timeoutPromise(testFunction("pass"), 0);
       expect(result).toEqual("success");

@@ -1,82 +1,95 @@
-import BlueBird from "bluebird";
 import { TimeoutError } from "@link1900/node-error";
+import { logger } from "@link1900/node-logger";
+import { isPresent } from "./objectHelper";
 
-export interface BasicMapPromiseOptions {
-  concurrency?: number;
-  delayInMilliseconds?: number;
+export interface PromiseErrorOptions {
+  errorStrategy?: "onError" | "throw" | "include";
+  onError?: (reason: any) => any;
 }
 
-export interface WrappedPromise<T, R> {
-  state: boolean;
-  value: R;
-  item: T;
+export function logFailedPromise(reason: any) {
+  logger.error("promise failed", reason);
 }
 
-export interface GroupedPromises<T> {
-  valid: T[];
-  invalid: any[];
-}
-
-export interface MapPromiseOptions extends BasicMapPromiseOptions {
-  actionOnFailure?: (failureValue?: any, item?: any) => any;
-}
-
-export async function promiseEvery<T, R>(items: T[], func: (item: T) => Promise<R>, options?: MapPromiseOptions) {
-  const resultGroups = await promiseEveryGrouped(items, func, options);
-  if (resultGroups.invalid.length > 0 && options && options.actionOnFailure) {
-    resultGroups.invalid.forEach((invalidItem) => {
-      if (options.actionOnFailure) {
-        return options.actionOnFailure(invalidItem.value, invalidItem.item);
-      }
-    });
+export function handlePromiseFailure(result: any, options: PromiseErrorOptions = {}) {
+  const { errorStrategy = "onError", onError = logFailedPromise } = options;
+  if (errorStrategy === "onError") {
+    onError(result);
   }
-  return resultGroups.valid;
+  if (errorStrategy === "throw") {
+    throw result;
+  }
+  if (errorStrategy === "include") {
+    return result;
+  }
+  return undefined;
 }
 
-export async function promiseEveryGrouped<T, R>(
-  items: T[],
-  func: (item: T) => Promise<R>,
-  options?: BasicMapPromiseOptions
-): Promise<GroupedPromises<R>> {
-  const wrappedPromises = await promiseEveryWrapped(items, func, options);
-  return {
-    valid: wrappedPromises.filter((result) => result.state).map((result) => result.value),
-    invalid: wrappedPromises
-      .filter((result) => !result.state)
-      .map((result) => ({ value: result.value, item: result.item })),
-  };
+/**
+ * Converts an array of promises into a promise array of resolved values.
+ * All promises run concurrently.
+ * Will execute every promise and what is returned is determined by options.errorStrategy
+ * @param items
+ * @param options
+ */
+export async function promiseEvery<Item>(
+  items: Array<Promise<Item> | Item>,
+  options: PromiseErrorOptions = {}
+): Promise<Array<Item>> {
+  const { errorStrategy = "onError" } = options;
+  let results = (await Promise.allSettled(items)).map((result) => {
+    if (result.status === "fulfilled") {
+      return result.value;
+    }
+
+    if (result.status === "rejected") {
+      return handlePromiseFailure(result.reason, options);
+    }
+
+    return undefined;
+  });
+
+  if (errorStrategy !== "include") {
+    results = results.filter(isPresent);
+  }
+
+  return results;
 }
 
-export async function promiseEveryWrapped<T, R>(
-  items: T[],
-  func: (item: T) => Promise<R>,
-  options?: BasicMapPromiseOptions
-): Promise<Array<WrappedPromise<T, R>>> {
-  const concurrency = options && options.concurrency ? options.concurrency : 1;
-  const delayInMilliseconds = options && options.delayInMilliseconds ? options.delayInMilliseconds : 0;
-
-  return BlueBird.map(
-    items,
-    async (item) => {
-      try {
-        return {
-          state: true,
-          value: await delayPromise(func(item), delayInMilliseconds),
-          item,
-        };
-      } catch (error) {
-        return { state: false, value: error, item };
+/**
+ * Converts an array of promises into a promise of array of resolved values.
+ * All promises will in order one by one, in array sequence.
+ */
+export async function promiseSequence<Item>(
+  items: Array<Promise<Item> | Item>,
+  options: PromiseErrorOptions = {}
+): Promise<Array<Item>> {
+  const results: Item[] = [];
+  const { errorStrategy = "onError" } = options;
+  for (let item of items) {
+    try {
+      const result = await item;
+      results.push(result);
+    } catch (error) {
+      const failureResult = handlePromiseFailure(error, options);
+      if (errorStrategy === "include") {
+        results.push(failureResult);
       }
-    },
-    { concurrency }
-  );
+    }
+  }
+  return results;
 }
 
 export async function delayPromise<T>(promise: T, delayInMilliseconds: number): Promise<T> {
   if (delayInMilliseconds <= 0) {
     return promise;
   }
-  return BlueBird.resolve(promise).delay(delayInMilliseconds);
+  return new Promise((resolve) => {
+    const timeoutId = setTimeout(() => {
+      resolve(promise);
+      clearTimeout(timeoutId);
+    }, delayInMilliseconds);
+  });
 }
 
 export async function timeoutPromise<T>(
@@ -87,5 +100,15 @@ export async function timeoutPromise<T>(
   if (timeoutInMilliseconds <= 0) {
     return promise;
   }
-  return BlueBird.resolve(promise).timeout(timeoutInMilliseconds, error);
+  let timer;
+
+  try {
+    const result = await Promise.race([
+      promise,
+      new Promise((resolve, reject) => (timer = setTimeout(reject, timeoutInMilliseconds, error))),
+    ]);
+    return result as any as T;
+  } finally {
+    clearTimeout(timer);
+  }
 }

@@ -25,6 +25,11 @@ commands:
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+  setup_git_push:
+    steps:
+      - run:
+          name: Set git username
+          command: git config --global user.email "link1900@gmail.com" && git config --global user.name "Scott Brown"
   setup_npm:
     steps:
       - run:
@@ -53,6 +58,7 @@ commands:
   publish_cmd:
     steps:
       - setup_npm
+      - setup_git_push
       - version_bump
       - publish_to_npm
 jobs:

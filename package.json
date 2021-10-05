@@ -18,7 +18,7 @@
     "test": "lerna run test",
     "validate": "yarn build && yarn lint && yarn test",
     "lerna:publish": "lerna publish from-git",
-    "lerna:version": "lerna version --message \"chore(release): publish\"",
+    "lerna:version": "lerna version --message \"chore(release): publish [skip ci]\"",
     "release": "git pull && git push && yarn lint && yarn test && yarn build && yarn lerna:version && yarn lerna:publish",
     "cz": "git-cz",
     "cz:retry": "git-cz --retry",

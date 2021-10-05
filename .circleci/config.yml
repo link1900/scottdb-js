@@ -30,6 +30,7 @@ commands:
       - run:
           name: Set git username
           command: git config --global user.email "link1900@gmail.com" && git config --global user.name "Scott Brown"
+      - add_ssh_keys
   setup_npm:
     steps:
       - run:

@@ -16,7 +16,7 @@
     "build": "lerna run build",
     "lint": "lerna run lint",
     "test": "lerna run test",
-    "validate": "yarn build && yarn lint && yarn test",
+    "validate": "yarn build && yarn test",
     "lerna:publish": "lerna publish from-git",
     "lerna:version": "lerna version --message \"chore(release): publish [skip ci]\"",
     "release": "git pull && git push && yarn lint && yarn test && yarn build && yarn lerna:version && yarn lerna:publish",

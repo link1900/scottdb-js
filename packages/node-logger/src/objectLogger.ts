@@ -18,12 +18,7 @@ export class ObjectLogger {
   public metaHooks: Array<() => object>;
 
   constructor(options: LogOptions = {}) {
-    const {
-      enabled = true,
-      name = "default",
-      level = "info",
-      context = undefined,
-    } = options;
+    const { enabled = true, name = "default", level = "info", context = undefined } = options;
     this.innerLogger = log.getLogger(name);
     this.innerLogger.setLevel(level, false);
     this.enabled = enabled;
@@ -74,8 +69,8 @@ export class ObjectLogger {
     return this.log("warn", message, meta);
   }
 
-  public error(message: string, error?: Error, meta: any = {}) {
-    if (error) {
+  public error(message: string, error?: unknown, meta: any = {}) {
+    if (error && error instanceof Error) {
       // pulling message out to ensure it is at the start of the error object
       const { message: errorMessage, ...errorFields } = error;
       meta.error = {
@@ -88,11 +83,7 @@ export class ObjectLogger {
     return this.log("error", message, meta);
   }
 
-  public log(
-    level: LogTypes,
-    message: string,
-    meta?: object
-  ): string | undefined {
+  public log(level: LogTypes, message: string, meta?: object): string | undefined {
     const messageMeta = this.context
       ? {
           ...meta,

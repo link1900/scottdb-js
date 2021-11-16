@@ -11,13 +11,7 @@ class ExampleError extends Error {
   public invalidField: string;
   public invalidReason: string;
 
-  constructor(
-    message: string,
-    code: ExampleEnum,
-    httpCode: string,
-    invalidField: string,
-    invalidReason: string
-  ) {
+  constructor(message: string, code: ExampleEnum, httpCode: string, invalidField: string, invalidReason: string) {
     super(message);
     this.code = code;
     this.httpCode = httpCode;
@@ -116,13 +110,7 @@ describe("ObjectLogger", () => {
   it("logs example error with extra information", () => {
     const logger = new ObjectLogger();
     const mock = jest.spyOn(logger, "error");
-    const exampleError = new ExampleError(
-      "extra error",
-      ExampleEnum.ERROR_ONE,
-      "404",
-      "name",
-      "too long"
-    );
+    const exampleError = new ExampleError("extra error", ExampleEnum.ERROR_ONE, "404", "name", "too long");
     const logResult = logger.error("error message", exampleError, {
       extra: "data",
     });
@@ -140,6 +128,16 @@ describe("ObjectLogger", () => {
     const logger = new ObjectLogger();
     const mock = jest.spyOn(logger, "error");
     const logResult = logger.error("error message");
+    const result = JSON.parse(logResult!);
+    expect(mock).toHaveBeenCalled();
+    expect(result && result.level).toEqual("error");
+    expect(result && result.message).toEqual("error message");
+  });
+
+  it("logs error with non error", () => {
+    const logger = new ObjectLogger();
+    const mock = jest.spyOn(logger, "error");
+    const logResult = logger.error("error message", null);
     const result = JSON.parse(logResult!);
     expect(mock).toHaveBeenCalled();
     expect(result && result.level).toEqual("error");

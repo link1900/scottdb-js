@@ -111,7 +111,7 @@ describe("promiseHelperTests", () => {
       try {
         await timeoutPromise(delayPromise(testFunction("pass"), 10000), 10);
         expect(true).toBeFalsy();
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toEqual("Operation failed to complete within the required period of time");
       }
     });

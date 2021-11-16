@@ -23,7 +23,7 @@ describe("urlHelper", () => {
         // @ts-ignore
         buildUrl();
         expect(true).toEqual(false);
-      } catch (error) {
+      } catch (error: any) {
         expect(error.code).toEqual(ErrorCode.INTERNAL_SERVER_ERROR);
       }
     });
@@ -33,7 +33,7 @@ describe("urlHelper", () => {
         // @ts-ignore
         buildUrl(null, { key: "123 key" });
         expect(true).toEqual(false);
-      } catch (error) {
+      } catch (error: any) {
         expect(error.code).toEqual(ErrorCode.INTERNAL_SERVER_ERROR);
       }
     });
@@ -43,7 +43,7 @@ describe("urlHelper", () => {
         // @ts-ignore
         buildUrl({});
         expect(true).toEqual(false);
-      } catch (error) {
+      } catch (error: any) {
         expect(error.code).toEqual(ErrorCode.INTERNAL_SERVER_ERROR);
       }
     });
@@ -53,7 +53,7 @@ describe("urlHelper", () => {
         const url = "maps.googleapis.com/maps/api/geo";
         buildUrl(url);
         expect(true).toEqual(false);
-      } catch (error) {
+      } catch (error: any) {
         expect(error.code).toEqual(ErrorCode.INTERNAL_SERVER_ERROR);
       }
     });

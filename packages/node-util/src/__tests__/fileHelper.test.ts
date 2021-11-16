@@ -28,7 +28,7 @@ describe("fileHelper", () => {
       try {
         await readFileFromDisk("no");
         expect(true).toEqual(false);
-      } catch (e) {
+      } catch (e: any) {
         expect(e.message).toContain("ENOENT");
       }
     });
@@ -312,7 +312,7 @@ describe("fileHelper", () => {
       try {
         await readDirectoryFromDisk("no");
         expect(true).toEqual(false);
-      } catch (e) {
+      } catch (e: any) {
         expect(e.message).toContain("ENOENT");
       }
     });

@@ -28,7 +28,7 @@ describe("environmentHelper", () => {
       try {
         getVariable("TEMP_TEST_VAR1");
         expect(false).toEqual(true);
-      } catch (error) {
+      } catch (error: any) {
         expect(error.code).toEqual(ErrorCode.INTERNAL_SERVER_ERROR);
       }
     });
@@ -47,7 +47,7 @@ describe("environmentHelper", () => {
       try {
         getVariableAsInteger("TEMP_TEST_VAR_NUM_BAD");
         expect(false).toEqual(true);
-      } catch (error) {
+      } catch (error: any) {
         expect(error.code).toEqual(ErrorCode.INTERNAL_SERVER_ERROR);
       }
     });
@@ -56,7 +56,7 @@ describe("environmentHelper", () => {
       try {
         getVariableAsInteger("TEMP_TEST_VAR1");
         expect(false).toEqual(true);
-      } catch (error) {
+      } catch (error: any) {
         expect(error.code).toEqual(ErrorCode.INTERNAL_SERVER_ERROR);
       }
     });

@@ -42,7 +42,10 @@ describe("fileHelper", () => {
     });
 
     it("write the file correctly", async () => {
-      const result = await writeFileToDisk(writeFilePath, "write test file contents");
+      const result = await writeFileToDisk(
+        writeFilePath,
+        "write test file contents"
+      );
       expect(result).toBeTruthy();
       const contents = await readFileFromDisk(writeFilePath);
       expect(contents).toEqual("write test file contents");
@@ -99,7 +102,10 @@ describe("fileHelper", () => {
     const writeFilePath = path.join(__dirname, "writeTestFile.txt");
 
     it("delete the file correctly", async () => {
-      const writeResult = await writeFileToDisk(writeFilePath, "write test file contents");
+      const writeResult = await writeFileToDisk(
+        writeFilePath,
+        "write test file contents"
+      );
       expect(writeResult).toBeTruthy();
       const deleteResult = await deleteFileFromDisk(writeFilePath);
       expect(deleteResult).toEqual(true);
@@ -124,7 +130,10 @@ describe("fileHelper", () => {
     });
 
     it("gets file info correctly", async () => {
-      const writeResult = await writeFileToDisk(writeFilePath, "write test file contents");
+      const writeResult = await writeFileToDisk(
+        writeFilePath,
+        "write test file contents"
+      );
       expect(writeResult).toBeTruthy();
       const stats = await getFileInfoFromDisk(writeFilePath);
       expect(stats).toBeTruthy();
@@ -150,7 +159,10 @@ describe("fileHelper", () => {
     });
 
     it("gets file info correctly", async () => {
-      const writeResult = await writeFileToDisk(writeFilePath, "write test file contents");
+      const writeResult = await writeFileToDisk(
+        writeFilePath,
+        "write test file contents"
+      );
       expect(writeResult).toBeTruthy();
       const stats = await getFileInfo(writeFilePath);
       if (!stats) {
@@ -219,7 +231,10 @@ describe("fileHelper", () => {
     });
 
     it("delete the file correctly", async () => {
-      const writeResult = await writeFileToDisk(writeFilePath, "write test file contents");
+      const writeResult = await writeFileToDisk(
+        writeFilePath,
+        "write test file contents"
+      );
       expect(writeResult).toBeTruthy();
       const deleteResult = await deletePath(writeFilePath);
       expect(deleteResult).toEqual(true);
@@ -277,7 +292,10 @@ describe("fileHelper", () => {
     const writeFilePath = path.join(__dirname, "writeTestFile.txt");
     const writeFolderDeepPath = path.join(__dirname, "deep");
     const writeFolderDeeperPath = path.join(writeFolderDeepPath, "path");
-    const writeFileDeepPath = path.join(writeFolderDeeperPath, "writeTestFile.txt");
+    const writeFileDeepPath = path.join(
+      writeFolderDeeperPath,
+      "writeTestFile.txt"
+    );
 
     afterAll(() => {
       fs.unlinkSync(writeFilePath);
@@ -294,7 +312,10 @@ describe("fileHelper", () => {
     });
 
     it("write the deep file correctly", async () => {
-      const result = await writePath(writeFileDeepPath, "write test file contents");
+      const result = await writePath(
+        writeFileDeepPath,
+        "write test file contents"
+      );
       expect(result).toBeTruthy();
       const contents = await readFileFromDisk(writeFileDeepPath);
       expect(contents).toEqual("write test file contents");

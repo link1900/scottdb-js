@@ -30,7 +30,9 @@ export async function writeFileToDisk(
   });
 }
 
-export async function createDirectoryOnDisk(filePath: string): Promise<boolean> {
+export async function createDirectoryOnDisk(
+  filePath: string
+): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     fs.mkdir(filePath, (err) => {
       if (err) {
@@ -71,7 +73,9 @@ export async function getFileInfoFromDisk(filePath: string): Promise<fs.Stats> {
   });
 }
 
-export async function getFileInfo(filePath: string): Promise<fs.Stats | undefined> {
+export async function getFileInfo(
+  filePath: string
+): Promise<fs.Stats | undefined> {
   try {
     return await getFileInfoFromDisk(filePath);
   } catch (error) {
@@ -128,13 +132,19 @@ export async function createDirectory(filePath: string): Promise<boolean> {
   return createDirectoryOnDisk(filePath);
 }
 
-export async function writePath(filePath: string, data: string, options: WriteFileOptions = {}): Promise<boolean> {
+export async function writePath(
+  filePath: string,
+  data: string,
+  options: WriteFileOptions = {}
+): Promise<boolean> {
   const dir = path.dirname(filePath);
   await createDirectory(dir);
   return writeFileToDisk(filePath, data, options);
 }
 
-export async function readDirectoryFromDisk(filePath: string): Promise<string[]> {
+export async function readDirectoryFromDisk(
+  filePath: string
+): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {
     fs.readdir(filePath, (err, files) => {
       if (err) {

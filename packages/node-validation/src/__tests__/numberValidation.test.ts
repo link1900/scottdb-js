@@ -31,7 +31,9 @@ describe("#isValidNumber", () => {
     it(`finds number value of '${testcase.value}' to be ${
       testcase.expectedResult ? "valid" : "invalid"
     } for options ${JSON.stringify(testcase.options)}`, () => {
-      expect(isValidNumber(testcase.value, testcase.options)).toEqual(testcase.expectedResult);
+      expect(isValidNumber(testcase.value, testcase.options)).toEqual(
+        testcase.expectedResult
+      );
     });
   });
 });

@@ -123,7 +123,10 @@ describe("environmentHelper", () => {
 
   describe("#loadConfigFile", () => {
     const writeFilePath = path.join(__dirname, "env-local-test-example.json");
-    const writeFilePathBroken = path.join(__dirname, "env-local-test-example-broken.json");
+    const writeFilePathBroken = path.join(
+      __dirname,
+      "env-local-test-example-broken.json"
+    );
 
     afterEach(async () => {
       await deletePath(writeFilePath);

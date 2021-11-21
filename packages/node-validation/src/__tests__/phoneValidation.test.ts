@@ -14,7 +14,16 @@ describe("#isPhone", () => {
     "(03) 9798 1234",
   ];
 
-  const invalidNumbers = ["nope", "123", "123456789012345678901", "", "    ", undefined, null, { someNumber: "123" }];
+  const invalidNumbers = [
+    "nope",
+    "123",
+    "123456789012345678901",
+    "",
+    "    ",
+    undefined,
+    null,
+    { someNumber: "123" },
+  ];
 
   validNumbers.forEach((testNumber) => {
     it(`number ${testNumber} to be valid`, () => {

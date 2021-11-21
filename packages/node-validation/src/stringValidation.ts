@@ -9,7 +9,10 @@ export interface StringValidationOptions {
   regex?: RegExp;
 }
 
-export function isValidString(value?: string, options?: StringValidationOptions) {
+export function isValidString(
+  value?: string,
+  options?: StringValidationOptions
+) {
   if (!isString(value)) {
     return false;
   }

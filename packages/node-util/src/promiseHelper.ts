@@ -11,7 +11,10 @@ export function logFailedPromise(reason: any) {
   logger.error("promise failed", reason);
 }
 
-export function handlePromiseFailure(result: any, options: PromiseErrorOptions = {}) {
+export function handlePromiseFailure(
+  result: any,
+  options: PromiseErrorOptions = {}
+) {
   const { errorStrategy = "onError", onError = logFailedPromise } = options;
   if (errorStrategy === "onError") {
     onError(result);
@@ -80,7 +83,10 @@ export async function promiseSequence<Item>(
   return results;
 }
 
-export async function delayPromise<T>(promise: T, delayInMilliseconds: number): Promise<T> {
+export async function delayPromise<T>(
+  promise: T,
+  delayInMilliseconds: number
+): Promise<T> {
   if (delayInMilliseconds <= 0) {
     return promise;
   }
@@ -105,7 +111,10 @@ export async function timeoutPromise<T>(
   try {
     const result = await Promise.race([
       promise,
-      new Promise((resolve, reject) => (timer = setTimeout(reject, timeoutInMilliseconds, error))),
+      new Promise(
+        (resolve, reject) =>
+          (timer = setTimeout(reject, timeoutInMilliseconds, error))
+      ),
     ]);
     return result as any as T;
   } finally {

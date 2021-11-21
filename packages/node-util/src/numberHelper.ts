@@ -46,11 +46,18 @@ export function inRange(value: number, start: number, end: number): boolean {
   return value >= start && value <= end;
 }
 
-export function inRanges(value: number, ranges: Array<{ start: number; end: number }>): boolean {
+export function inRanges(
+  value: number,
+  ranges: Array<{ start: number; end: number }>
+): boolean {
   return ranges.some((range) => inRange(value, range.start, range.end));
 }
 
-export function generateNumberRange(start: number, end: number, step: number = 1): number[] {
+export function generateNumberRange(
+  start: number,
+  end: number,
+  step: number = 1
+): number[] {
   return Array(Math.ceil((end - start) / step) + 1)
     .fill(start)
     .map((x, y) => x + y * step);

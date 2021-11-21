@@ -1,4 +1,9 @@
-import { delayPromise, promiseEvery, timeoutPromise, promiseSequence } from "../promiseHelper";
+import {
+  delayPromise,
+  promiseEvery,
+  timeoutPromise,
+  promiseSequence,
+} from "../promiseHelper";
 
 async function testFunction(result: string) {
   if (result === "fail-error") {
@@ -15,7 +20,9 @@ async function testFunction(result: string) {
 }
 
 function getPromiseSet(types: string[]): Array<Promise<string> | string> {
-  return types.map((item) => (item === "skipped" ? "skipped" : testFunction(item)));
+  return types.map((item) =>
+    item === "skipped" ? "skipped" : testFunction(item)
+  );
 }
 
 describe("promiseHelperTests", () => {
@@ -28,7 +35,12 @@ describe("promiseHelperTests", () => {
     });
 
     it("handles non promises", async () => {
-      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught", "skipped"]);
+      const items = getPromiseSet([
+        "pass",
+        "fail-error",
+        "fail-uncaught",
+        "skipped",
+      ]);
       const results = await promiseEvery(items);
       expect(results).toHaveLength(2);
       expect(results).toEqual(["success", "skipped"]);
@@ -36,7 +48,9 @@ describe("promiseHelperTests", () => {
 
     it("throws when errorStrategy equals 'throw'", async () => {
       const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
-      await expect(() => promiseEvery(items, { errorStrategy: "throw" })).rejects.toThrowError("example error");
+      await expect(() =>
+        promiseEvery(items, { errorStrategy: "throw" })
+      ).rejects.toThrowError("example error");
     });
 
     it("includes undefined if errorStrategy equals 'include'", async () => {
@@ -48,7 +62,9 @@ describe("promiseHelperTests", () => {
     it("uses custom onError when provided'", async () => {
       const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
       const errors: any[] = [];
-      const results = await promiseEvery(items, { onError: (error: any) => errors.push(error) });
+      const results = await promiseEvery(items, {
+        onError: (error: any) => errors.push(error),
+      });
       expect(results).toHaveLength(1);
       expect(errors).toHaveLength(2);
     });
@@ -63,7 +79,12 @@ describe("promiseHelperTests", () => {
     });
 
     it("handles non promises", async () => {
-      const items = getPromiseSet(["pass", "fail-error", "fail-uncaught", "skipped"]);
+      const items = getPromiseSet([
+        "pass",
+        "fail-error",
+        "fail-uncaught",
+        "skipped",
+      ]);
       const results = await promiseSequence(items);
       expect(results).toHaveLength(2);
       expect(results).toEqual(["success", "skipped"]);
@@ -71,14 +92,18 @@ describe("promiseHelperTests", () => {
 
     it("includes undefined if errorStrategy equals 'include'", async () => {
       const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
-      const results = await promiseSequence(items, { errorStrategy: "include" });
+      const results = await promiseSequence(items, {
+        errorStrategy: "include",
+      });
       expect(results).toHaveLength(3);
     });
 
     it("uses custom onError when provided'", async () => {
       const items = getPromiseSet(["pass", "fail-error", "fail-uncaught"]);
       const errors: any[] = [];
-      const results = await promiseSequence(items, { onError: (error: any) => errors.push(error) });
+      const results = await promiseSequence(items, {
+        onError: (error: any) => errors.push(error),
+      });
       expect(results).toHaveLength(1);
       expect(errors).toHaveLength(2);
     });
@@ -112,7 +137,9 @@ describe("promiseHelperTests", () => {
         await timeoutPromise(delayPromise(testFunction("pass"), 10000), 10);
         expect(true).toBeFalsy();
       } catch (error) {
-        expect(error.message).toEqual("Operation failed to complete within the required period of time");
+        expect(error.message).toEqual(
+          "Operation failed to complete within the required period of time"
+        );
       }
     });
   });

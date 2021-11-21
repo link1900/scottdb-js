@@ -22,7 +22,9 @@ export function getVariableAsInteger(key: string): number {
   const stringValue = getVariable(key);
   const result = parseInt(stringValue, 10);
   if (!Number.isInteger(result)) {
-    throw new InternalServerError(`Environment variable ${key} was not a valid integer`);
+    throw new InternalServerError(
+      `Environment variable ${key} was not a valid integer`
+    );
   }
   return result;
 }
@@ -36,7 +38,11 @@ export function isVariableEnabled(key: string): boolean {
   }
 }
 
-export function setVariable(envVarName: string, envVarValue: string, disableOverride: boolean = false): boolean {
+export function setVariable(
+  envVarName: string,
+  envVarValue: string,
+  disableOverride: boolean = false
+): boolean {
   if (process.env[envVarName] !== undefined && disableOverride) {
     return false;
   }
@@ -45,7 +51,10 @@ export function setVariable(envVarName: string, envVarValue: string, disableOver
   return true;
 }
 
-export async function loadConfigFile(filePath: string, override: boolean = false): Promise<boolean> {
+export async function loadConfigFile(
+  filePath: string,
+  override: boolean = false
+): Promise<boolean> {
   try {
     const configToLoad = await readJsonFileFromDisk(filePath);
     logger.trace(`Loading environment variables from config file ${filePath}`);
@@ -56,7 +65,10 @@ export async function loadConfigFile(filePath: string, override: boolean = false
   }
 }
 
-export function loadConfigObject(configToLoad: object, override: boolean = false): boolean {
+export function loadConfigObject(
+  configToLoad: object,
+  override: boolean = false
+): boolean {
   Object.keys(configToLoad).forEach((key) => {
     setVariable(key, configToLoad[key], !override);
   });
@@ -67,7 +79,10 @@ export async function loadConfigForEnvironment(configPath: string) {
   const executionEnvironment = findVariable("EXECUTION_ENVIRONMENT");
   if (executionEnvironment) {
     logger.info(`Loading environment variables for ${executionEnvironment}`);
-    const configFilePath = path.join(configPath, `${executionEnvironment}.env.json`);
+    const configFilePath = path.join(
+      configPath,
+      `${executionEnvironment}.env.json`
+    );
     await loadConfigFile(configFilePath);
   } else {
     logger.info("No environment was set for EXECUTION_ENVIRONMENT");

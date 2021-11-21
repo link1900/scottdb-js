@@ -7,7 +7,9 @@ export const DEFAULT_CONTEXT_NAMESPACE_ID = "request-context";
  * @param namespace String representing the unique namespace for the context.
  * (Defaults to 'request-context')
  */
-export const getNamespace = (namespace: string = DEFAULT_CONTEXT_NAMESPACE_ID): Namespace => {
+export const getNamespace = (
+  namespace: string = DEFAULT_CONTEXT_NAMESPACE_ID
+): Namespace => {
   return cls.getNamespace(namespace) || cls.createNamespace(namespace);
 };
 
@@ -16,7 +18,10 @@ export const getNamespace = (namespace: string = DEFAULT_CONTEXT_NAMESPACE_ID): 
  * @param key
  * @param namespace
  */
-export const getFromContext = <T>(key: string, namespace?: string): T | undefined => {
+export const getFromContext = <T>(
+  key: string,
+  namespace?: string
+): T | undefined => {
   const ns = getNamespace(namespace);
   if (ns && ns.active) {
     return ns.get(key);
@@ -24,7 +29,11 @@ export const getFromContext = <T>(key: string, namespace?: string): T | undefine
   return undefined;
 };
 
-export const setInContext = <T>(key: string, value: any, namespace?: string): T | undefined => {
+export const setInContext = <T>(
+  key: string,
+  value: any,
+  namespace?: string
+): T | undefined => {
   const ns = getNamespace(namespace);
   if (ns && ns.active) {
     return ns.set(key, value);

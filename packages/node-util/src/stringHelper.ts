@@ -5,7 +5,10 @@ import prettyBytes from "pretty-bytes";
 
 export { isString };
 
-export function arrayToString(fields: Array<string | null | undefined> = [], separator: string = " "): string {
+export function arrayToString(
+  fields: Array<string | null | undefined> = [],
+  separator: string = " "
+): string {
   if (!isArray(fields)) {
     return "";
   }
@@ -17,7 +20,10 @@ export function arrayToString(fields: Array<string | null | undefined> = [], sep
     .trim();
 }
 
-export function filterForOnlyLetters(value?: string, regex: string | RegExp = /[^a-zA-Z\s]/g): string {
+export function filterForOnlyLetters(
+  value?: string,
+  regex: string | RegExp = /[^a-zA-Z\s]/g
+): string {
   if (!value) {
     return "";
   }

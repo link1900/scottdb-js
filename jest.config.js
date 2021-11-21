@@ -11,7 +11,11 @@ module.exports = {
   globals: {
     __DEV__: true,
   },
-  collectCoverageFrom: ["src/*.{js,jsx,ts,tsx}", "src/**/*.{js,jsx,ts,tsx}", "!**/__tests__/**"],
+  collectCoverageFrom: [
+    "src/*.{js,jsx,ts,tsx}",
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!**/__tests__/**",
+  ],
   coveragePathIgnorePatterns: ["index.ts"],
   coverageDirectory: "coverage",
   coverageReporters: ["json", "text-summary", "lcov", "html"],

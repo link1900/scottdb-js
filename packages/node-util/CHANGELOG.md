@@ -4,31 +4,22 @@ All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 <a name="0.5.0"></a>
-# [0.5.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.4.1&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.5.0) (2021-10-05)
 
+# [0.5.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.4.1&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.5.0) (2021-10-05)
 
 ### Features
 
-* **node-util:** Removed bluebird from the promise helpers. ([d26db8e](https://github.com/projects/link1900/repos/link1900/commits/d26db8e))
-
+- **node-util:** Removed bluebird from the promise helpers. ([d26db8e](https://github.com/projects/link1900/repos/link1900/commits/d26db8e))
 
 ### BREAKING CHANGES
 
-* **node-util:** Many promise helper functions have been removed.
-
-
-
-
+- **node-util:** Many promise helper functions have been removed.
 
 <a name="0.4.1"></a>
+
 ## [0.4.1](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.4.0&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.4.1) (2021-10-04)
 
 **Note:** Version bump only for package @link1900/node-util
-
-
-
-
-
 
 <a name="0.4.0"></a>
 

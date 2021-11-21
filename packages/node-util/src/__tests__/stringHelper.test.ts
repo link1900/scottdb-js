@@ -19,7 +19,11 @@ import exampleJson from "./exampleJson.json";
 describe("stringHelper", () => {
   describe("#arrayToString", () => {
     const testCases = [
-      { value: ["val1", null, "val3"], option: undefined, expected: "val1 val3" },
+      {
+        value: ["val1", null, "val3"],
+        option: undefined,
+        expected: "val1 val3",
+      },
       { value: [null, "val3"], option: undefined, expected: "val3" },
       { value: ["val1", null, "val3"], option: "-", expected: "val1-val3" },
       { value: "something", option: undefined, expected: "" },
@@ -27,11 +31,13 @@ describe("stringHelper", () => {
     ];
 
     testCases.forEach((testCase) => {
-      it(`combines strings '${testCase.value}' to be ${testCase.expected} for options ${JSON.stringify(
-        testCase.option
-      )}`, () => {
+      it(`combines strings '${testCase.value}' to be ${
+        testCase.expected
+      } for options ${JSON.stringify(testCase.option)}`, () => {
         // @ts-ignore
-        expect(arrayToString(testCase.value, testCase.option)).toEqual(testCase.expected);
+        expect(arrayToString(testCase.value, testCase.option)).toEqual(
+          testCase.expected
+        );
       });
     });
   });
@@ -132,7 +138,10 @@ describe("stringHelper", () => {
       { value: null, expected: '{"value":null}' },
       { value: undefined, expected: "{}" },
       { value: { test: "object" }, expected: '{"value":{"test":"object"}}' },
-      { value: ["value1", "value2"], expected: '{"value":["value1","value2"]}' },
+      {
+        value: ["value1", "value2"],
+        expected: '{"value":["value1","value2"]}',
+      },
     ];
 
     inputs.forEach((input) => {

@@ -12,7 +12,9 @@ export type ReplacementRule = {
 
 export function unwrap<T>(value: T | undefined | null): T {
   if (value === null || value === undefined) {
-    throw new InternalServerError("Attempted to unwrap value but was null or undefined");
+    throw new InternalServerError(
+      "Attempted to unwrap value but was null or undefined"
+    );
   }
   return value;
 }
@@ -39,12 +41,20 @@ const jsonParseRules: ReplacementRule[] = [
   },
 ];
 
-export function walkObjectAndReplace(object: object, replacementRules: ReplacementRule[]): object {
+export function walkObjectAndReplace(
+  object: object,
+  replacementRules: ReplacementRule[]
+): object {
   let result = {};
   const objectKeys = Object.keys(object);
   objectKeys.forEach((objectKey) => {
     const objectValue = object[objectKey];
-    result[objectKey] = replaceField(objectKey, objectValue, replacementRules, object);
+    result[objectKey] = replaceField(
+      objectKey,
+      objectValue,
+      replacementRules,
+      object
+    );
   });
   return result;
 }
@@ -64,7 +74,9 @@ export function replaceField(
     // apply the mapping function if there was a match
     return replacement ? replacement.mapping(objectValue, parent) : objectValue;
   } else if (isArray(objectValue)) {
-    return objectValue.map((item, index) => replaceField(`${index}`, item, replacementRules, parent));
+    return objectValue.map((item, index) =>
+      replaceField(`${index}`, item, replacementRules, parent)
+    );
   } else if (isObject(objectValue)) {
     return walkObjectAndReplace(objectValue, replacementRules);
   }

@@ -112,3 +112,12 @@ export async function deserializeFromString(string: string): Promise<any> {
 export function formatBytes(bytes: number): string {
   return prettyBytes(bytes);
 }
+
+export function stringToBoolean(value?: string): boolean {
+  return (
+    isString(value) &&
+    ["true", "t", "yes", "y", "1", "on", "active", "valid"].includes(
+      value.trim().toLowerCase()
+    )
+  );
+}

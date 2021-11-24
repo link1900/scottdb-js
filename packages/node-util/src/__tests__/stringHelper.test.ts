@@ -13,6 +13,7 @@ import {
   objectStringToObject,
   unzipStringToString,
   zipStringToString,
+  stringToBoolean,
 } from "../stringHelper";
 import exampleJson from "./exampleJson.json";
 
@@ -197,6 +198,43 @@ describe("stringHelper", () => {
     it("gives format in MB", async () => {
       const result = await formatBytes(152562384);
       expect(result).toEqual("153 MB");
+    });
+  });
+
+  describe("#stringToBoolean", () => {
+    [
+      { value: "", expected: false },
+      { value: undefined, expected: false },
+      { value: null, expected: false },
+      { value: "No", expected: false },
+      { value: "no", expected: false },
+      { value: "NO", expected: false },
+      { value: "false", expected: false },
+      { value: "f", expected: false },
+      { value: "n", expected: false },
+      { value: "yes", expected: true },
+      { value: "yES", expected: true },
+      { value: "YES", expected: true },
+      { value: "y", expected: true },
+      { value: "t", expected: true },
+      { value: "true", expected: true },
+      { value: " true", expected: true },
+      { value: "true ", expected: true },
+      { value: "truE", expected: true },
+      { value: "TRUE", expected: true },
+      { value: "0", expected: false },
+      { value: "1", expected: true },
+      { value: "on", expected: true },
+      { value: "off", expected: false },
+      { value: "active", expected: true },
+      { value: "valid", expected: true },
+      { value: "inactive", expected: false },
+      { value: "invalid", expected: false },
+      { value: "blue", expected: false },
+    ].forEach(({ value, expected }: any) => {
+      it("maps to a boolean false", () => {
+        expect(stringToBoolean(value)).toEqual(expected);
+      });
     });
   });
 });

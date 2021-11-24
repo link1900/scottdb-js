@@ -1,6 +1,6 @@
 import { InternalServerError } from "@link1900/node-error";
 import { logger } from "@link1900/node-logger";
-import { readJsonFileFromDisk } from "@link1900/node-util";
+import { readJsonFileFromDisk, stringToBoolean } from "@link1900/node-util";
 import * as path from "path";
 
 export function findVariable(key: string): string | undefined {
@@ -32,7 +32,7 @@ export function getVariableAsInteger(key: string): number {
 export function isVariableEnabled(key: string): boolean {
   try {
     const result = getVariable(key);
-    return result.trim().toLowerCase() === "true";
+    return stringToBoolean(result);
   } catch (err) {
     return false;
   }

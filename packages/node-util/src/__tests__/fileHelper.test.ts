@@ -14,6 +14,7 @@ import {
   writeFileToDisk,
   writePath,
   readDirectoryFromDisk,
+  copyFileFromDisk,
 } from "../fileHelper";
 
 describe("fileHelper", () => {
@@ -336,6 +337,22 @@ describe("fileHelper", () => {
       } catch (e) {
         expect(e.message).toContain("ENOENT");
       }
+    });
+  });
+
+  describe("#copyFileFromDisk", () => {
+    const copyFilePath = path.join(__dirname, "copyTestFile.txt");
+    const copyFilePathTarget = path.join(__dirname, "copyTestFile_copy.txt");
+
+    afterAll(() => {
+      fs.unlinkSync(copyFilePathTarget);
+    });
+
+    it("copies the file correctly", async () => {
+      const result = await copyFileFromDisk(copyFilePath, copyFilePathTarget);
+      expect(result).toBeTruthy();
+      const contents = await readFileFromDisk(copyFilePathTarget);
+      expect(contents).toEqual("copy test file contents\n");
     });
   });
 });

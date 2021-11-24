@@ -156,3 +156,20 @@ export async function readDirectoryFromDisk(
     });
   });
 }
+
+export async function copyFileFromDisk(
+  fromPath: string,
+  toPath: string,
+  options: { writeFlag: number } = { writeFlag: 0 }
+): Promise<boolean> {
+  const { writeFlag } = options;
+  return new Promise((resolve, reject) => {
+    fs.copyFile(fromPath, toPath, writeFlag, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+}

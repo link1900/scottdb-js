@@ -11,6 +11,8 @@ export type ReplacementRule = {
   mapping: (value: any, parent: object) => any;
 };
 
+export { isObject };
+
 export function unwrap<T>(value: T | undefined | null): T {
   if (value === null || value === undefined) {
     throw new InternalServerError(

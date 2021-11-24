@@ -53,14 +53,17 @@ export function setVariable(
 
 export async function loadConfigFile(
   filePath: string,
-  override: boolean = false
+  override: boolean = false,
+  warn: boolean = true
 ): Promise<boolean> {
   try {
     const configToLoad = await readJsonFileFromDisk(filePath);
     logger.trace(`Loading environment variables from config file ${filePath}`);
     return loadConfigObject(configToLoad, override);
   } catch (error) {
-    logger.warn(`Unable to load config from config file ${filePath}`);
+    if (warn) {
+      logger.warn(`Unable to load config from config file ${filePath}`);
+    }
     return false;
   }
 }
@@ -87,5 +90,6 @@ export async function loadConfigForEnvironment(configPath: string) {
   } else {
     logger.info("No environment was set for EXECUTION_ENVIRONMENT");
   }
-  await loadConfigFile(path.join(configPath, "env.json"));
+  await loadConfigFile(path.join(configPath, "secret.json"), false, false);
+  await loadConfigFile(path.join(configPath, "env.json"), false, false);
 }

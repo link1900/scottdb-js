@@ -15,6 +15,7 @@ import {
   zipStringToString,
   stringToBoolean,
   stringToArray,
+  uuid,
 } from "../stringHelper";
 import exampleJson from "./exampleJson.json";
 
@@ -282,6 +283,12 @@ describe("stringHelper", () => {
       it("maps to a boolean false", () => {
         expect(stringToBoolean(value)).toEqual(expected);
       });
+    });
+  });
+
+  describe("uuid()", () => {
+    it("gets a uuid string", () => {
+      expect(uuid()).toHaveLength(36);
     });
   });
 });

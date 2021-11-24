@@ -2,6 +2,7 @@ import { isArray, isString, isEmpty } from "lodash";
 import zlib from "zlib";
 import crypto from "crypto";
 import prettyBytes from "pretty-bytes";
+import { v4 as uuidv4 } from "uuid";
 
 export { isString };
 
@@ -131,4 +132,8 @@ export function stringToBoolean(value?: string): boolean {
       value.trim().toLowerCase()
     )
   );
+}
+
+export function uuid(): string {
+  return uuidv4();
 }

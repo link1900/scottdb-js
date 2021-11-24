@@ -7,4 +7,6 @@ export * from "./objectHelper";
 export * from "./phoneHelper";
 export * from "./promiseHelper";
 export * from "./stringHelper";
-export * from "./urlHelper";
+
+export * from "./url/urlHelper";
+export * from "./url/UrlBuilder";

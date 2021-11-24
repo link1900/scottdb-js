@@ -2,8 +2,16 @@ import queryString from "query-string";
 import { InternalServerError } from "@link1900/node-error";
 import { isString } from "lodash";
 import { isUri } from "@link1900/node-validation";
+import { UrlBuilder, UrlOptions, UrlProperties } from "./UrlBuilder";
 
-export function buildUrl(url: string, queryParameters = {}): string {
+export function buildUrl(
+  urlProperties: UrlProperties = {},
+  options: UrlOptions = {}
+): string {
+  return new UrlBuilder(urlProperties, options).toString();
+}
+
+export function addUrlParameters(url: string, queryParameters = {}): string {
   if (!isString(url)) {
     throw new InternalServerError(
       `Cannot build url for invalid url of '${url}'`

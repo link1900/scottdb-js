@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-environment",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "Node environment",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

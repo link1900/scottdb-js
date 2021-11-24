@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-environment@0.2.9&sourceBranch=refs%2Ftags%2F@link1900/node-environment@0.3.0) (2021-11-24)
+
+
+### Bug Fixes
+
+* **node-environment:** Updated how boolean config is handled ([6fe15f5](https://github.com/projects/link1900/repos/link1900/commits/6fe15f5))
+
+
+### Features
+
+* **node-environment:** Updated configFileLoading to load a secret file ([9de1e77](https://github.com/projects/link1900/repos/link1900/commits/9de1e77))
+
+
+
+
+
 <a name="0.2.9"></a>
 ## [0.2.9](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-environment@0.2.8&sourceBranch=refs%2Ftags%2F@link1900/node-environment@0.2.9) (2021-11-24)
 

@@ -7,6 +7,7 @@ import {
   parseNumber,
   sumNumbers,
   toPlaces,
+  parseIntegerString,
 } from "../numberHelper";
 
 describe("numberHelper", () => {
@@ -60,6 +61,25 @@ describe("numberHelper", () => {
     testCases.forEach((testCase) => {
       it(`parses ${testCase.value} as ${testCase.expected}`, () => {
         expect(parseNumber(testCase.value)).toEqual(testCase.expected);
+      });
+    });
+  });
+
+  describe("#parseIntegerString", () => {
+    const testCases = [
+      { value: "5", expected: 5 },
+      { value: "", expected: undefined },
+      { value: " ", expected: undefined },
+      { value: "  5   ", expected: 5 },
+      { value: "-54000.45", expected: -54000 },
+      { value: null, expected: undefined },
+      { value: undefined, expected: undefined },
+      { value: "nope", expected: undefined },
+    ];
+
+    testCases.forEach((testCase) => {
+      it(`parses ${testCase.value} as ${testCase.expected}`, () => {
+        expect(parseIntegerString(testCase.value)).toEqual(testCase.expected);
       });
     });
   });

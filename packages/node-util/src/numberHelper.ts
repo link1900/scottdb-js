@@ -42,6 +42,19 @@ export function parseNumber(something: any): number {
   return 0;
 }
 
+export function parseIntegerString(
+  numberString: string | null | undefined
+): number | undefined {
+  if (numberString === undefined || numberString === null) {
+    return undefined;
+  }
+  const result = parseInt(numberString, 10);
+  if (isNaN(result)) {
+    return undefined;
+  }
+  return result;
+}
+
 export function inRange(value: number, start: number, end: number): boolean {
   return value >= start && value <= end;
 }

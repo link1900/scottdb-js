@@ -14,6 +14,7 @@ import {
   unzipStringToString,
   zipStringToString,
   stringToBoolean,
+  stringToArray,
 } from "../stringHelper";
 import exampleJson from "./exampleJson.json";
 
@@ -37,6 +38,38 @@ describe("stringHelper", () => {
       } for options ${JSON.stringify(testCase.option)}`, () => {
         // @ts-ignore
         expect(arrayToString(testCase.value, testCase.option)).toEqual(
+          testCase.expected
+        );
+      });
+    });
+  });
+
+  describe("#stringToArray", () => {
+    const testCases = [
+      {
+        value: "val1 val3",
+        option: undefined,
+        expected: ["val1", "val3"],
+      },
+      { value: "", option: undefined, expected: [] },
+      {
+        value: "  val1  val2 val3   ",
+        option: undefined,
+        expected: ["val1", "val2", "val3"],
+      },
+      { value: " ", option: undefined, expected: [] },
+      { value: "val3", option: undefined, expected: ["val3"] },
+      { value: "val1-val3", option: "-", expected: ["val1", "val3"] },
+      { value: null, option: undefined, expected: [] },
+      { value: undefined, option: undefined, expected: [] },
+    ];
+
+    testCases.forEach((testCase) => {
+      it(`splits strings '${testCase.value}' to be ${
+        testCase.expected
+      } for options ${JSON.stringify(testCase.option)}`, () => {
+        // @ts-ignore
+        expect(stringToArray(testCase.value, testCase.option)).toEqual(
           testCase.expected
         );
       });

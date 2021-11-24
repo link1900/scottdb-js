@@ -20,6 +20,17 @@ export function arrayToString(
     .trim();
 }
 
+export function stringToArray(
+  field?: string | null,
+  separator: string = " "
+): string[] {
+  if (field === undefined || field === null) {
+    return [];
+  }
+
+  return field.split(separator).filter((x) => !isEmpty(x));
+}
+
 export function filterForOnlyLetters(
   value?: string,
   regex: string | RegExp = /[^a-zA-Z\s]/g

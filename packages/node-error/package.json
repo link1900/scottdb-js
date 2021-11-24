@@ -22,5 +22,9 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "dependencies": {
+    "@types/uuid": "8.3.3",
+    "uuid": "8.3.2"
+  }
 }

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.4.0&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.4.1) (2021-11-24)
+
+**Note:** Version bump only for package @link1900/node-logger
+
+
+
+
+
 <a name="0.4.0"></a>
 
 # [0.4.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.3.1&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.4.0) (2021-10-05)

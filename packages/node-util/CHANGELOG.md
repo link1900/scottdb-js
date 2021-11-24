@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.5.0&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.6.0) (2021-11-24)
+
+
+### Features
+
+* **node-util:** Added chainPromiseFunctions ([6eeee8b](https://github.com/projects/link1900/repos/link1900/commits/6eeee8b))
+* **node-util:** Added copyFileFromDisk to fileHelper ([51680e2](https://github.com/projects/link1900/repos/link1900/commits/51680e2))
+* **node-util:** Added isEmpty ([1a361bf](https://github.com/projects/link1900/repos/link1900/commits/1a361bf))
+* **node-util:** Added isObject to objectHelper ([240ee83](https://github.com/projects/link1900/repos/link1900/commits/240ee83))
+* **node-util:** Added objectSizeInBytes to objectHelper ([76d9628](https://github.com/projects/link1900/repos/link1900/commits/76d9628))
+* **node-util:** Added parseIntegerString to numberHelper ([3d5c4bf](https://github.com/projects/link1900/repos/link1900/commits/3d5c4bf))
+* **node-util:** Added StepSequence ([853b0f9](https://github.com/projects/link1900/repos/link1900/commits/853b0f9))
+* **node-util:** Added stringToArray to stringHelper ([a752108](https://github.com/projects/link1900/repos/link1900/commits/a752108))
+* **node-util:** Added stringToBoolean to stringHelper ([1830732](https://github.com/projects/link1900/repos/link1900/commits/1830732))
+* **node-util:** Added UrlBuilder ([8c69e2d](https://github.com/projects/link1900/repos/link1900/commits/8c69e2d))
+* **node-util:** Added uuid ([c6bbeb7](https://github.com/projects/link1900/repos/link1900/commits/c6bbeb7))
+
+
+
+
+
 <a name="0.5.0"></a>
 
 # [0.5.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.4.1&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.5.0) (2021-10-05)

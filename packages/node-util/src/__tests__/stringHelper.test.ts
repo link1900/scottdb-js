@@ -13,25 +13,80 @@ import {
   objectStringToObject,
   unzipStringToString,
   zipStringToString,
+  stringToBoolean,
+  stringToArray,
+  uuid,
 } from "../stringHelper";
 import exampleJson from "./exampleJson.json";
 
 describe("stringHelper", () => {
   describe("#arrayToString", () => {
-    const testCases = [
-      { value: ["val1", null, "val3"], option: undefined, expected: "val1 val3" },
-      { value: [null, "val3"], option: undefined, expected: "val3" },
-      { value: ["val1", null, "val3"], option: "-", expected: "val1-val3" },
-      { value: "something", option: undefined, expected: "" },
-      { value: undefined, option: undefined, expected: "" },
+    const testCases: Array<{
+      value: any;
+      separator?: string;
+      expected: string;
+    }> = [
+      {
+        value: ["val1", null, "val3"],
+        expected: "val1 val3",
+      },
+      {
+        value: ["   val1   ", "   val2   ", "  val3  "],
+        expected: "val1 val2 val3",
+      },
+      { value: [null, undefined, "val3"], expected: "val3" },
+      { value: ["val1", null, "val3"], separator: "-", expected: "val1-val3" },
+      {
+        value: ["#val1#", "val2", "#val3#"],
+        separator: "#",
+        expected: "#val1##val2##val3#",
+      },
+      { value: "something", expected: "" },
+      { value: [" ", " "], expected: "" },
+      { value: [], expected: "" },
+      { value: null, expected: "" },
+      { value: undefined, expected: "" },
     ];
 
     testCases.forEach((testCase) => {
-      it(`combines strings '${testCase.value}' to be ${testCase.expected} for options ${JSON.stringify(
-        testCase.option
-      )}`, () => {
+      it(`combines strings '${testCase.value}' to be ${
+        testCase.expected
+      } for separator ${JSON.stringify(testCase.separator)}`, () => {
+        expect(arrayToString(testCase.value, testCase.separator)).toEqual(
+          testCase.expected
+        );
+      });
+    });
+  });
+
+  describe("#stringToArray", () => {
+    const testCases = [
+      {
+        value: "val1 val3",
+        option: undefined,
+        expected: ["val1", "val3"],
+      },
+      { value: "", option: undefined, expected: [] },
+      {
+        value: "  val1  val2 val3   ",
+        option: undefined,
+        expected: ["val1", "val2", "val3"],
+      },
+      { value: " ", option: undefined, expected: [] },
+      { value: "val3", option: undefined, expected: ["val3"] },
+      { value: "val1-val3", option: "-", expected: ["val1", "val3"] },
+      { value: null, option: undefined, expected: [] },
+      { value: undefined, option: undefined, expected: [] },
+    ];
+
+    testCases.forEach((testCase) => {
+      it(`splits strings '${testCase.value}' to be ${
+        testCase.expected
+      } for options ${JSON.stringify(testCase.option)}`, () => {
         // @ts-ignore
-        expect(arrayToString(testCase.value, testCase.option)).toEqual(testCase.expected);
+        expect(stringToArray(testCase.value, testCase.option)).toEqual(
+          testCase.expected
+        );
       });
     });
   });
@@ -132,7 +187,10 @@ describe("stringHelper", () => {
       { value: null, expected: '{"value":null}' },
       { value: undefined, expected: "{}" },
       { value: { test: "object" }, expected: '{"value":{"test":"object"}}' },
-      { value: ["value1", "value2"], expected: '{"value":["value1","value2"]}' },
+      {
+        value: ["value1", "value2"],
+        expected: '{"value":["value1","value2"]}',
+      },
     ];
 
     inputs.forEach((input) => {
@@ -188,6 +246,49 @@ describe("stringHelper", () => {
     it("gives format in MB", async () => {
       const result = await formatBytes(152562384);
       expect(result).toEqual("153 MB");
+    });
+  });
+
+  describe("#stringToBoolean", () => {
+    [
+      { value: "", expected: false },
+      { value: undefined, expected: false },
+      { value: null, expected: false },
+      { value: "No", expected: false },
+      { value: "no", expected: false },
+      { value: "NO", expected: false },
+      { value: "false", expected: false },
+      { value: "f", expected: false },
+      { value: "n", expected: false },
+      { value: "yes", expected: true },
+      { value: "yES", expected: true },
+      { value: "YES", expected: true },
+      { value: "y", expected: true },
+      { value: "t", expected: true },
+      { value: "true", expected: true },
+      { value: " true", expected: true },
+      { value: "true ", expected: true },
+      { value: "truE", expected: true },
+      { value: "TRUE", expected: true },
+      { value: "0", expected: false },
+      { value: "1", expected: true },
+      { value: "on", expected: true },
+      { value: "off", expected: false },
+      { value: "active", expected: true },
+      { value: "valid", expected: true },
+      { value: "inactive", expected: false },
+      { value: "invalid", expected: false },
+      { value: "blue", expected: false },
+    ].forEach(({ value, expected }: any) => {
+      it("maps to a boolean false", () => {
+        expect(stringToBoolean(value)).toEqual(expected);
+      });
+    });
+  });
+
+  describe("uuid()", () => {
+    it("gets a uuid string", () => {
+      expect(uuid()).toHaveLength(36);
     });
   });
 });

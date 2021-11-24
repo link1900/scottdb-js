@@ -1,5 +1,6 @@
-import { InternalServerError } from "@link1900/node-error";
+import sizeof from "object-sizeof";
 import { isObject, isString, isDate, isNumber, isArray } from "lodash";
+import { InternalServerError } from "@link1900/node-error";
 
 export type ReplacementValueType = "string" | "number" | "date";
 
@@ -10,9 +11,13 @@ export type ReplacementRule = {
   mapping: (value: any, parent: object) => any;
 };
 
+export { isObject };
+
 export function unwrap<T>(value: T | undefined | null): T {
   if (value === null || value === undefined) {
-    throw new InternalServerError("Attempted to unwrap value but was null or undefined");
+    throw new InternalServerError(
+      "Attempted to unwrap value but was null or undefined"
+    );
   }
   return value;
 }
@@ -39,12 +44,20 @@ const jsonParseRules: ReplacementRule[] = [
   },
 ];
 
-export function walkObjectAndReplace(object: object, replacementRules: ReplacementRule[]): object {
+export function walkObjectAndReplace(
+  object: object,
+  replacementRules: ReplacementRule[]
+): object {
   let result = {};
   const objectKeys = Object.keys(object);
   objectKeys.forEach((objectKey) => {
     const objectValue = object[objectKey];
-    result[objectKey] = replaceField(objectKey, objectValue, replacementRules, object);
+    result[objectKey] = replaceField(
+      objectKey,
+      objectValue,
+      replacementRules,
+      object
+    );
   });
   return result;
 }
@@ -64,7 +77,9 @@ export function replaceField(
     // apply the mapping function if there was a match
     return replacement ? replacement.mapping(objectValue, parent) : objectValue;
   } else if (isArray(objectValue)) {
-    return objectValue.map((item, index) => replaceField(`${index}`, item, replacementRules, parent));
+    return objectValue.map((item, index) =>
+      replaceField(`${index}`, item, replacementRules, parent)
+    );
   } else if (isObject(objectValue)) {
     return walkObjectAndReplace(objectValue, replacementRules);
   }
@@ -132,4 +147,8 @@ export function serializeObjectToString(val: object): string {
 
 export function deserializeStringToObject(val: string): object {
   return jsonObjectToObject(stringToObject(val));
+}
+
+export function objectSizeInBytes(value?: any): number {
+  return sizeof(value);
 }

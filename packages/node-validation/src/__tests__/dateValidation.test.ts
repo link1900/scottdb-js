@@ -29,9 +29,12 @@ describe("dateValidation tests", () => {
     ];
 
     strings.forEach((stringTest) => {
-      it(`finds string value of '${stringTest.value}' to be ${stringTest.expectedResult ? "valid" : "invalid"}`, () => {
-        // @ts-ignore
-        expect(isValidISODateString(stringTest.value, stringTest.options)).toEqual(stringTest.expectedResult);
+      it(`finds string value of '${stringTest.value}' to be ${
+        stringTest.expectedResult ? "valid" : "invalid"
+      }`, () => {
+        expect(isValidISODateString(stringTest.value)).toEqual(
+          stringTest.expectedResult
+        );
       });
     });
   });

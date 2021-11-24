@@ -15,7 +15,9 @@ describe("#isUri", () => {
   ];
 
   uris.forEach((urlTest) => {
-    it(`finds uri ${urlTest.value} to be ${urlTest.expectedResult ? "valid" : "invalid"}`, () => {
+    it(`finds uri ${urlTest.value} to be ${
+      urlTest.expectedResult ? "valid" : "invalid"
+    }`, () => {
       // @ts-ignore
       expect(isUri(urlTest.value)).toEqual(urlTest.expectedResult);
     });

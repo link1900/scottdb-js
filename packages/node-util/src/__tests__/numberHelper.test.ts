@@ -7,6 +7,7 @@ import {
   parseNumber,
   sumNumbers,
   toPlaces,
+  parseIntegerString,
 } from "../numberHelper";
 
 describe("numberHelper", () => {
@@ -21,7 +22,11 @@ describe("numberHelper", () => {
       { value: [], goal: 56, expected: 0 },
       { value: [10, 20, 30], goal: 12, expected: 10 },
       { value: [10.1, 10.5, 10.4, 8.2, 9.23, 10], goal: 10.2, expected: 10.1 },
-      { value: [2, 0, -1.5, -0.75, -5, 3, -1.2, -2.1], goal: -1, expected: -1.2 },
+      {
+        value: [2, 0, -1.5, -0.75, -5, 3, -1.2, -2.1],
+        goal: -1,
+        expected: -1.2,
+      },
       { value: [10, 15, 0, 20, 5], goal: 0, expected: 0 },
       { value: [10, 15, 0, 20, 5], goal: 2, expected: 0 },
       { value: [10, 15, 0, 20, 5], goal: 2.5, expected: 0 },
@@ -32,7 +37,9 @@ describe("numberHelper", () => {
 
     testCases.forEach((testCase) => {
       it(`finds ${testCase.expected} to be closest`, () => {
-        expect(findClosestNumber(testCase.value, testCase.goal)).toEqual(testCase.expected);
+        expect(findClosestNumber(testCase.value, testCase.goal)).toEqual(
+          testCase.expected
+        );
       });
     });
   });
@@ -58,6 +65,25 @@ describe("numberHelper", () => {
     });
   });
 
+  describe("#parseIntegerString", () => {
+    const testCases = [
+      { value: "5", expected: 5 },
+      { value: "", expected: undefined },
+      { value: " ", expected: undefined },
+      { value: "  5   ", expected: 5 },
+      { value: "-54000.45", expected: -54000 },
+      { value: null, expected: undefined },
+      { value: undefined, expected: undefined },
+      { value: "nope", expected: undefined },
+    ];
+
+    testCases.forEach((testCase) => {
+      it(`parses ${testCase.value} as ${testCase.expected}`, () => {
+        expect(parseIntegerString(testCase.value)).toEqual(testCase.expected);
+      });
+    });
+  });
+
   describe("#inRange", () => {
     const testCases = [
       { value: 5, start: 1, end: 10, expected: true },
@@ -66,7 +92,9 @@ describe("numberHelper", () => {
 
     testCases.forEach((testCase) => {
       it(`finds ${testCase.value} is in between (inclusive) ${testCase.start} and ${testCase.end} as ${testCase.expected}`, () => {
-        expect(inRange(testCase.value, testCase.start, testCase.end)).toEqual(testCase.expected);
+        expect(inRange(testCase.value, testCase.start, testCase.end)).toEqual(
+          testCase.expected
+        );
       });
     });
   });
@@ -95,7 +123,9 @@ describe("numberHelper", () => {
 
     testCases.forEach((testCase) => {
       it(`finds ${testCase.value} is in all provided ranges as ${testCase.expected}`, () => {
-        expect(inRanges(testCase.value, testCase.ranges)).toEqual(testCase.expected);
+        expect(inRanges(testCase.value, testCase.ranges)).toEqual(
+          testCase.expected
+        );
       });
     });
   });
@@ -106,12 +136,19 @@ describe("numberHelper", () => {
       { start: 1, end: 10, expected: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
       { start: 0, end: 10, step: 2, expected: [0, 2, 4, 6, 8, 10] },
       { start: 1, end: 10, step: 3, expected: [1, 4, 7, 10] },
-      { start: 0, end: 1000, step: 100, expected: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000] },
+      {
+        start: 0,
+        end: 1000,
+        step: 100,
+        expected: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+      },
     ];
 
     testCases.forEach((testCase) => {
       it(`generates ${testCase.expected} when start is ${testCase.start} and end is ${testCase.end}`, () => {
-        expect(generateNumberRange(testCase.start, testCase.end, testCase.step)).toEqual(testCase.expected);
+        expect(
+          generateNumberRange(testCase.start, testCase.end, testCase.step)
+        ).toEqual(testCase.expected);
       });
     });
   });
@@ -153,7 +190,9 @@ describe("numberHelper", () => {
 
     testCases.forEach((testCase) => {
       it(`rounds number to specific number of places ${testCase.value} to ${testCase.expected}`, () => {
-        expect(toPlaces(testCase.value, testCase.places)).toEqual(testCase.expected);
+        expect(toPlaces(testCase.value, testCase.places)).toEqual(
+          testCase.expected
+        );
       });
     });
   });

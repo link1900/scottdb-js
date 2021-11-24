@@ -2,10 +2,14 @@ import { isArray, isString, isEmpty } from "lodash";
 import zlib from "zlib";
 import crypto from "crypto";
 import prettyBytes from "pretty-bytes";
+import { v4 as uuidv4 } from "uuid";
 
-export { isString };
+export { isString, isEmpty };
 
-export function arrayToString(fields: Array<string | null | undefined> = [], separator: string = " "): string {
+export function arrayToString(
+  fields: Array<string | null | undefined> = [],
+  separator: string = " "
+): string {
   if (!isArray(fields)) {
     return "";
   }
@@ -17,7 +21,21 @@ export function arrayToString(fields: Array<string | null | undefined> = [], sep
     .trim();
 }
 
-export function filterForOnlyLetters(value?: string, regex: string | RegExp = /[^a-zA-Z\s]/g): string {
+export function stringToArray(
+  field?: string | null,
+  separator: string = " "
+): string[] {
+  if (field === undefined || field === null) {
+    return [];
+  }
+
+  return field.split(separator).filter((x) => !isEmpty(x));
+}
+
+export function filterForOnlyLetters(
+  value?: string,
+  regex: string | RegExp = /[^a-zA-Z\s]/g
+): string {
   if (!value) {
     return "";
   }
@@ -105,4 +123,17 @@ export async function deserializeFromString(string: string): Promise<any> {
 
 export function formatBytes(bytes: number): string {
   return prettyBytes(bytes);
+}
+
+export function stringToBoolean(value?: string): boolean {
+  return (
+    isString(value) &&
+    ["true", "t", "yes", "y", "1", "on", "active", "valid"].includes(
+      value.trim().toLowerCase()
+    )
+  );
+}
+
+export function uuid(): string {
+  return uuidv4();
 }

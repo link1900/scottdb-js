@@ -25,7 +25,16 @@ describe("arrayHelper", () => {
 
   describe("#removeNils", () => {
     it("removes the nils from an array", () => {
-      const input = [true, false, { some: "value" }, "value", undefined, 5, null, []];
+      const input = [
+        true,
+        false,
+        { some: "value" },
+        "value",
+        undefined,
+        5,
+        null,
+        [],
+      ];
       const result = removeNils<any>(input);
       expect(result.length).toEqual(6);
       expect(result).toEqual([true, false, { some: "value" }, "value", 5, []]);

@@ -36,7 +36,11 @@ describe("#isValidString", () => {
     { value: "something", options: { regex: /th/ }, expectedResult: true },
     { value: "something", options: { regex: /cats/ }, expectedResult: false },
 
-    { value: "some", options: { min: 2, max: 5, regex: /so/ }, expectedResult: true },
+    {
+      value: "some",
+      options: { min: 2, max: 5, regex: /so/ },
+      expectedResult: true,
+    },
   ];
 
   strings.forEach((stringTest) => {
@@ -44,7 +48,9 @@ describe("#isValidString", () => {
       stringTest.expectedResult ? "valid" : "invalid"
     } for options ${JSON.stringify(stringTest.options)}`, () => {
       // @ts-ignore
-      expect(isValidString(stringTest.value, stringTest.options)).toEqual(stringTest.expectedResult);
+      expect(isValidString(stringTest.value, stringTest.options)).toEqual(
+        stringTest.expectedResult
+      );
     });
   });
 });

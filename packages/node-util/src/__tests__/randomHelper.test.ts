@@ -1,4 +1,10 @@
-import { randomCharacter, randomInteger, randomIntegerArray, randomOption, randomString } from "../randomHelper";
+import {
+  randomCharacter,
+  randomInteger,
+  randomIntegerArray,
+  randomOption,
+  randomString,
+} from "../randomHelper";
 
 describe("randomHelper", () => {
   describe("randomInteger", () => {

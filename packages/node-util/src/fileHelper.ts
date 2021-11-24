@@ -1,5 +1,6 @@
-import fs, { WriteFileOptions } from "fs";
 import path from "path";
+import * as fs from "fs";
+import { WriteFileOptions } from "fs";
 import { stringToObject } from "./objectHelper";
 
 export async function readFileFromDisk(filePath: string): Promise<string> {
@@ -30,7 +31,9 @@ export async function writeFileToDisk(
   });
 }
 
-export async function createDirectoryOnDisk(filePath: string): Promise<boolean> {
+export async function createDirectoryOnDisk(
+  filePath: string
+): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     fs.mkdir(filePath, (err) => {
       if (err) {
@@ -71,7 +74,9 @@ export async function getFileInfoFromDisk(filePath: string): Promise<fs.Stats> {
   });
 }
 
-export async function getFileInfo(filePath: string): Promise<fs.Stats | undefined> {
+export async function getFileInfo(
+  filePath: string
+): Promise<fs.Stats | undefined> {
   try {
     return await getFileInfoFromDisk(filePath);
   } catch (error) {
@@ -128,19 +133,42 @@ export async function createDirectory(filePath: string): Promise<boolean> {
   return createDirectoryOnDisk(filePath);
 }
 
-export async function writePath(filePath: string, data: string, options: WriteFileOptions = {}): Promise<boolean> {
+export async function writePath(
+  filePath: string,
+  data: string,
+  options: WriteFileOptions = {}
+): Promise<boolean> {
   const dir = path.dirname(filePath);
   await createDirectory(dir);
   return writeFileToDisk(filePath, data, options);
 }
 
-export async function readDirectoryFromDisk(filePath: string): Promise<string[]> {
+export async function readDirectoryFromDisk(
+  filePath: string
+): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {
     fs.readdir(filePath, (err, files) => {
       if (err) {
         reject(err);
       } else {
         resolve(files);
+      }
+    });
+  });
+}
+
+export async function copyFileFromDisk(
+  fromPath: string,
+  toPath: string,
+  options: { writeFlag: number } = { writeFlag: 0 }
+): Promise<boolean> {
+  const { writeFlag } = options;
+  return new Promise((resolve, reject) => {
+    fs.copyFile(fromPath, toPath, writeFlag, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(true);
       }
     });
   });

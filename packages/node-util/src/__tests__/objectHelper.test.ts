@@ -10,6 +10,7 @@ import {
   serializeObjectToString,
   deserializeStringToObject,
   isPresent,
+  objectSizeInBytes,
 } from "../objectHelper";
 
 describe("objectHelper", () => {
@@ -62,7 +63,10 @@ describe("objectHelper", () => {
       };
 
       const stringReplacer = (value: string) => `${value}Replaced`;
-      const dateReplacer = (value: Date) => ({ fieldType: "date", stringValue: value.toISOString() });
+      const dateReplacer = (value: Date) => ({
+        fieldType: "date",
+        stringValue: value.toISOString(),
+      });
       const numberReplacer = (value: number) => (value += 1);
       const rules: ReplacementRule[] = [
         {
@@ -91,11 +95,19 @@ describe("objectHelper", () => {
       expect(result.keyTest).toEqual("keyTestValueReplaced");
       expect(result.valueTest).toEqual("valueTestValueReplaced");
       expect(result.stringTest).toEqual("someStringValueReplaced");
-      expect(result.dateTest).toEqual({ fieldType: "date", stringValue: someDate.toISOString() });
+      expect(result.dateTest).toEqual({
+        fieldType: "date",
+        stringValue: someDate.toISOString(),
+      });
       expect(result.numberTest).toEqual(6);
       expect(result.nestedTest.keyTest).toEqual("keyTestNestedReplaced");
-      expect(result.nestedTest.dateTest).toEqual({ fieldType: "date", stringValue: someDate.toISOString() });
-      expect(result.nestedTest.doubleNestedTest.keyTest).toEqual("keyTestDoubleNestedReplaced");
+      expect(result.nestedTest.dateTest).toEqual({
+        fieldType: "date",
+        stringValue: someDate.toISOString(),
+      });
+      expect(result.nestedTest.doubleNestedTest.keyTest).toEqual(
+        "keyTestDoubleNestedReplaced"
+      );
       expect(result.nestedTest.doubleNestedTest.dateTest).toEqual({
         fieldType: "date",
         stringValue: someDate.toISOString(),
@@ -110,7 +122,12 @@ describe("objectHelper", () => {
         stringTest: "someStringValue",
         dateTest: someDate,
         numberTest: 5,
-        arrayTest: [5, someDate, "arrayStringValue", { stringTest: "someString", dateTest: someDate }],
+        arrayTest: [
+          5,
+          someDate,
+          "arrayStringValue",
+          { stringTest: "someString", dateTest: someDate },
+        ],
         nestedTest: {
           dateTest: someDate,
           doubleNestedTest: {
@@ -125,8 +142,12 @@ describe("objectHelper", () => {
       expect(result.dateTest).toEqual(`___date___${someDate.toISOString()}`);
       expect(result.numberTest).toEqual(5);
       expect(result.arrayTest.length).toEqual(4);
-      expect(result.nestedTest.dateTest).toEqual(`___date___${someDate.toISOString()}`);
-      expect(result.nestedTest.doubleNestedTest.dateTest).toEqual(`___date___${someDate.toISOString()}`);
+      expect(result.nestedTest.dateTest).toEqual(
+        `___date___${someDate.toISOString()}`
+      );
+      expect(result.nestedTest.doubleNestedTest.dateTest).toEqual(
+        `___date___${someDate.toISOString()}`
+      );
 
       const parseResult: any = jsonObjectToObject(result);
       expect(parseResult).toEqual(toReplace);
@@ -135,7 +156,9 @@ describe("objectHelper", () => {
 
   describe("#stringToObject", () => {
     it("converts an string to an object", () => {
-      expect(stringToObject(`{ "test": "object" }`)).toEqual({ test: "object" });
+      expect(stringToObject(`{ "test": "object" }`)).toEqual({
+        test: "object",
+      });
       // @ts-ignore
       expect(stringToObject(undefined)).toEqual({});
       // @ts-ignore
@@ -165,7 +188,12 @@ describe("objectHelper", () => {
         stringTest: "someStringValue",
         dateTest: someDate,
         numberTest: 5,
-        arrayTest: [5, someDate, "arrayStringValue", { stringTest: "someString", dateTest: someDate }],
+        arrayTest: [
+          5,
+          someDate,
+          "arrayStringValue",
+          { stringTest: "someString", dateTest: someDate },
+        ],
         nestedTest: {
           dateTest: someDate,
           doubleNestedTest: {
@@ -187,6 +215,32 @@ describe("objectHelper", () => {
     });
     it("returns false when the value is nil", () => {
       expect(isPresent("some")).toEqual(true);
+    });
+  });
+
+  describe("#objectSizeInBytes", () => {
+    const testCases = [
+      { value: undefined, expected: 0 },
+      { value: null, expected: 0 },
+      { value: "word", expected: 8 },
+      { value: 1, expected: 8 },
+      { value: true, expected: 4 },
+      { value: [true, false], expected: 8 },
+      {
+        value: {
+          stringValue: "word",
+          numberValue: 1,
+          booleanValue: true,
+          arrayValue: [true, false],
+        },
+        expected: 116,
+      },
+    ];
+
+    testCases.forEach((testCase) => {
+      it(`for value '${testCase.value}' to be size ${testCase.expected}`, () => {
+        expect(objectSizeInBytes(testCase.value)).toEqual(testCase.expected);
+      });
     });
   });
 });

@@ -18,7 +18,9 @@ export function getBenchmarkEndTimeMilliseconds(startTime: TimeMark) {
 }
 
 export function getBenchmarkEndTimeString(startTime: TimeMark) {
-  return convertMillisecondsToString(getBenchmarkEndTimeMilliseconds(startTime));
+  return convertMillisecondsToString(
+    getBenchmarkEndTimeMilliseconds(startTime)
+  );
 }
 
 export function convertMillisecondsToString(milliseconds: number): string {

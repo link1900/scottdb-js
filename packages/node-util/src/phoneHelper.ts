@@ -4,7 +4,10 @@ import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
 /**
  * Takes a phone number and does analysis it to determine if it is a mobile or national number.
  */
-export function categorizePhoneNumber(phone?: string, isoCountryCode?: string): { mobile?: string; phone?: string } {
+export function categorizePhoneNumber(
+  phone?: string,
+  isoCountryCode?: string
+): { mobile?: string; phone?: string } {
   if (!phone || !isValidString(phone, { min: 1, max: 50 })) {
     return {
       mobile: undefined,
@@ -32,12 +35,18 @@ export function categorizePhoneNumber(phone?: string, isoCountryCode?: string): 
   };
 }
 
-export function isNumberMobileType(phone: string, isoCountryCode: string): boolean {
+export function isNumberMobileType(
+  phone: string,
+  isoCountryCode: string
+): boolean {
   const type = getNumberType(phone, isoCountryCode);
   return type === PhoneNumberType.MOBILE;
 }
 
-export function getNumberType(phone: string, isoCountryCode: string): PhoneNumberType {
+export function getNumberType(
+  phone: string,
+  isoCountryCode: string
+): PhoneNumberType {
   try {
     const phoneNumber = getPhoneUtil().parse(phone, isoCountryCode);
     return getPhoneUtil().getNumberType(phoneNumber);

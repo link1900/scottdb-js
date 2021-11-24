@@ -4,6 +4,10 @@ import { HttpStatusCode } from "./HttpStatusCode";
 
 export class InternalServerError extends ServerError {
   constructor(message: string) {
-    super(message, ErrorCode.INTERNAL_SERVER_ERROR, HttpStatusCode.INTERNAL_SERVER_ERROR_500);
+    super(
+      message,
+      ErrorCode.INTERNAL_SERVER_ERROR,
+      HttpStatusCode.INTERNAL_SERVER_ERROR_500
+    );
   }
 }

@@ -4,7 +4,7 @@ import crypto from "crypto";
 import prettyBytes from "pretty-bytes";
 import { v4 as uuidv4 } from "uuid";
 
-export { isString };
+export { isString, isEmpty };
 
 export function arrayToString(
   fields: Array<string | null | undefined> = [],

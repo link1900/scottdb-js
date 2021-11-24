@@ -1,5 +1,6 @@
-import fs, { WriteFileOptions } from "fs";
 import path from "path";
+import * as fs from "fs";
+import { WriteFileOptions } from "fs";
 import { stringToObject } from "./objectHelper";
 
 export async function readFileFromDisk(filePath: string): Promise<string> {

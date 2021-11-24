@@ -1,5 +1,6 @@
-import { InternalServerError } from "@link1900/node-error";
+import sizeof from "object-sizeof";
 import { isObject, isString, isDate, isNumber, isArray } from "lodash";
+import { InternalServerError } from "@link1900/node-error";
 
 export type ReplacementValueType = "string" | "number" | "date";
 
@@ -144,4 +145,8 @@ export function serializeObjectToString(val: object): string {
 
 export function deserializeStringToObject(val: string): object {
   return jsonObjectToObject(stringToObject(val));
+}
+
+export function objectSizeInBytes(value?: any): number {
+  return sizeof(value);
 }

@@ -10,6 +10,7 @@ import {
   serializeObjectToString,
   deserializeStringToObject,
   isPresent,
+  objectSizeInBytes,
 } from "../objectHelper";
 
 describe("objectHelper", () => {
@@ -214,6 +215,32 @@ describe("objectHelper", () => {
     });
     it("returns false when the value is nil", () => {
       expect(isPresent("some")).toEqual(true);
+    });
+  });
+
+  describe("#objectSizeInBytes", () => {
+    const testCases = [
+      { value: undefined, expected: 0 },
+      { value: null, expected: 0 },
+      { value: "word", expected: 8 },
+      { value: 1, expected: 8 },
+      { value: true, expected: 4 },
+      { value: [true, false], expected: 8 },
+      {
+        value: {
+          stringValue: "word",
+          numberValue: 1,
+          booleanValue: true,
+          arrayValue: [true, false],
+        },
+        expected: 116,
+      },
+    ];
+
+    testCases.forEach((testCase) => {
+      it(`for value '${testCase.value}' to be size ${testCase.expected}`, () => {
+        expect(objectSizeInBytes(testCase.value)).toEqual(testCase.expected);
+      });
     });
   });
 });

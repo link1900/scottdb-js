@@ -20,24 +20,38 @@ import exampleJson from "./exampleJson.json";
 
 describe("stringHelper", () => {
   describe("#arrayToString", () => {
-    const testCases = [
+    const testCases: Array<{
+      value: any;
+      separator?: string;
+      expected: string;
+    }> = [
       {
         value: ["val1", null, "val3"],
-        option: undefined,
         expected: "val1 val3",
       },
-      { value: [null, "val3"], option: undefined, expected: "val3" },
-      { value: ["val1", null, "val3"], option: "-", expected: "val1-val3" },
-      { value: "something", option: undefined, expected: "" },
-      { value: undefined, option: undefined, expected: "" },
+      {
+        value: ["   val1   ", "   val2   ", "  val3  "],
+        expected: "val1 val2 val3",
+      },
+      { value: [null, undefined, "val3"], expected: "val3" },
+      { value: ["val1", null, "val3"], separator: "-", expected: "val1-val3" },
+      {
+        value: ["#val1#", "val2", "#val3#"],
+        separator: "#",
+        expected: "#val1##val2##val3#",
+      },
+      { value: "something", expected: "" },
+      { value: [" ", " "], expected: "" },
+      { value: [], expected: "" },
+      { value: null, expected: "" },
+      { value: undefined, expected: "" },
     ];
 
     testCases.forEach((testCase) => {
       it(`combines strings '${testCase.value}' to be ${
         testCase.expected
-      } for options ${JSON.stringify(testCase.option)}`, () => {
-        // @ts-ignore
-        expect(arrayToString(testCase.value, testCase.option)).toEqual(
+      } for separator ${JSON.stringify(testCase.separator)}`, () => {
+        expect(arrayToString(testCase.value, testCase.separator)).toEqual(
           testCase.expected
         );
       });

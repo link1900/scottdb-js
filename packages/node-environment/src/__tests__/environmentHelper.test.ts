@@ -219,6 +219,8 @@ describe("environmentHelper", () => {
     afterEach(async () => {
       delete process.env.exampleVar;
       delete process.env.extraVar;
+      delete process.env.localSecretVar;
+      delete process.env.remoteSecretVar;
       process.env.EXECUTION_ENVIRONMENT = "local-test";
     });
 
@@ -228,6 +230,8 @@ describe("environmentHelper", () => {
       delete process.env.EXECUTION_ENVIRONMENT;
       await loadConfigForEnvironment(testConfigPath);
       expect(process.env.exampleVar).toEqual("baseValue");
+      expect(process.env.localSecretVar).toEqual("top-secret");
+      expect(process.env.remoteSecretVar).toEqual("another-top-secret");
     });
 
     it("load base extra config correctly", async () => {
@@ -235,6 +239,8 @@ describe("environmentHelper", () => {
       await loadConfigForEnvironment(testConfigPath);
       expect(process.env.exampleVar).toEqual("test-value");
       expect(process.env.extraVar).toEqual("extra-value");
+      expect(process.env.localSecretVar).toEqual("top-secret");
+      expect(process.env.remoteSecretVar).toEqual("more-top-secret");
     });
   });
 });

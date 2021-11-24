@@ -1,6 +1,6 @@
 import { InternalServerError } from "@link1900/node-error";
 import { logger } from "@link1900/node-logger";
-import { readJsonFileFromDisk } from "@link1900/node-util";
+import { readJsonFileFromDisk, stringToBoolean } from "@link1900/node-util";
 import * as path from "path";
 
 export function findVariable(key: string): string | undefined {
@@ -32,7 +32,7 @@ export function getVariableAsInteger(key: string): number {
 export function isVariableEnabled(key: string): boolean {
   try {
     const result = getVariable(key);
-    return result.trim().toLowerCase() === "true";
+    return stringToBoolean(result);
   } catch (err) {
     return false;
   }
@@ -53,14 +53,17 @@ export function setVariable(
 
 export async function loadConfigFile(
   filePath: string,
-  override: boolean = false
+  override: boolean = false,
+  warn: boolean = true
 ): Promise<boolean> {
   try {
     const configToLoad = await readJsonFileFromDisk(filePath);
     logger.trace(`Loading environment variables from config file ${filePath}`);
     return loadConfigObject(configToLoad, override);
   } catch (error) {
-    logger.warn(`Unable to load config from config file ${filePath}`);
+    if (warn) {
+      logger.warn(`Unable to load config from config file ${filePath}`);
+    }
     return false;
   }
 }
@@ -87,5 +90,6 @@ export async function loadConfigForEnvironment(configPath: string) {
   } else {
     logger.info("No environment was set for EXECUTION_ENVIRONMENT");
   }
-  await loadConfigFile(path.join(configPath, "env.json"));
+  await loadConfigFile(path.join(configPath, "secret.json"), false, false);
+  await loadConfigFile(path.join(configPath, "env.json"), false, false);
 }

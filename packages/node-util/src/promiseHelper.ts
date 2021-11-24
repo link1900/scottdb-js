@@ -1,23 +1,18 @@
 import { TimeoutError } from "@link1900/node-error";
-import { logger } from "@link1900/node-logger";
 import { isPresent } from "./objectHelper";
 
 export interface PromiseErrorOptions {
-  errorStrategy?: "onError" | "throw" | "include";
-  onError?: (reason: any) => any;
-}
-
-export function logFailedPromise(reason: any) {
-  logger.error("promise failed", reason);
+  errorStrategy?: "handler" | "throw" | "include";
+  errorHandler?: (reason: any) => any;
 }
 
 export function handlePromiseFailure(
   result: any,
   options: PromiseErrorOptions = {}
 ) {
-  const { errorStrategy = "onError", onError = logFailedPromise } = options;
-  if (errorStrategy === "onError") {
-    onError(result);
+  const { errorStrategy = "handler", errorHandler = () => {} } = options;
+  if (errorStrategy === "handler") {
+    errorHandler(result);
   }
   if (errorStrategy === "throw") {
     throw result;
@@ -59,19 +54,15 @@ export async function promiseEvery<Item>(
   return results;
 }
 
-/**
- * Converts an array of promises into a promise of array of resolved values.
- * All promises will in order one by one, in array sequence.
- */
-export async function promiseSequence<Item>(
-  items: Array<Promise<Item> | Item>,
+export async function promiseFunctionSequence<Item>(
+  executors: Array<() => Promise<Item>>,
   options: PromiseErrorOptions = {}
 ): Promise<Array<Item>> {
   const results: Item[] = [];
-  const { errorStrategy = "onError" } = options;
-  for (let item of items) {
+  const { errorStrategy = "handler" } = options;
+  for (let executor of executors) {
     try {
-      const result = await item;
+      const result = await executor();
       results.push(result);
     } catch (error) {
       const failureResult = handlePromiseFailure(error, options);
@@ -81,6 +72,43 @@ export async function promiseSequence<Item>(
     }
   }
   return results;
+}
+
+export async function mapPromiseFunctionSequence<Item, Result>(
+  items: Item[],
+  executor: (item: Item) => Promise<Result>,
+  options: PromiseErrorOptions = {}
+): Promise<Array<Result>> {
+  return promiseFunctionSequence(
+    items.map((item) => {
+      return () => {
+        return executor(item);
+      };
+    }),
+    options
+  );
+}
+
+export async function chainPromiseFunctions<SequenceContext>(
+  initContext: SequenceContext,
+  executors: Array<
+    (context: SequenceContext) => SequenceContext | Promise<SequenceContext>
+  >,
+  options: PromiseErrorOptions = {}
+): Promise<SequenceContext> {
+  let result: SequenceContext = initContext;
+  const { errorStrategy = "handler" } = options;
+  for (let executor of executors) {
+    try {
+      result = await executor(result);
+    } catch (error) {
+      handlePromiseFailure(error, options);
+      if (errorStrategy === "include") {
+        return result;
+      }
+    }
+  }
+  return result;
 }
 
 export async function delayPromise<T>(

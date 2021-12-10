@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-location",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Node location",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,7 +29,5 @@
     "country-state-city": "2.0.0",
     "moment-timezone": "0.5.33",
     "slugify": "1.4.7"
-  },
-  "dependencies": {
   }
 }

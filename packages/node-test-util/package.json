@@ -1,0 +1,34 @@
+{
+  "name": "@link1900/node-test-util",
+  "version": "0.0.1",
+  "description": "Node test util",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Scott Brown <link1900@gmail.com>",
+  "license": "MIT",
+  "repository": "git@github.com:link1900/link1900.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "prebuild": "rm -rf lib/",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+  },
+  "dependencies": {
+    "@types/nock": "11.1.0",
+    "@types/node-fetch": "2.5.12",
+    "nock": "13.2.1",
+    "node-fetch": "2.6.6"
+  }
+}

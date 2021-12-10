@@ -1,0 +1,35 @@
+{
+  "name": "@link1900/node-location",
+  "version": "0.0.1",
+  "description": "Node location",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Scott Brown <link1900@gmail.com>",
+  "license": "MIT",
+  "repository": "git@github.com:link1900/link1900.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "prebuild": "rm -rf lib/",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "@link1900/node-script": "^0.1.0",
+    "@link1900/node-util": "^0.6.1",
+    "country-state-city": "2.0.0",
+    "moment-timezone": "0.5.33",
+    "slugify": "1.4.7"
+  },
+  "dependencies": {
+  }
+}

@@ -20,6 +20,7 @@ module.exports = {
   coverageDirectory: "coverage",
   coverageReporters: ["json", "text-summary", "lcov", "html"],
   collectCoverage: true,
+  maxWorkers: "2",
   coverageThreshold: {
     global: {
       branches: 60,

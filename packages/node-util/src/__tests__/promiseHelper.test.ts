@@ -1,6 +1,5 @@
 import {
   chainPromiseFunctions,
-  delayPromise,
   promiseEvery,
   timeoutPromise,
   mapPromiseFunctionSequence,
@@ -268,18 +267,6 @@ describe("promiseHelperTests", () => {
     });
   });
 
-  describe("delayPromise()", () => {
-    it("runs without delay when delay is 0", async () => {
-      const result = await delayPromise(testFunction("pass"), 0);
-      expect(result).toEqual("success");
-    });
-
-    it("runs with delay when delay is 1000", async () => {
-      const result = await delayPromise(testFunction("pass"), 1000);
-      expect(result).toEqual("success");
-    });
-  });
-
   describe("timeoutPromise()", () => {
     it("runs without timeout when timeout is 0", async () => {
       const result = await timeoutPromise(testFunction("pass"), 0);
@@ -293,7 +280,7 @@ describe("promiseHelperTests", () => {
 
     it("throws error when does not finished before the timeout", async () => {
       try {
-        await timeoutPromise(delayPromise(testFunction("pass"), 10000), 10);
+        await timeoutPromise(new Promise(() => {}), 10);
         expect(true).toBeFalsy();
       } catch (error) {
         expect(error.message).toEqual(

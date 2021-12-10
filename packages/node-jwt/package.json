@@ -1,0 +1,37 @@
+{
+  "name": "@link1900/node-jwt",
+  "version": "0.0.1",
+  "description": "Node jwt",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Scott Brown <link1900@gmail.com>",
+  "license": "MIT",
+  "repository": "git@github.com:link1900/link1900.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "prebuild": "rm -rf lib/",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "@link1900/node-test-util": "^0.1.0",
+    "@types/jsonwebtoken": "8.5.1"
+  },
+  "dependencies": {
+    "@link1900/node-error": "^0.3.0",
+    "@link1900/node-http-client": "^0.1.0",
+    "@link1900/node-util": "^0.6.0",
+    "jsonwebtoken": "8.5.1",
+    "jwks-rsa": "1.12.2"
+  }
+}

@@ -15,7 +15,7 @@
     "format": "prettier --write .",
     "build": "lerna run build",
     "lint": "lerna run lint",
-    "test": "lerna run test",
+    "test": "lerna run test --concurrency=1",
     "validate": "yarn build && yarn test",
     "lerna:publish": "lerna publish from-git",
     "lerna:version": "lerna version --message \"chore(release): publish [skip ci]\"",

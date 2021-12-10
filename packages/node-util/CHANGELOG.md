@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.6.1"></a>
+## [0.6.1](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.6.0&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.6.1) (2021-12-10)
+
+
+### Bug Fixes
+
+* **node-util:** Adjusted a file read test to not be effected by line endings ([a3c6af3](https://github.com/projects/link1900/repos/link1900/commits/a3c6af3))
+* **node-util:** Removed delayPromise as it has a memory leak ([d0558b4](https://github.com/projects/link1900/repos/link1900/commits/d0558b4))
+
+
+
+
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.5.0&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.6.0) (2021-11-24)
 

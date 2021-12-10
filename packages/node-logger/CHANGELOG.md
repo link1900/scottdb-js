@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.4.1&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.4.2) (2021-12-10)
+
+
+### Bug Fixes
+
+* **node-logger:** Skipped possible bad tests ([de1d5df](https://github.com/projects/link1900/repos/link1900/commits/de1d5df))
+* **node-logger:** Skipped possible bad tests ([c2e274a](https://github.com/projects/link1900/repos/link1900/commits/c2e274a))
+* **node-logger:** Unskipped working tests ([a506fc9](https://github.com/projects/link1900/repos/link1900/commits/a506fc9))
+* **node-logger:** Updated logger tests to find error ([50998ec](https://github.com/projects/link1900/repos/link1900/commits/50998ec))
+
+
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.4.0&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.4.1) (2021-11-24)
 

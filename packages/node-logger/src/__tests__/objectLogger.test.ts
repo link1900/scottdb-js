@@ -62,7 +62,7 @@ describe("ObjectLogger", () => {
     });
   });
 
-  describe.skip("formatMessage()", () => {
+  describe("formatMessage()", () => {
     it("formats basic message correctly correctly", () => {
       const logger = new ObjectLogger();
       const stringResult = logger.formatMessage("info", "test message", {});
@@ -340,7 +340,7 @@ describe("ObjectLogger", () => {
       expect(mock).toHaveBeenCalled();
     });
 
-    it.skip("logs a circular meta data correctly", () => {
+    it("logs a circular meta data correctly", () => {
       const logger = new ObjectLogger();
       const circular: any = { field: undefined };
       circular.field = circular;
@@ -353,7 +353,7 @@ describe("ObjectLogger", () => {
       expect(result.field.field).toEqual("[Circular ~.field]");
     });
 
-    it.skip("logs a circular error correctly", () => {
+    it("logs a circular error correctly", () => {
       const logger = new ObjectLogger();
       const circular: any = { field: undefined };
       circular.field = circular;

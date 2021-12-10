@@ -111,21 +111,6 @@ export async function chainPromiseFunctions<SequenceContext>(
   return result;
 }
 
-export async function delayPromise<T>(
-  promise: T,
-  delayInMilliseconds: number
-): Promise<T> {
-  if (delayInMilliseconds <= 0) {
-    return promise;
-  }
-  return new Promise((resolve) => {
-    const timeoutId = setTimeout(() => {
-      resolve(promise);
-      clearTimeout(timeoutId);
-    }, delayInMilliseconds);
-  });
-}
-
 export async function timeoutPromise<T>(
   promise: T,
   timeoutInMilliseconds: number,

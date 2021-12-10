@@ -1,5 +1,6 @@
 import { ObjectLogger } from "../objectLogger";
 import testStrings from "./testStrings.json";
+import SpyInstance = jest.SpyInstance;
 
 enum ExampleEnum {
   ERROR_ONE = "error one",
@@ -27,6 +28,32 @@ class ExampleError extends Error {
 }
 
 describe("ObjectLogger", () => {
+  let logMock: SpyInstance;
+  let infoMock: SpyInstance;
+  let warnMock: SpyInstance;
+  let errorMock: SpyInstance;
+
+  beforeAll(() => {
+    logMock = jest.spyOn(console, "log").mockImplementation(() => {});
+    infoMock = jest.spyOn(console, "info").mockImplementation(() => {});
+    warnMock = jest.spyOn(console, "warn").mockImplementation(() => {});
+    errorMock = jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    logMock.mockReset();
+    infoMock.mockReset();
+    warnMock.mockReset();
+    errorMock.mockReset();
+  });
+
+  afterAll(() => {
+    logMock.mockRestore();
+    infoMock.mockRestore();
+    warnMock.mockRestore();
+    errorMock.mockRestore();
+  });
+
   describe("constructor()", () => {
     it("builds the object logger correctly", () => {
       const logger = new ObjectLogger();
@@ -75,268 +102,270 @@ describe("ObjectLogger", () => {
     });
   });
 
-  it("logs info correctly", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "info");
-    const logResult = logger.info("info message", { extra: "data" });
-    const result = JSON.parse(logResult!);
-    expect(result && result.level).toEqual("info");
-    expect(result && result.message).toEqual("info message");
-    expect(result && result.extra).toEqual("data");
-    expect(mock).toHaveBeenCalled();
-  });
-
-  it("logs warn correctly", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "warn");
-    const logResult = logger.warn("warn message", { extra: "data" });
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("warn");
-    expect(result && result.message).toEqual("warn message");
-    expect(result && result.extra).toEqual("data");
-  });
-
-  it("logs error correctly", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "error");
-    const logResult = logger.error("error message", new Error("some error"), {
-      extra: "data",
+  describe("log()", () => {
+    it("logs info correctly", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "info");
+      const logResult = logger.info("info message", { extra: "data" });
+      const result = JSON.parse(logResult!);
+      expect(result && result.level).toEqual("info");
+      expect(result && result.message).toEqual("info message");
+      expect(result && result.extra).toEqual("data");
+      expect(mock).toHaveBeenCalled();
     });
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("error");
-    expect(result && result.message).toEqual("error message");
-    expect(result && result.extra).toEqual("data");
-    expect(result && result.error.type).toEqual("Error");
-    expect(result && result.error.message).toEqual("some error");
-    expect(result && result.error.stacktrace).toBeTruthy();
-  });
 
-  it("logs example error with extra information", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "error");
-    const exampleError = new ExampleError(
-      "extra error",
-      ExampleEnum.ERROR_ONE,
-      "404",
-      "name",
-      "too long"
-    );
-    const logResult = logger.error("error message", exampleError, {
-      extra: "data",
+    it("logs warn correctly", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "warn");
+      const logResult = logger.warn("warn message", { extra: "data" });
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("warn");
+      expect(result && result.message).toEqual("warn message");
+      expect(result && result.extra).toEqual("data");
     });
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("error");
-    expect(result && result.message).toEqual("error message");
-    expect(result && result.extra).toEqual("data");
-    expect(result && result.error.type).toEqual("Error");
-    expect(result && result.error.message).toEqual("extra error");
-    expect(result && result.error.stacktrace).toBeTruthy();
-  });
 
-  it("logs error correctly with meta", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "error");
-    const logResult = logger.error("error message");
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("error");
-    expect(result && result.message).toEqual("error message");
-  });
-
-  it("logs error correctly without error", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "error");
-    const logResult = logger.error("error message", undefined, {
-      extra: "data",
+    it("logs error correctly", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "error");
+      const logResult = logger.error("error message", new Error("some error"), {
+        extra: "data",
+      });
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("error");
+      expect(result && result.message).toEqual("error message");
+      expect(result && result.extra).toEqual("data");
+      expect(result && result.error.type).toEqual("Error");
+      expect(result && result.error.message).toEqual("some error");
+      expect(result && result.error.stacktrace).toBeTruthy();
     });
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("error");
-    expect(result && result.message).toEqual("error message");
-    expect(result && result.extra).toEqual("data");
-  });
 
-  it("logs trace correctly", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "trace");
-    const logResult = logger.trace("trace message", { extra: "data" });
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("trace");
-    expect(result && result.message).toEqual("trace message");
-    expect(result && result.extra).toEqual("data");
-  });
+    it("logs example error with extra information", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "error");
+      const exampleError = new ExampleError(
+        "extra error",
+        ExampleEnum.ERROR_ONE,
+        "404",
+        "name",
+        "too long"
+      );
+      const logResult = logger.error("error message", exampleError, {
+        extra: "data",
+      });
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("error");
+      expect(result && result.message).toEqual("error message");
+      expect(result && result.extra).toEqual("data");
+      expect(result && result.error.type).toEqual("Error");
+      expect(result && result.error.message).toEqual("extra error");
+      expect(result && result.error.stacktrace).toBeTruthy();
+    });
 
-  it("logs debug correctly", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "debug");
-    const logResult = logger.debug("debug message", { extra: "data" });
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("debug");
-    expect(result && result.message).toEqual("debug message");
-    expect(result && result.extra).toEqual("data");
-  });
+    it("logs error correctly with meta", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "error");
+      const logResult = logger.error("error message");
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("error");
+      expect(result && result.message).toEqual("error message");
+    });
 
-  it("logs correctly", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "log");
-    const logResult = logger.log("info", "log message");
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("info");
-    expect(result && result.timestamp).toBeTruthy();
-    expect(result && result.trace).toBeFalsy();
-  });
+    it("logs error correctly without error", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "error");
+      const logResult = logger.error("error message", undefined, {
+        extra: "data",
+      });
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("error");
+      expect(result && result.message).toEqual("error message");
+      expect(result && result.extra).toEqual("data");
+    });
 
-  it("does not log if disabled", () => {
-    const logger = new ObjectLogger();
-    const mock = jest.spyOn(logger, "formatMessage");
-    logger.enabled = false;
-    const logResult = logger.log("info", "log message");
-    expect(mock).not.toHaveBeenCalled();
-    expect(logResult).toBeFalsy();
-  });
+    it("logs trace correctly", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "trace");
+      const logResult = logger.trace("trace message", { extra: "data" });
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("trace");
+      expect(result && result.message).toEqual("trace message");
+      expect(result && result.extra).toEqual("data");
+    });
 
-  it("logs only the correct level", () => {
-    const logger = new ObjectLogger();
-    const mockLog = jest.spyOn(console, "log");
-    const mockWarn = jest.spyOn(console, "warn");
-    logger.level = "warn";
-    expect(logger.level).toEqual("warn");
-    logger.warn("warn message");
-    expect(mockWarn).toHaveBeenCalled();
-    logger.info("info message");
-    expect(mockLog).not.toHaveBeenCalled();
-  });
+    it("logs debug correctly", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "debug");
+      const logResult = logger.debug("debug message", { extra: "data" });
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("debug");
+      expect(result && result.message).toEqual("debug message");
+      expect(result && result.extra).toEqual("data");
+    });
 
-  it("gets log level correctly", () => {
-    const logger = new ObjectLogger();
-    logger.level = "trace";
-    expect(logger.level).toEqual("trace");
+    it("logs correctly", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "log");
+      const logResult = logger.log("info", "log message");
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("info");
+      expect(result && result.timestamp).toBeTruthy();
+      expect(result && result.trace).toBeFalsy();
+    });
 
-    logger.level = "debug";
-    expect(logger.level).toEqual("debug");
+    it("does not log if disabled", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "formatMessage");
+      logger.enabled = false;
+      const logResult = logger.log("info", "log message");
+      expect(mock).not.toHaveBeenCalled();
+      expect(logResult).toBeFalsy();
+    });
 
-    logger.level = "info";
-    expect(logger.level).toEqual("info");
+    it("logs only the correct level", () => {
+      const logger = new ObjectLogger();
+      const mockLog = jest.spyOn(console, "log");
+      const mockWarn = jest.spyOn(console, "warn");
+      logger.level = "warn";
+      expect(logger.level).toEqual("warn");
+      logger.warn("warn message");
+      expect(mockWarn).toHaveBeenCalled();
+      logger.info("info message");
+      expect(mockLog).not.toHaveBeenCalled();
+    });
 
-    logger.level = "warn";
-    expect(logger.level).toEqual("warn");
+    it("gets log level correctly", () => {
+      const logger = new ObjectLogger();
+      logger.level = "trace";
+      expect(logger.level).toEqual("trace");
 
-    logger.level = "error";
-    expect(logger.level).toEqual("error");
+      logger.level = "debug";
+      expect(logger.level).toEqual("debug");
 
-    logger.innerLogger.setLevel("silent");
-    expect(logger.level).toEqual("silent");
-  });
+      logger.level = "info";
+      expect(logger.level).toEqual("info");
 
-  it("adds hook correctly", () => {
-    const logger = new ObjectLogger();
-    expect(logger.metaHooks.length).toEqual(0);
-    logger.addMetaHook(() => ({ some: "value" }));
-    expect(logger.metaHooks.length).toEqual(1);
-  });
+      logger.level = "warn";
+      expect(logger.level).toEqual("warn");
 
-  it("clears hooks correctly", () => {
-    const logger = new ObjectLogger();
-    expect(logger.metaHooks.length).toEqual(0);
-    logger.addMetaHook(() => ({ some: "value" }));
-    logger.addMetaHook(() => ({ some: "value2" }));
-    expect(logger.metaHooks.length).toEqual(2);
-    logger.clearMetaHooks();
-    expect(logger.metaHooks.length).toEqual(0);
-  });
+      logger.level = "error";
+      expect(logger.level).toEqual("error");
 
-  it("builds meta data from hooks correctly", () => {
-    const logger = new ObjectLogger();
-    logger.addMetaHook(() => ({ some: "value" }));
-    logger.addMetaHook(() => ({ some: "value2" }));
-    logger.addMetaHook(() => ({ more: "value3" }));
-    expect(logger.getMetaDataForHooks()).toEqual({
-      some: "value2",
-      more: "value3",
+      logger.innerLogger.setLevel("silent");
+      expect(logger.level).toEqual("silent");
     });
   });
 
-  it("builds meta data from hooks when no hooks are defined", () => {
-    const logger = new ObjectLogger();
-    expect(logger.getMetaDataForHooks()).toEqual({});
-  });
+  describe("hooks", () => {
+    it("adds hook correctly", () => {
+      const logger = new ObjectLogger();
+      expect(logger.metaHooks.length).toEqual(0);
+      logger.addMetaHook(() => ({ some: "value" }));
+      expect(logger.metaHooks.length).toEqual(1);
+    });
 
-  it("logs messages with the hook metadata", () => {
-    const logger = new ObjectLogger();
-    logger.addMetaHook(() => ({ some: "value" }));
-    logger.addMetaHook(() => ({ some: "value2" }));
-    logger.addMetaHook(() => ({ more: "value3" }));
-    const mock = jest.spyOn(logger, "formatMessage");
+    it("clears hooks correctly", () => {
+      const logger = new ObjectLogger();
+      expect(logger.metaHooks.length).toEqual(0);
+      logger.addMetaHook(() => ({ some: "value" }));
+      logger.addMetaHook(() => ({ some: "value2" }));
+      expect(logger.metaHooks.length).toEqual(2);
+      logger.clearMetaHooks();
+      expect(logger.metaHooks.length).toEqual(0);
+    });
 
-    const logResult = logger.log("info", "log message");
+    it("builds meta data from hooks correctly", () => {
+      const logger = new ObjectLogger();
+      logger.addMetaHook(() => ({ some: "value" }));
+      logger.addMetaHook(() => ({ some: "value2" }));
+      logger.addMetaHook(() => ({ more: "value3" }));
+      expect(logger.getMetaDataForHooks()).toEqual({
+        some: "value2",
+        more: "value3",
+      });
+    });
 
-    const result = JSON.parse(logResult!);
-    expect(mock).toHaveBeenCalled();
-    expect(result && result.level).toEqual("info");
-    expect(result && result.timestamp).toBeTruthy();
-    expect(result && result.some).toEqual("value2");
-    expect(result && result.more).toEqual("value3");
-  });
+    it("builds meta data from hooks when no hooks are defined", () => {
+      const logger = new ObjectLogger();
+      expect(logger.getMetaDataForHooks()).toEqual({});
+    });
 
-  it("logs context correctly", () => {
-    const logger = new ObjectLogger({ context: { extraContext: "data1" } });
-    const mock = jest.spyOn(logger, "info");
-    const logResult = logger.info("info message", { extra: "data2" });
-    const result = JSON.parse(logResult!);
-    expect(result.level).toEqual("info");
-    expect(result.message).toEqual("info message");
-    expect(result.extra).toEqual("data2");
-    expect(result.extraContext).toEqual("data1");
-    expect(mock).toHaveBeenCalled();
-  });
+    it("logs messages with the hook metadata", () => {
+      const logger = new ObjectLogger();
+      logger.addMetaHook(() => ({ some: "value" }));
+      logger.addMetaHook(() => ({ some: "value2" }));
+      logger.addMetaHook(() => ({ more: "value3" }));
+      const mock = jest.spyOn(logger, "formatMessage");
 
-  it("logs context correctly after update", () => {
-    const logger = new ObjectLogger({ context: { extraContext: "data1" } });
-    logger.updateContext({ moreContext: "data3" });
-    const mock = jest.spyOn(logger, "info");
-    const logResult = logger.info("info message", { extra: "data2" });
-    const result = JSON.parse(logResult!);
-    expect(result.level).toEqual("info");
-    expect(result.message).toEqual("info message");
-    expect(result.extra).toEqual("data2");
-    expect(result.extraContext).toEqual("data1");
-    expect(result.moreContext).toEqual("data3");
-    expect(mock).toHaveBeenCalled();
-  });
+      const logResult = logger.log("info", "log message");
 
-  it("logs a circular meta data correctly", () => {
-    const mockLog = jest.spyOn(console, "info");
-    const logger = new ObjectLogger();
-    const circular: any = { field: undefined };
-    circular.field = circular;
-    logger.info("bad log", circular);
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("info");
+      expect(result && result.timestamp).toBeTruthy();
+      expect(result && result.some).toEqual("value2");
+      expect(result && result.more).toEqual("value3");
+    });
 
-    expect(mockLog).toHaveBeenCalled();
-    const call = mockLog.mock.calls[0][0];
-    const result = JSON.parse(call);
-    expect(result.message).toEqual("bad log");
-    expect(result.field.field).toEqual("[Circular ~.field]");
-  });
+    it("logs context correctly", () => {
+      const logger = new ObjectLogger({ context: { extraContext: "data1" } });
+      const mock = jest.spyOn(logger, "info");
+      const logResult = logger.info("info message", { extra: "data2" });
+      const result = JSON.parse(logResult!);
+      expect(result.level).toEqual("info");
+      expect(result.message).toEqual("info message");
+      expect(result.extra).toEqual("data2");
+      expect(result.extraContext).toEqual("data1");
+      expect(mock).toHaveBeenCalled();
+    });
 
-  it("logs a circular error correctly", () => {
-    const mockLog = jest.spyOn(console, "error");
-    const logger = new ObjectLogger();
-    const circular: any = { field: undefined };
-    circular.field = circular;
-    const circleError: any = new Error("some error");
-    circleError.field = circleError;
-    logger.error("bad log", circleError, circular);
+    it("logs context correctly after update", () => {
+      const logger = new ObjectLogger({ context: { extraContext: "data1" } });
+      logger.updateContext({ moreContext: "data3" });
+      const mock = jest.spyOn(logger, "info");
+      const logResult = logger.info("info message", { extra: "data2" });
+      const result = JSON.parse(logResult!);
+      expect(result.level).toEqual("info");
+      expect(result.message).toEqual("info message");
+      expect(result.extra).toEqual("data2");
+      expect(result.extraContext).toEqual("data1");
+      expect(result.moreContext).toEqual("data3");
+      expect(mock).toHaveBeenCalled();
+    });
 
-    expect(mockLog).toHaveBeenCalled();
-    const call = mockLog.mock.calls[0][0];
-    const result = JSON.parse(call);
-    expect(result.message).toEqual("bad log");
-    expect(result.field.field).toEqual("[Circular ~.field]");
+    it("logs a circular meta data correctly", () => {
+      const logger = new ObjectLogger();
+      const circular: any = { field: undefined };
+      circular.field = circular;
+      logger.info("bad log", circular);
+
+      expect(infoMock).toHaveBeenCalled();
+      const call = infoMock.mock.calls[0][0];
+      const result = JSON.parse(call);
+      expect(result.message).toEqual("bad log");
+      expect(result.field.field).toEqual("[Circular ~.field]");
+    });
+
+    it("logs a circular error correctly", () => {
+      const logger = new ObjectLogger();
+      const circular: any = { field: undefined };
+      circular.field = circular;
+      const circleError: any = new Error("some error");
+      circleError.field = circleError;
+      logger.error("bad log", circleError, circular);
+
+      expect(errorMock).toHaveBeenCalled();
+      const call = errorMock.mock.calls[0][0];
+      const result = JSON.parse(call);
+      expect(result.message).toEqual("bad log");
+      expect(result.field.field).toEqual("[Circular ~.field]");
+    });
   });
 });

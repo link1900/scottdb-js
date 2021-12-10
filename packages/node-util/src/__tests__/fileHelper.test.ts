@@ -352,7 +352,7 @@ describe("fileHelper", () => {
       const result = await copyFileFromDisk(copyFilePath, copyFilePathTarget);
       expect(result).toBeTruthy();
       const contents = await readFileFromDisk(copyFilePathTarget);
-      expect(contents).toEqual("copy test file contents\n");
+      expect(contents).toContain("copy test file contents");
     });
   });
 });

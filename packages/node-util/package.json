@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-util",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Node util",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,7 +25,7 @@
   ],
   "dependencies": {
     "@link1900/node-error": "^0.3.0",
-    "@link1900/node-validation": "^0.1.6",
+    "@link1900/node-validation": "^0.1.7",
     "@types/google-libphonenumber": "7.4.17",
     "@types/lodash": "4.14.144",
     "@types/pretty-bytes": "5.1.0",

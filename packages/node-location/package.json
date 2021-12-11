@@ -27,7 +27,7 @@
     "@link1900/node-script": "^0.1.0",
     "@link1900/node-util": "^0.6.1",
     "country-state-city": "2.0.0",
-    "moment-timezone": "0.5.33",
+    "moment-timezone": "0.5.34",
     "slugify": "1.4.7"
   }
 }

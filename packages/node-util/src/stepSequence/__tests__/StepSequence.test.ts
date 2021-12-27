@@ -3,6 +3,8 @@ import { StepSequence } from "../StepSequence";
 import { ExampleAsyncStep } from "./ExampleAsyncStep";
 import { ExampleBadStep } from "./ExampleBadStep";
 import { ExampleContext } from "./ExampleContext";
+import { ExampleHardcodedStep } from "./ExampleHardcodedStep";
+import { ExampleSkipStep } from "./ExampleSkipStep";
 import { ExampleStep } from "./ExampleStep";
 
 describe("StepSequence", () => {
@@ -77,6 +79,62 @@ describe("StepSequence", () => {
 
       const result = await sequence.runSteps({ count: 0 });
       expect(result.count).toEqual(2);
+    });
+
+    it("it runs all enabled steps correctly", async () => {
+      const sequence = new StepSequence<ExampleContext>();
+      const step1 = new ExampleStep();
+      const step2 = new ExampleStep();
+      step2.enabled = false;
+      sequence.addStep(step1);
+      sequence.addStep(step2);
+      expect(sequence.steps).toHaveLength(2);
+
+      const result = await sequence.runSteps({ count: 0 });
+      expect(result.count).toEqual(1);
+    });
+
+    it("it runs all applicable steps correctly", async () => {
+      const sequence = new StepSequence<ExampleContext>();
+      const step1 = new ExampleStep();
+      const step2 = new ExampleSkipStep();
+      sequence.addStep(step1);
+      sequence.addStep(step2);
+      expect(sequence.steps).toHaveLength(2);
+
+      const result = await sequence.runSteps({ count: 0 });
+      expect(result.count).toEqual(1);
+    });
+
+    it("it runs only the first step when in first mode", async () => {
+      const sequence = new StepSequence<ExampleContext>();
+      const step1 = new ExampleStep();
+      const step2 = new ExampleHardcodedStep();
+      sequence.addStep(step1);
+      sequence.addStep(step2);
+      expect(sequence.steps).toHaveLength(2);
+
+      const result = await sequence.runSteps(
+        { count: 0 },
+        { sequenceMode: "first" }
+      );
+      expect(result.count).toEqual(1);
+    });
+
+    it("it runs only the first active step when in first mode", async () => {
+      const sequence = new StepSequence<ExampleContext>();
+      const step1 = new ExampleStep();
+      const step2 = new ExampleHardcodedStep();
+      step1.enabled = false;
+      sequence.addStep(step1);
+      sequence.addStep(step2);
+      expect(sequence.steps).toHaveLength(2);
+
+      const result = await sequence.runSteps(
+        { count: 0 },
+        { sequenceMode: "first" }
+      );
+      expect(result.count).toEqual(15);
     });
 
     it("it throws on failed steps", async () => {

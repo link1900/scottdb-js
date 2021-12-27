@@ -11,6 +11,7 @@ import { get, has } from "lodash";
 type SchemaProvider = () => Promise<GraphQLSchema>;
 type ContextProvider = () => Promise<any>;
 
+let graphqlSchema: GraphQLSchema | undefined;
 let schemaProvider: SchemaProvider | undefined;
 let contextProvider: ContextProvider | undefined;
 
@@ -20,6 +21,22 @@ export function setTestSchemaProvider(provider: SchemaProvider) {
 
 export function setTestContextProvider(provider: ContextProvider) {
   contextProvider = provider;
+}
+
+async function getTestGraphqlSchema() {
+  if (!graphqlSchema) {
+    if (!schemaProvider) {
+      throw new Error(
+        "Need to call setSchemaProvider() before calling getTestGraphqlSchema()"
+      );
+    }
+    graphqlSchema = await schemaProvider();
+  }
+  return graphqlSchema;
+}
+
+export function setTestGraphqlSchema(schema: GraphQLSchema) {
+  graphqlSchema = schema;
 }
 
 export async function callGraphqlWithSchema(
@@ -64,7 +81,7 @@ export async function runQuery(
   if (!schemaProvider) {
     throw new Error("call setTestSchemaProvider() before using runQuery");
   }
-  const schema = await schemaProvider();
+  const schema = await getTestGraphqlSchema();
   const result = await callGraphqlWithSchema(
     query,
     variables,
@@ -93,7 +110,7 @@ export function buildQueryFunction(
   const queryString = typeof query === "string" ? query : print(query);
   return async function queryFunction(
     variables: object = {},
-    providedContext: any,
+    providedContext?: any,
     expectedError: boolean = false
   ) {
     let theContext;

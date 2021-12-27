@@ -1,5 +1,6 @@
 import { StepFunction } from "../StepFunction";
 import { StepSequence } from "../StepSequence";
+import { ExampleAsyncSkipStep } from "./ExampleAsyncSkipStep";
 import { ExampleAsyncStep } from "./ExampleAsyncStep";
 import { ExampleBadStep } from "./ExampleBadStep";
 import { ExampleContext } from "./ExampleContext";
@@ -106,9 +107,36 @@ describe("StepSequence", () => {
       expect(result.count).toEqual(1);
     });
 
+    it("it skips async not applying steps", async () => {
+      const sequence = new StepSequence<ExampleContext>();
+      const step1 = new ExampleStep();
+      const step2 = new ExampleAsyncSkipStep();
+      sequence.addStep(step1);
+      sequence.addStep(step2);
+      expect(sequence.steps).toHaveLength(2);
+
+      const result = await sequence.runSteps({ count: 0 });
+      expect(result.count).toEqual(1);
+    });
+
     it("it runs only the first step when in first mode", async () => {
       const sequence = new StepSequence<ExampleContext>();
       const step1 = new ExampleStep();
+      const step2 = new ExampleHardcodedStep();
+      sequence.addStep(step1);
+      sequence.addStep(step2);
+      expect(sequence.steps).toHaveLength(2);
+
+      const result = await sequence.runSteps(
+        { count: 0 },
+        { sequenceMode: "first" }
+      );
+      expect(result.count).toEqual(1);
+    });
+
+    it("it runs only the first async step when in first mode", async () => {
+      const sequence = new StepSequence<ExampleContext>();
+      const step1 = new ExampleAsyncStep();
       const step2 = new ExampleHardcodedStep();
       sequence.addStep(step1);
       sequence.addStep(step2);

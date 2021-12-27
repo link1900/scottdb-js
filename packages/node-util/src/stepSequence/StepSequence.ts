@@ -1,4 +1,3 @@
-import { isPresent } from "../objectHelper";
 import { chainPromiseFunctions, PromiseErrorOptions } from "../promiseHelper";
 import { Step } from "./Step";
 
@@ -42,12 +41,13 @@ export class StepSequence<Context> {
 
   async runSteps(
     initContext: Context,
-    options: StepSequenceOptions & PromiseErrorOptions = {
-      sequenceMode: "every",
-      errorStrategy: "throw",
-    }
+    options: StepSequenceOptions & PromiseErrorOptions = {}
   ): Promise<Context> {
-    const { sequenceMode } = options;
+    const {
+      sequenceMode = "every",
+      errorStrategy = "throw",
+      errorHandler,
+    } = options;
     if (sequenceMode === "every") {
       return chainPromiseFunctions<Context>(
         initContext,
@@ -60,24 +60,21 @@ export class StepSequence<Context> {
             return step.run(ctx);
           };
         }),
-        options
+        { errorStrategy, errorHandler }
       );
     }
 
     if (sequenceMode === "first") {
-      const activeSteps = await Promise.all(
-        this.steps.map((step) => {
-          if (step.applies(initContext)) {
-            return step;
-          } else {
-            return undefined;
+      for (let step of this.steps) {
+        try {
+          const doesApply = await step.applies(initContext);
+          if (doesApply) {
+            return await step.run(initContext);
           }
-        })
-      );
-      const mainSteps = activeSteps.filter(isPresent);
-      if (mainSteps.length > 0) {
-        return mainSteps[0].run(initContext);
+        } catch (error) {}
       }
+
+      return initContext;
     }
 
     return initContext;

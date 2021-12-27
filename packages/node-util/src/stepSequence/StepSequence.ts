@@ -7,7 +7,7 @@ import { Step } from "./Step";
  * first - will run only the first which has applies true
  */
 export type StepSequenceOptions = {
-  sequenceMode: "every" | "first";
+  sequenceMode?: "every" | "first";
 };
 
 export class StepSequence<Context> {

@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-graphql",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Node graphql",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,9 +25,9 @@
   ],
   "dependencies": {
     "@link1900/node-error": "^0.3.0",
-    "@link1900/node-http-client": "^0.1.1",
+    "@link1900/node-http-client": "^0.1.2",
     "@link1900/node-logger": "^0.4.2",
-    "@link1900/node-test-util": "^0.1.0",
+    "@link1900/node-test-util": "^0.2.0",
     "@link1900/node-util": "^0.6.2",
     "@link1900/node-validation": "^0.1.7",
     "graphql": "15.5.0",

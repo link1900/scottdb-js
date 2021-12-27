@@ -11,7 +11,7 @@ export class UserInputError extends ServerError {
     invalidField: string,
     invalidReason: InvalidFieldReason
   ) {
-    super(message, ErrorCode.USER_INPUT_ERROR, HttpStatusCode.BAD_REQUEST_400);
+    super(message, ErrorCode.USER_INPUT_ERROR, HttpStatusCode.BAD_REQUEST);
     this.invalidField = invalidField;
     this.invalidReason = invalidReason;
   }

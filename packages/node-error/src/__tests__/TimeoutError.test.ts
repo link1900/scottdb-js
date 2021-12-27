@@ -9,6 +9,6 @@ describe("TimeoutError", () => {
       "Operation failed to complete within the required period of time"
     );
     expect(error.code).toEqual(ErrorCode.TIMEOUT);
-    expect(error.httpCode).toEqual(HttpStatusCode.INTERNAL_SERVER_ERROR_500);
+    expect(error.httpCode).toEqual(HttpStatusCode.INTERNAL_SERVER_ERROR);
   });
 });

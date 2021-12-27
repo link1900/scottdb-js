@@ -7,6 +7,6 @@ describe("UnauthorizedError", () => {
     const error = new UnauthorizedError("test message");
     expect(error.message).toEqual("test message");
     expect(error.code).toEqual(ErrorCode.UNAUTHORIZED_ERROR);
-    expect(error.httpCode).toEqual(HttpStatusCode.UNAUTHORIZED_401);
+    expect(error.httpCode).toEqual(HttpStatusCode.UNAUTHORIZED);
   });
 });

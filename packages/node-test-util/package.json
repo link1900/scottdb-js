@@ -24,9 +24,20 @@
     "lib"
   ],
   "dependencies": {
+    "@types/lodash": "4.14.178",
     "@types/nock": "11.1.0",
     "@types/node-fetch": "2.5.12",
+    "@types/supertest": "2.0.11",
+    "graphql": "15.5.0",
+    "lodash": "4.17.21",
     "nock": "13.2.1",
-    "node-fetch": "2.6.6"
+    "node-fetch": "2.6.6",
+    "supertest": "6.1.6"
+  },
+  "devDependencies": {
+    "apollo-server-express": "3.5.0",
+    "express": "4.17.2",
+    "reflect-metadata": "0.1.13",
+    "type-graphql": "1.1.1"
   }
 }

@@ -61,7 +61,7 @@ export async function makeValidGraphqlQuery<
     const externalMessage = errors[0]?.message ?? "";
     throw new ExternalGraphqlApiError({
       message: "graphql api returned errors",
-      externalHttpCode: HttpStatusCode.OK_200,
+      externalHttpCode: HttpStatusCode.OK,
       externalMessage,
       externalGraphqlErrors: errors,
       graphqlErrorType: "resolver",
@@ -71,7 +71,7 @@ export async function makeValidGraphqlQuery<
   if (!data) {
     throw new ExternalGraphqlApiError({
       message: "graphql api returned response without data",
-      externalHttpCode: HttpStatusCode.OK_200,
+      externalHttpCode: HttpStatusCode.OK,
       graphqlErrorType: "resolver",
     });
   }

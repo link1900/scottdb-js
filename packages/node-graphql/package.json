@@ -24,6 +24,7 @@
     "lib"
   ],
   "dependencies": {
+    "@link1900/node-environment": "^0.3.2",
     "@link1900/node-error": "^0.3.0",
     "@link1900/node-http-client": "^0.1.2",
     "@link1900/node-logger": "^0.4.2",

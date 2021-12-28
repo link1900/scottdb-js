@@ -7,7 +7,7 @@ export class InternalServerError extends ServerError {
     super(
       message,
       ErrorCode.INTERNAL_SERVER_ERROR,
-      HttpStatusCode.INTERNAL_SERVER_ERROR_500
+      HttpStatusCode.INTERNAL_SERVER_ERROR
     );
   }
 }

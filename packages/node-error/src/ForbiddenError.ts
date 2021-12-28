@@ -4,6 +4,6 @@ import { HttpStatusCode } from "./HttpStatusCode";
 
 export class ForbiddenError extends ServerError {
   constructor(message: string) {
-    super(message, ErrorCode.FORBIDDEN_ERROR, HttpStatusCode.FORBIDDEN_403);
+    super(message, ErrorCode.FORBIDDEN_ERROR, HttpStatusCode.FORBIDDEN);
   }
 }

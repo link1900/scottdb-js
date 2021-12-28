@@ -43,7 +43,7 @@ describe("scriptSetupRegistry", () => {
     registerArgSetupStep(() => {
       count++;
     });
-    runArgumentSetupSteps({ program: new Command() });
+    await runArgumentSetupSteps({ program: new Command() });
     expect(count).toEqual(1);
   });
 
@@ -52,7 +52,7 @@ describe("scriptSetupRegistry", () => {
     registerSetupStep(() => {
       count++;
     });
-    runSetupSteps({ program: new Command(), args: {} });
+    await runSetupSteps({ program: new Command(), args: {} });
     expect(count).toEqual(1);
   });
 });

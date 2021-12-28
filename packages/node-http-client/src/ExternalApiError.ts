@@ -19,11 +19,7 @@ export class ExternalApiError extends ServerError {
       externalMessage,
       originalError,
     } = options;
-    super(
-      message,
-      "EXTERNAL_API_ERROR",
-      HttpStatusCode.INTERNAL_SERVER_ERROR_500
-    );
+    super(message, "EXTERNAL_API_ERROR", HttpStatusCode.INTERNAL_SERVER_ERROR);
     this.externalHttpCode = externalHttpCode;
     this.externalMessage = externalMessage;
     this.originalError = originalError;

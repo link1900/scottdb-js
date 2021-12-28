@@ -1,4 +1,4 @@
-import { requestContextStep } from "../RequestContextStep";
+import { RequestContextStep } from "../RequestContextStep";
 
 const exampleContextWithId: any = {
   express: {
@@ -12,7 +12,7 @@ const exampleContextWithoutId: any = {};
 
 describe("RequestContextStep", () => {
   it("build request context with passed id", async () => {
-    const result = await requestContextStep.run(exampleContextWithId);
+    const result = await new RequestContextStep().run(exampleContextWithId);
     expect(result).toEqual({
       express: {
         req: {
@@ -24,7 +24,7 @@ describe("RequestContextStep", () => {
   });
 
   it("build request context with new uuid", async () => {
-    const result = await requestContextStep.run(exampleContextWithoutId);
+    const result = await new RequestContextStep().run(exampleContextWithoutId);
     expect(result?.requestId).toHaveLength(36);
   });
 });

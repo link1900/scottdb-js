@@ -1,15 +1,21 @@
-import { StepFunction, uuid } from "@link1900/node-util";
+import { Step, uuid } from "@link1900/node-util";
 import { ExpressRequestContext } from "./ExpressRequestContext";
 import { RequestContext } from "./RequestContext";
 
-export const requestContextStep = new StepFunction<
+export class RequestContextStep extends Step<
   ExpressRequestContext & RequestContext
->((ctx) => {
-  const { express } = ctx;
-  if (express && express.req && (express.req as any).requestId) {
-    ctx.requestId = (express.req as any).requestId;
-  } else {
-    ctx.requestId = uuid();
+> {
+  run(
+    context: ExpressRequestContext & RequestContext
+  ):
+    | Promise<ExpressRequestContext & RequestContext>
+    | (ExpressRequestContext & RequestContext) {
+    const { express } = context;
+    if (express && express.req && (express.req as any).requestId) {
+      context.requestId = (express.req as any).requestId;
+    } else {
+      context.requestId = uuid();
+    }
+    return context;
   }
-  return ctx;
-});
+}

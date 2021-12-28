@@ -8,8 +8,6 @@ import {
 } from "@link1900/node-error";
 import { ExternalApiError } from "@link1900/node-http-client";
 import { GraphQLError } from "graphql";
-import { ArgumentValidationError } from "type-graphql";
-import { GraphqlArgumentErrorFormatter } from "../GraphqlArgumentErrorFormatter";
 import {
   formatGraphqlError,
   handleGraphqlError,
@@ -42,7 +40,6 @@ function getAllGraphqlErrorFormatters() {
   return [
     new GraphqlUserInputErrorFormatter(),
     new GraphqlExternalApiErrorFormatter(),
-    new GraphqlArgumentErrorFormatter(),
     new GraphqlServerErrorFormatter(),
     new GraphqlUnauthenticatedErrorFormatter(),
     new GraphqlJavascriptErrorFormatter(),
@@ -95,24 +92,6 @@ describe("handleGraphqlError", () => {
 
     expect(result?.extensions?.invalidField).toEqual("name");
     expect(result?.extensions?.invalidReason).toEqual("REQUIRED");
-  });
-
-  it("formats argument validation error", () => {
-    registerGraphqlErrorFormatters(getAllGraphqlErrorFormatters());
-    const result = handleGraphqlError(
-      getMockGraphqlError({
-        originalError: new ArgumentValidationError([]),
-      })
-    );
-    expect(result.message).toEqual("some error");
-    expect(result?.extensions?.errorId).toHaveLength(36);
-    expect(result?.extensions?.stacktrace).toBeUndefined();
-    expect(result?.extensions?.errorMessage).toEqual(
-      "Argument Validation Error"
-    );
-    expect(result?.extensions?.code).toEqual("USER_INPUT_ERROR");
-    expect(result?.extensions?.httpStatusCode).toEqual(400);
-    expect(result?.extensions?.validationErrors).toEqual([]);
   });
 
   it("formats server error", () => {
@@ -220,24 +199,6 @@ describe("handleGraphqlError masked", () => {
 
     expect(result?.extensions?.invalidField).toEqual("name");
     expect(result?.extensions?.invalidReason).toEqual("REQUIRED");
-  });
-
-  it("formats argument validation error", () => {
-    registerGraphqlErrorFormatters(getAllGraphqlErrorFormatters());
-    const result = handleGraphqlError(
-      getMockGraphqlError({
-        originalError: new ArgumentValidationError([]),
-      })
-    );
-    expect(result.message).toEqual("some error");
-    expect(result?.extensions?.errorId).toHaveLength(36);
-    expect(result?.extensions?.stacktrace).toBeUndefined();
-    expect(result?.extensions?.errorMessage).toEqual(
-      "Argument Validation Error"
-    );
-    expect(result?.extensions?.code).toEqual("USER_INPUT_ERROR");
-    expect(result?.extensions?.httpStatusCode).toEqual(400);
-    expect(result?.extensions?.validationErrors).toEqual([]);
   });
 
   it("formats server error", () => {

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.6.2&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.7.0) (2021-12-28)
+
+
+### Bug Fixes
+
+* **node-util:** Allow sequenceMode defaulting ([6df144f](https://github.com/projects/link1900/repos/link1900/commits/6df144f))
+* **node-util:** More step sequence default fixing ([b9e63bb](https://github.com/projects/link1900/repos/link1900/commits/b9e63bb))
+
+
+### Features
+
+* **node-util:** Updated the Step and StepSequence with applies ([8abe5d6](https://github.com/projects/link1900/repos/link1900/commits/8abe5d6))
+
+
+
+
+
 <a name="0.6.2"></a>
 ## [0.6.2](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-util@0.6.1&sourceBranch=refs%2Ftags%2F@link1900/node-util@0.6.2) (2021-12-11)
 

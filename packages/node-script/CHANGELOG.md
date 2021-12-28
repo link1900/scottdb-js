@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-script@0.1.1&sourceBranch=refs%2Ftags%2F@link1900/node-script@0.1.2) (2021-12-28)
+
+
+### Bug Fixes
+
+* **node-util:** More step sequence default fixing ([b9e63bb](https://github.com/projects/link1900/repos/link1900/commits/b9e63bb))
+
+
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-script@0.1.0&sourceBranch=refs%2Ftags%2F@link1900/node-script@0.1.1) (2021-12-11)
 

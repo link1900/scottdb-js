@@ -12,6 +12,9 @@ jest.mock("@link1900/node-logger", () => ({
 const exampleContext: any = {
   express: {
     req: {
+      get: () => {
+        return "Bearer someToken";
+      },
       headers: {
         authorization: "Bearer someToken",
       },
@@ -21,7 +24,11 @@ const exampleContext: any = {
 
 const exampleEmptyContext: any = {
   express: {
-    req: {},
+    req: {
+      get: () => {
+        return undefined;
+      },
+    },
   },
 };
 

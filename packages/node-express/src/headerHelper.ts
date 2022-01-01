@@ -1,5 +1,4 @@
 import { logger } from "@link1900/node-logger";
-import { IncomingHttpHeaders } from "http";
 import { parseIntegerString } from "@link1900/node-util";
 
 export interface CacheControlFields {
@@ -7,11 +6,9 @@ export interface CacheControlFields {
   cacheMode: "no-cache" | "allow-cache" | "only-cache";
 }
 
-export function getIdTokenFromHeaders(
-  headers?: IncomingHttpHeaders
+export function getIdTokenFromAuthorizationHeader(
+  authHeader?: string
 ): string | undefined {
-  const authHeader: string | undefined = (headers?.Authorization ??
-    headers?.authorization) as string;
   if (authHeader) {
     logger.debug("found authorization header");
     if (authHeader.startsWith("Bearer ")) {
@@ -19,17 +16,16 @@ export function getIdTokenFromHeaders(
     } else {
       return authHeader;
     }
+  } else {
+    logger.debug("no authorization header found");
+    return undefined;
   }
-  return undefined;
 }
 
 export function getCacheControlContextFromHeaders(
-  headers?: IncomingHttpHeaders
+  cacheControlHeader?: string
 ): CacheControlFields {
   try {
-    const cacheControlHeader: string | undefined = (headers?.[
-      "Cache-Control"
-    ] ?? headers?.["cache-control"]) as string | undefined;
     if (!cacheControlHeader) {
       return {
         cacheMode: "allow-cache",

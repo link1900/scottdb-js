@@ -2,7 +2,7 @@ import { InternalServerError } from "@link1900/node-error";
 import { JwtPayload, verifyRS256Token } from "@link1900/node-jwt";
 import { logger } from "@link1900/node-logger";
 import { Step } from "@link1900/node-util";
-import { getIdTokenFromHeaders } from "../headerHelper";
+import { getIdTokenFromAuthorizationHeader } from "../headerHelper";
 import { ExpressRequestContext } from "./ExpressRequestContext";
 import { JwtAuthContext } from "./JwtAuthContext";
 
@@ -50,10 +50,11 @@ export class JwtAuthContextStep extends Step<
 
     const { req } = express;
 
-    const headers = req.headers;
-    const token = getIdTokenFromHeaders(headers);
+    const authHeader = req.get("Authorization");
+    const token = getIdTokenFromAuthorizationHeader(authHeader);
 
     if (!token) {
+      logger.debug("no token found in Authorization header");
       context.authenticated = false;
       return context;
     }

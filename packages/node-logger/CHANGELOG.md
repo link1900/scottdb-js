@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.4.3"></a>
+## [0.4.3](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.4.2&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.4.3) (2022-01-31)
+
+
+### Bug Fixes
+
+* **node-logger:** Handle unknown in the logger.error ([dd29b8a](https://github.com/projects/link1900/repos/link1900/commits/dd29b8a))
+
+
+
+
+
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.4.1&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.4.2) (2021-12-10)
 

@@ -74,9 +74,9 @@ export class ObjectLogger {
     return this.log("warn", message, meta);
   }
 
-  public error(message: string, error?: Error, meta: any = {}) {
-    if (error) {
-      // pulling message out to ensure it is at the start of the error object
+  public error(message: string, error?: Error | unknown, meta: any = {}) {
+    if (error && error instanceof Error) {
+      // pulling message out to ensure it is at the start of the meta object
       const { message: errorMessage, ...errorFields } = error;
       meta.error = {
         message: errorMessage,

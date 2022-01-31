@@ -141,6 +141,20 @@ describe("ObjectLogger", () => {
       expect(result && result.error.stacktrace).toBeTruthy();
     });
 
+    it("logs unknown error object correctly", () => {
+      const logger = new ObjectLogger();
+      const mock = jest.spyOn(logger, "error");
+      const logResult = logger.error("error message", {} as unknown, {
+        extra: "data",
+      });
+      const result = JSON.parse(logResult!);
+      expect(mock).toHaveBeenCalled();
+      expect(result && result.level).toEqual("error");
+      expect(result && result.message).toEqual("error message");
+      expect(result && result.extra).toEqual("data");
+      expect(result && result.error).toEqual(undefined);
+    });
+
     it("logs example error with extra information", () => {
       const logger = new ObjectLogger();
       const mock = jest.spyOn(logger, "error");

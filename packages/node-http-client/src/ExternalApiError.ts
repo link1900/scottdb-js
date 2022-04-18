@@ -4,13 +4,13 @@ export type ExternalApiErrorOptions = {
   message?: string;
   externalHttpCode?: HttpStatusCode;
   externalMessage?: string;
-  originalError?: Error;
+  originalError?: Error | unknown;
 };
 
 export class ExternalApiError extends ServerError {
   public externalHttpCode?: HttpStatusCode;
   public externalMessage?: string;
-  public originalError?: Error;
+  public originalError?: Error | unknown;
 
   constructor(options: ExternalApiErrorOptions = {}) {
     const {

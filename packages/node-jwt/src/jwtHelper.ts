@@ -81,3 +81,14 @@ export async function verifyRS256Token(
     audience
   ) as JwtPayload;
 }
+
+export function tokenHasNotExpired(token: string): boolean {
+  const { payload } = decodeTokenAsObject(token);
+  if (payload !== undefined && typeof payload.exp !== 'undefined') {
+    const clockTimestamp = Math.floor(Date.now() / 1000);
+    if (clockTimestamp >= payload.exp) {
+      return false;
+    }
+  }
+  return true;
+}

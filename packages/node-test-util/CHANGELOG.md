@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-test-util@0.2.1&sourceBranch=refs%2Ftags%2F@link1900/node-test-util@0.3.0) (2022-09-17)
+
+
+### Features
+
+* **node-test-util:** added helper get jwt tokens ([369cc60](https://github.com/projects/link1900/repos/link1900/commits/369cc60))
+
+
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-test-util@0.2.0&sourceBranch=refs%2Ftags%2F@link1900/node-test-util@0.2.1) (2022-04-18)
 

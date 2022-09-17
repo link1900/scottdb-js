@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-http-client",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Node http client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,7 +24,7 @@
     "lib"
   ],
   "devDependencies": {
-    "@link1900/node-test-util": "^0.2.1",
+    "@link1900/node-test-util": "^0.3.0",
     "@types/tough-cookie": "4.0.1"
   },
   "dependencies": {

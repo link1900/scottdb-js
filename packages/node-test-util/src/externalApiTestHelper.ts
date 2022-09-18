@@ -8,6 +8,7 @@ export interface MockApiOptions {
   body?: string | Record<string, any> | null;
   headers?: ReplyHeaders;
   networkErrorMessage?: string;
+  requestBody?: any;
 }
 
 export interface MockScope extends Scope {
@@ -24,17 +25,18 @@ export function mockApi(options: MockApiOptions): MockScope {
     body = {},
     headers,
     networkErrorMessage,
+    requestBody,
   } = options;
   const mock = nock(baseUrl);
   if (networkErrorMessage) {
-    mock.intercept(path, method).replyWithError(networkErrorMessage);
+    mock.intercept(path, method, requestBody).replyWithError(networkErrorMessage);
     return mock;
   } else {
-    mock.intercept(path, method).reply(
+    mock.intercept(path, method, requestBody).reply(
       status,
-      function mockInterceptor(uri, requestBody) {
+      function mockInterceptor(uri, reqBody) {
         (mock as any).requestHeaders = this.req.headers;
-        (mock as any).requestBody = requestBody;
+        (mock as any).requestBody = reqBody;
         return body;
       },
       headers

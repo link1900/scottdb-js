@@ -36,6 +36,46 @@ describe("mockApi()", () => {
     expect(apiMock.isDone()).toEqual(true);
   });
 
+  it("mocks a post api by matching request body", async () => {
+    const matchBody = { body: "matches" };
+    const apiMock = mockApi({
+      baseUrl: "http://localhost",
+      path: "/example",
+      method: "POST",
+      status: 200,
+      body: { result: "success" },
+      requestBody: matchBody,
+    });
+    const response = await fetch(EXAMPLE_URL, {
+      method: "POST",
+      body: JSON.stringify(matchBody),
+    });
+    const body = await response.json();
+    expect(response.status).toEqual(200);
+    expect(response.statusText).toEqual("OK");
+    expect(body.result).toEqual("success");
+    expect(apiMock.isDone()).toEqual(true);
+  });
+
+  it("mock a post api fails when request body does not match", async () => {
+    const apiMock = mockApi({
+      baseUrl: "http://localhost",
+      path: "/example",
+      method: "POST",
+      status: 200,
+      body: { result: "success" },
+      requestBody: { body: "match" },
+    });
+
+    await expect(() =>
+      fetch(EXAMPLE_URL, {
+        method: "POST",
+        body: JSON.stringify({ body: "no match" }),
+      })
+    ).rejects.toThrowError("No match for request");
+    expect(apiMock.isDone()).toEqual(false);
+  });
+
   it("mocks the headers correctly", async () => {
     const apiMock = mockApi({
       baseUrl: "http://localhost",

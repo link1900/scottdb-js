@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-express",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Node express",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,7 +25,7 @@
   ],
   "dependencies": {
     "@link1900/node-error": "^0.3.1",
-    "@link1900/node-jwt": "^0.2.0",
+    "@link1900/node-jwt": "^0.2.1",
     "@link1900/node-logger": "^0.4.3",
     "@link1900/node-util": "^0.7.0",
     "express": "4.17.2"

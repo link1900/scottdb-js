@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-auth0",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node auth0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,13 +24,13 @@
     "lib"
   ],
   "devDependencies": {
-    "@link1900/node-test-util": "^0.3.0"
+    "@link1900/node-test-util": "^0.4.0"
   },
   "dependencies": {
     "@link1900/node-environment": "^0.3.4",
     "@link1900/node-error": "^0.3.1",
-    "@link1900/node-http-client": "^0.1.6",
-    "@link1900/node-jwt": "^0.2.0",
+    "@link1900/node-http-client": "^0.1.7",
+    "@link1900/node-jwt": "^0.2.1",
     "@link1900/node-util": "^0.7.0"
   }
 }

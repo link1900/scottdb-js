@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-logger-api",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Node logger api",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -23,8 +23,6 @@
   "files": [
     "lib"
   ],
-  "devDependencies": {
-  },
   "dependencies": {
     "@link1900/node-logger-interface": "^0.1.0"
   }

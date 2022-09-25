@@ -1,6 +1,11 @@
 import { LoggerInterface } from "@link1900/node-logger-interface";
 import { EmptyLogger } from "./EmptyLogger";
 
+export {
+  LogLevel,
+  LogOptions,
+  LoggerInterface
+} from "@link1900/node-logger-interface";
 export * from "./EmptyLogger";
 
 const getExistingNodeLoggerImplementation = () => {

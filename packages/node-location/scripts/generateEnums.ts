@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import { runScript } from "@link1900/node-script";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import csc, { ICountry, IState } from "country-state-city";
 import { writeFileToDisk } from "@link1900/node-util";
 import path from "path";

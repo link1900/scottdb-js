@@ -1,5 +1,5 @@
 import { InternalServerError } from "@link1900/node-error";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import { readJsonFileFromDisk, stringToBoolean } from "@link1900/node-util";
 import * as path from "path";
 

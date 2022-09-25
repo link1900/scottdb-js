@@ -6,7 +6,7 @@ import {
   getBenchmarkEndTimeMilliseconds,
   isPresent,
 } from "@link1900/node-util";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import { ExternalApiError } from "./ExternalApiError";
 import {
   parseJsonToXml,

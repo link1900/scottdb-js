@@ -1,8 +1,8 @@
 import { JwtAuthContextStep } from "../JwtAuthContextStep";
 import { JwtPayload } from "@link1900/node-jwt";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 
-jest.mock("@link1900/node-logger", () => ({
+jest.mock("@link1900/node-logger-api", () => ({
   logger: {
     debug: jest.fn(),
     error: jest.fn(),

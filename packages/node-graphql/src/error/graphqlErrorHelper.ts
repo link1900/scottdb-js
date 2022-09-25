@@ -1,4 +1,4 @@
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
 import { GraphqlErrorDetail } from "./GraphqlErrorDetail";
 import { GraphqlErrorFormatter } from "./GraphqlErrorFormatter";

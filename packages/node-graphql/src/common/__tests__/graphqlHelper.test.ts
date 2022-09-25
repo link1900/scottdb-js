@@ -4,7 +4,7 @@ import {
   logGraphqlCall,
 } from "../graphqlHelper";
 import gql from "graphql-tag";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 
 const exampleQuery =
   "query ViewerLoadQuery {\n" +

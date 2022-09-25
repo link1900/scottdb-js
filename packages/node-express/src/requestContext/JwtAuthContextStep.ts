@@ -1,6 +1,6 @@
 import { InternalServerError } from "@link1900/node-error";
 import { JwtPayload, verifyRS256Token } from "@link1900/node-jwt";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import { Step } from "@link1900/node-util";
 import { getIdTokenFromAuthorizationHeader } from "../headerHelper";
 import { ExpressRequestContext } from "./ExpressRequestContext";

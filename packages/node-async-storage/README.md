@@ -90,7 +90,7 @@ For a guide on using the trace middleware helper please see [node express readme
 
 ```typescript
 import express from "express";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import { applyTraceMiddleware } from "@link1900/node-express";
 
 const app = express();

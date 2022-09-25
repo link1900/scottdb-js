@@ -1,6 +1,6 @@
 import { DocumentNode, print } from "graphql";
 import { isObject, isString } from "lodash";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 
 export function getOperationNameFromGraphqlQueryString(
   value?: string | null

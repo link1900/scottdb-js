@@ -3,7 +3,7 @@ import {
   makeValidJsonRequest,
   ValidJsonRequestOptions,
 } from "@link1900/node-http-client";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import { getOperationNameFromGraphqlQueryString } from "../common/graphqlHelper";
 import { GraphqlErrorResponse } from "./GraphqlErrorResponse";
 import { ExternalGraphqlApiError } from "./ExternalGraphqlApiError";

@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import {
   getBenchmarkStartTime,
   getBenchmarkEndTimeString,

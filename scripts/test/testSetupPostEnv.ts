@@ -1,5 +1,5 @@
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 
 beforeAll(async () => {
-  logger.enabled = false;
+  logger.setLevel("silent");
 });

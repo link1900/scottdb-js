@@ -1,4 +1,4 @@
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 import { parseIntegerString } from "@link1900/node-util";
 
 export interface CacheControlFields {

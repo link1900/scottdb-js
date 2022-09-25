@@ -8,7 +8,7 @@ import {
   setupExecutionEnvironment,
 } from "../src";
 
-import { logger } from "@link1900/node-logger";
+import { logger } from "@link1900/node-logger-api";
 
 async function main() {
   logger.info(

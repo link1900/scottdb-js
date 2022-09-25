@@ -26,7 +26,7 @@
   "dependencies": {
     "@link1900/node-error": "^0.3.1",
     "@link1900/node-jwt": "^0.2.1",
-    "@link1900/node-logger": "^0.4.3",
+    "@link1900/node-logger-api": "^0.1.0",
     "@link1900/node-util": "^0.7.0",
     "express": "4.17.2"
   }

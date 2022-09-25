@@ -1,17 +1,9 @@
 import * as log from "loglevel";
 import { Logger } from "loglevel";
 import stringify from "json-stringify-safe";
+import { LoggerInterface, LogLevel, LogOptions } from "@link1900/node-logger-interface";
 
-export type LogTypes = "trace" | "debug" | "info" | "warn" | "error" | "silent";
-
-export type LogOptions = {
-  name?: string;
-  enabled?: boolean;
-  level?: LogTypes;
-  context?: Object;
-};
-
-export class ObjectLogger {
+export class ObjectLogger implements LoggerInterface {
   public innerLogger: Logger;
   public enabled: boolean;
   public context: Object | undefined;
@@ -89,7 +81,7 @@ export class ObjectLogger {
   }
 
   public log(
-    level: LogTypes,
+    level: LogLevel,
     message: string,
     meta?: object
   ): string | undefined {
@@ -107,7 +99,45 @@ export class ObjectLogger {
     return logMessage;
   }
 
-  get level(): LogTypes {
+  public updateContext(context: Object) {
+    this.context = {
+      ...this.context,
+      ...context,
+    };
+  }
+
+  public addMetaHook(hook: () => object) {
+    this.metaHooks.push(hook);
+  }
+
+  public clearMetaHooks() {
+    this.metaHooks = [];
+  }
+
+  configure(options: LogOptions): void {
+    const { enabled, name, level, context } = options;
+    if (name) {
+      this.innerLogger = log.getLogger(name);
+    }
+
+    if (level) {
+      this.innerLogger.setLevel(level, false);
+    }
+
+    if (enabled !== undefined) {
+      this.enabled = enabled;
+    }
+
+    if (context) {
+      this.context = context;
+    }
+  }
+
+  get level(): LogLevel {
+    return this.getLevel();
+  }
+
+  getLevel(): LogLevel {
     switch (this.innerLogger.getLevel()) {
       case log.levels.TRACE:
         return "trace";
@@ -124,22 +154,11 @@ export class ObjectLogger {
     }
   }
 
-  set level(level: LogTypes) {
+  set level(level: LogLevel) {
     this.innerLogger.setLevel(level, false);
   }
 
-  public updateContext(context: Object) {
-    this.context = {
-      ...this.context,
-      ...context,
-    };
-  }
-
-  public addMetaHook(hook: () => object) {
-    this.metaHooks.push(hook);
-  }
-
-  public clearMetaHooks() {
-    this.metaHooks = [];
+  setLevel(newLevel: LogLevel): void {
+    this.innerLogger.setLevel(newLevel, false);
   }
 }

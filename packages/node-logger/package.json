@@ -25,7 +25,8 @@
   ],
   "dependencies": {
     "json-stringify-safe": "5.0.1",
-    "loglevel": "1.7.1"
+    "loglevel": "1.7.1",
+    "@link1900/node-logger-interface": "^0.1.0"
   },
   "devDependencies": {
     "@types/json-stringify-safe": "5.0.0"

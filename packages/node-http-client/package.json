@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-http-client",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Node http client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

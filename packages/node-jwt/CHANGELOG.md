@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-jwt@0.2.1&sourceBranch=refs%2Ftags%2F@link1900/node-jwt@0.2.2) (2022-09-25)
+
+**Note:** Version bump only for package @link1900/node-jwt
+
+
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-jwt@0.2.0&sourceBranch=refs%2Ftags%2F@link1900/node-jwt@0.2.1) (2022-09-18)
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.4.3&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.5.0) (2022-09-25)
+
+
+### Features
+
+* **node-logger:** Updated ObjectLogger to implement the logger interface ([15128b7](https://github.com/projects/link1900/repos/link1900/commits/15128b7))
+
+
+
+
+
 <a name="0.4.3"></a>
 ## [0.4.3](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-logger@0.4.2&sourceBranch=refs%2Ftags%2F@link1900/node-logger@0.4.3) (2022-01-31)
 

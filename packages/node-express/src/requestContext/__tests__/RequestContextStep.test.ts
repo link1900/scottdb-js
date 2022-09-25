@@ -2,8 +2,10 @@ import { RequestContextStep } from "../RequestContextStep";
 
 const exampleContextWithId: any = {
   express: {
-    req: {
-      requestId: "123",
+    res: {
+      locals: {
+        requestId: "123",
+      }
     },
   },
 };
@@ -15,8 +17,10 @@ describe("RequestContextStep", () => {
     const result = await new RequestContextStep().run(exampleContextWithId);
     expect(result).toEqual({
       express: {
-        req: {
-          requestId: "123",
+        res: {
+          locals: {
+            requestId: "123",
+          }
         },
       },
       requestId: "123",

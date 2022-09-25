@@ -1,4 +1,4 @@
-export * from "./logRequestMiddleware";
+export * from "./traceMiddleware";
 export * from "./headerHelper";
 
 export * from "./requestContext/ExpressRequestContext";

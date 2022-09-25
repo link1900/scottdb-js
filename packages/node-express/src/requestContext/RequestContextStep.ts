@@ -11,11 +11,7 @@ export class RequestContextStep extends Step<
     | Promise<ExpressRequestContext & RequestContext>
     | (ExpressRequestContext & RequestContext) {
     const { express } = context;
-    if (express && express.req && (express.req as any).requestId) {
-      context.requestId = (express.req as any).requestId;
-    } else {
-      context.requestId = uuid();
-    }
+    context.requestId = express?.res?.locals?.requestId ?? uuid();
     return context;
   }
 }

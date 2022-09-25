@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-environment",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Node environment",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,7 +24,7 @@
     "lib"
   ],
   "dependencies": {
-    "@link1900/node-logger-api": "^0.1.0",
+    "@link1900/node-logger-api": "^0.2.0",
     "@link1900/node-util": "^0.7.0",
     "@link1900/node-validation": "^0.1.7"
   }

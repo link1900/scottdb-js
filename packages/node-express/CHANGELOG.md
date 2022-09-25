@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-express@0.3.0&sourceBranch=refs%2Ftags%2F@link1900/node-express@0.4.0) (2022-09-25)
+
+
+### Features
+
+* **node-express:** Replaced requestMiddleware with traceMiddleware ([f28e8ef](https://github.com/projects/link1900/repos/link1900/commits/f28e8ef))
+
+
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/projects/link1900/repos/link1900/compare/diff?targetBranch=refs%2Ftags%2F@link1900/node-express@0.2.6&sourceBranch=refs%2Ftags%2F@link1900/node-express@0.3.0) (2022-09-25)
 

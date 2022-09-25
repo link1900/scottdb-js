@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-script",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Node script",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -24,8 +24,8 @@
     "lib"
   ],
   "dependencies": {
-    "@link1900/node-environment": "^0.4.0",
-    "@link1900/node-logger-api": "^0.1.0",
+    "@link1900/node-environment": "^0.4.1",
+    "@link1900/node-logger-api": "^0.2.0",
     "@link1900/node-util": "^0.7.0",
     "commander": "8.3.0",
     "markdown-table": "3.0.1"

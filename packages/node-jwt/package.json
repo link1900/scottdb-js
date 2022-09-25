@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-jwt",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Node jwt",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@link1900/node-error": "^0.3.1",
-    "@link1900/node-http-client": "^0.2.0",
+    "@link1900/node-http-client": "^0.2.1",
     "@link1900/node-util": "^0.7.0",
     "jsonwebtoken": "8.5.1",
     "jwks-rsa": "1.12.2"

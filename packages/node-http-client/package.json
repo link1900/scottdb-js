@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-http-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Node http client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@link1900/node-error": "^0.3.1",
-    "@link1900/node-logger-api": "^0.1.0",
+    "@link1900/node-logger-api": "^0.2.0",
     "@link1900/node-util": "^0.7.0",
     "@types/node-fetch": "2.5.12",
     "fast-xml-parser": "3.17.6",

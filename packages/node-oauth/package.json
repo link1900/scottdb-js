@@ -1,6 +1,6 @@
 {
   "name": "@link1900/node-oauth",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Node oauth",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -27,7 +27,7 @@
     "@link1900/node-test-util": "^0.4.0"
   },
   "dependencies": {
-    "@link1900/node-http-client": "^0.2.0",
+    "@link1900/node-http-client": "^0.2.1",
     "moment-timezone": "0.5.34"
   }
 }

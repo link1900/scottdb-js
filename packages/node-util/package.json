@@ -32,7 +32,7 @@
     "decimal.js": "10.1.1",
     "google-libphonenumber": "3.2.2",
     "lodash": "4.17.21",
-    "moment-timezone": "0.5.34",
+    "moment-timezone": "0.5.35",
     "object-sizeof": "1.6.1",
     "pretty-bytes": "5.1.0",
     "pretty-ms": "7.0.1",

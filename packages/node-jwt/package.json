@@ -31,7 +31,7 @@
     "@link1900/node-error": "^0.3.1",
     "@link1900/node-http-client": "^0.2.1",
     "@link1900/node-util": "^0.7.0",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "jwks-rsa": "1.12.2"
   }
 }

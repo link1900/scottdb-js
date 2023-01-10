@@ -1,0 +1,39 @@
+{
+  "name": "@link1900/node-database",
+  "version": "0.0.1",
+  "description": "Node database",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Scott Brown <link1900@gmail.com>",
+  "license": "MIT",
+  "repository": "git@github.com:link1900/link1900.git",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "prebuild": "rm -rf lib/",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "@link1900/node-error": "^0.3.1",
+    "@link1900/node-logger-api": "^0.2.0",
+    "@link1900/node-util": "^0.7.0",
+    "change-case": "4.1.2",
+    "class-validator": "0.13.2",
+    "pg": "8.8.0",
+    "reflect-metadata": "0.1.13",
+    "type-graphql": "1.1.1",
+    "typeorm": "0.3.10",
+    "typeorm-naming-strategies": "4.1.0"
+  }
+}

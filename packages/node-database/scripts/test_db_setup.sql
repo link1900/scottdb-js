@@ -1,0 +1,3 @@
+CREATE USER lib_test WITH ENCRYPTED PASSWORD 'lib_test';
+CREATE DATABASE "lib-test";
+GRANT ALL PRIVILEGES ON DATABASE "lib-test" TO lib_test;

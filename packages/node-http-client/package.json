@@ -32,7 +32,7 @@
     "@link1900/node-logger-api": "^0.2.0",
     "@link1900/node-util": "^0.7.0",
     "@types/node-fetch": "2.5.12",
-    "fast-xml-parser": "3.17.6",
+    "fast-xml-parser": "4.4.1",
     "node-fetch": "2.6.7",
     "tough-cookie": "4.0.0"
   }
